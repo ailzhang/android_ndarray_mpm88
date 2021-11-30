@@ -7,10 +7,10 @@ public class Ndarray {
     private int col;
     private int dim;
     private int ssbo;
-    private int shape;
+    private int[] shape;
     public boolean init;
 
-    public Ndarray(String name, String type, int dim, int shape, int row, int col) {
+    public Ndarray(String name, String type, int dim, int[] shape, int row, int col) {
         this.name = name;
         this.type = type;
         this.dim = dim;
@@ -40,11 +40,11 @@ public class Ndarray {
         this.ssbo = ssbo;
     }
 
-    public void setShape(int shape) {
+    public void setShape(int[] shape) {
         this.shape = shape;
     }
 
-    public int getShape() {
+    public int[] getShape() {
         return shape;
     }
 
