@@ -41,7 +41,7 @@ void substep_c54_01()
         _li_V += U;
       }
       int V = _li_V << 2;
-      float W = float(1.0);
+      float W = float(0.0);
       _arr4_f32_[V >> 2] = W;
       int Y = int(1);
       int _li_Z = 0;

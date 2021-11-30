@@ -556,7 +556,7 @@ void substep_c54_07()
         _li_MK += Ge;
       }
       int MK = _li_MK << 2;
-      _arr1_f32_[MK >> 2] = Gx;
+      _arr1_f32_[MK >> 2] = Me;
       int _li_MN = 0;
       { // linear seek
         int _s0_MN = _args_i32_[16 + 1 * 8 + 0];
@@ -572,83 +572,81 @@ void substep_c54_07()
       float MQ = float(0.0002);
       float MR = MP * MQ;
       float MS = Mh * MQ;
-      float MT;
-      { // Begin Atomic Op
-      MT = atomicAdd_arr0_f32(Gf >> 2, MR);
-      } // End Atomic Op
-      float MU;
-      { // Begin Atomic Op
-      MU = atomicAdd_arr0_f32(Gk >> 2, MS);
-      } // End Atomic Op
-      int _li_MW = 0;
+      float MT = _arr0_f32_[Gf >> 2];
+      float MU = MT + MR;
+      float MV = _arr0_f32_[Gk >> 2];
+      float MW = MV + MS;
+      _arr0_f32_[Gf >> 2] = MU;
+      _arr0_f32_[Gk >> 2] = MW;
+      int _li_N0 = 0;
       { // linear seek
-        int _s0_MW = _args_i32_[16 + 2 * 8 + 0];
-        _li_MW *= _s0_MW;
-        _li_MW += Gc;
+        int _s0_N0 = _args_i32_[16 + 2 * 8 + 0];
+        _li_N0 *= _s0_N0;
+        _li_N0 += Gc;
       }
-      int MW = _li_MW << 2;
-      float MX = _arr2_f32_[MW >> 2];
-      float N0 = Mx + MG;
-      float N1 = N0 * MQ;
-      float N2 = N1 + GD;
-      float N3 = MX * N2;
-      _arr2_f32_[MW >> 2] = N3;
-      int _li_N6 = 0;
+      int N0 = _li_N0 << 2;
+      float N1 = _arr2_f32_[N0 >> 2];
+      float N4 = Mx + MG;
+      float N5 = N4 * MQ;
+      float N6 = N5 + GD;
+      float N7 = N1 * N6;
+      _arr2_f32_[N0 >> 2] = N7;
+      int _li_Na = 0;
       { // linear seek
-        int _s0_N6 = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_N6 = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_N6 = _args_i32_[16 + 3 * 8 + 2];
-        _li_N6 *= _s0_N6;
-        _li_N6 += Gc;
-        _li_N6 *= _s1_N6;
-        _li_N6 += Ge;
-        _li_N6 *= _s2_N6;
-        _li_N6 += Ge;
+        int _s0_Na = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_Na = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_Na = _args_i32_[16 + 3 * 8 + 2];
+        _li_Na *= _s0_Na;
+        _li_Na += Gc;
+        _li_Na *= _s1_Na;
+        _li_Na += Ge;
+        _li_Na *= _s2_Na;
+        _li_Na += Ge;
       }
-      int N6 = _li_N6 << 2;
-      _arr3_f32_[N6 >> 2] = Mx;
-      int _li_N9 = 0;
+      int Na = _li_Na << 2;
+      _arr3_f32_[Na >> 2] = Mx;
+      int _li_Nd = 0;
       { // linear seek
-        int _s0_N9 = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_N9 = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_N9 = _args_i32_[16 + 3 * 8 + 2];
-        _li_N9 *= _s0_N9;
-        _li_N9 += Gc;
-        _li_N9 *= _s1_N9;
-        _li_N9 += Ge;
-        _li_N9 *= _s2_N9;
-        _li_N9 += Gj;
+        int _s0_Nd = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_Nd = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_Nd = _args_i32_[16 + 3 * 8 + 2];
+        _li_Nd *= _s0_Nd;
+        _li_Nd += Gc;
+        _li_Nd *= _s1_Nd;
+        _li_Nd += Ge;
+        _li_Nd *= _s2_Nd;
+        _li_Nd += Gj;
       }
-      int N9 = _li_N9 << 2;
-      _arr3_f32_[N9 >> 2] = MA;
-      int _li_Nc = 0;
+      int Nd = _li_Nd << 2;
+      _arr3_f32_[Nd >> 2] = MA;
+      int _li_Ng = 0;
       { // linear seek
-        int _s0_Nc = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_Nc = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_Nc = _args_i32_[16 + 3 * 8 + 2];
-        _li_Nc *= _s0_Nc;
-        _li_Nc += Gc;
-        _li_Nc *= _s1_Nc;
-        _li_Nc += Gj;
-        _li_Nc *= _s2_Nc;
-        _li_Nc += Ge;
+        int _s0_Ng = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_Ng = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_Ng = _args_i32_[16 + 3 * 8 + 2];
+        _li_Ng *= _s0_Ng;
+        _li_Ng += Gc;
+        _li_Ng *= _s1_Ng;
+        _li_Ng += Gj;
+        _li_Ng *= _s2_Ng;
+        _li_Ng += Ge;
       }
-      int Nc = _li_Nc << 2;
-      _arr3_f32_[Nc >> 2] = MD;
-      int _li_Ne = 0;
+      int Ng = _li_Ng << 2;
+      _arr3_f32_[Ng >> 2] = MD;
+      int _li_Ni = 0;
       { // linear seek
-        int _s0_Ne = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_Ne = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_Ne = _args_i32_[16 + 3 * 8 + 2];
-        _li_Ne *= _s0_Ne;
-        _li_Ne += Gc;
-        _li_Ne *= _s1_Ne;
-        _li_Ne += Gj;
-        _li_Ne *= _s2_Ne;
-        _li_Ne += Gj;
+        int _s0_Ni = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_Ni = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_Ni = _args_i32_[16 + 3 * 8 + 2];
+        _li_Ni *= _s0_Ni;
+        _li_Ni += Gc;
+        _li_Ni *= _s1_Ni;
+        _li_Ni += Gj;
+        _li_Ni *= _s2_Ni;
+        _li_Ni += Gj;
       }
-      int Ne = _li_Ne << 2;
-      _arr3_f32_[Ne >> 2] = MG;
+      int Ni = _li_Ni << 2;
+      _arr3_f32_[Ni >> 2] = MG;
   }
 }
 

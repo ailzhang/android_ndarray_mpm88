@@ -316,7 +316,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         Integer[] bind_idx = programs[1].getBind_idx();
         Kernel[] substep_kernel = programs[1].getKernels();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 50; i++) {
             for (int j = 0; j < bind_idx.length; j++) {
                 GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
                 if (!ndarrays[j].init) {
@@ -324,10 +324,14 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                     ndarrays[j].init = true;
                 }
             }
-            for (int j = 0; j < substep_kernel.length; j++) {
+            for (int j = 0; j < 8; j++) {
                 GLES32.glUseProgram(substep_kernel[j].getShader_program());
                 GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
             }
+            //for (int j = 6; j < 8; j++) {
+            //    GLES32.glUseProgram(substep_kernel[j].getShader_program());
+            //    GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
+            //}
             for (int j = 0; j < bind_idx.length; j++) {
                 GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], 0);
             }
