@@ -42,8 +42,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
     public Mpm88Ndarray(Context _context) {
         context = _context;
+        // Open Json file.
         JSONParser parser = new JSONParser();
-        InputStream jsonfile = context.getResources().openRawResource(R.raw.metadata);
+        InputStream jsonfile = this.context.getResources().openRawResource(R.raw.metadata);
         JSONObject mpm88;
         try {
             mpm88 = (JSONObject) parser.parse(new InputStreamReader(jsonfile, "utf-8"));
@@ -54,7 +55,44 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
 
         // -----------------------------------------------------------------------------------------
+        // Parse Json data.
+        parseJsonData(mpm88);
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        // Generate SSBOs.
+        generateSSBO();
+        // Compile compute shaders and link compute programs.
+        compileComputeShaders();
+        // Compile render shaders and link render program.
+        compileRenderShaders();
+        // Fill some data to buffers.
+        fillData();
+        // Run init kernel once at the beginning.
+        init();
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        GLES32.glViewport(0, 0, width, height);
+    }
+
+    @Override
+    public void onDrawFrame(GL10 gl) {
+        // Clear color.
+        GLES32.glClearColor(0f, 0f, 0f, 1f);
+        GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
+
+        // Run substep kernel, pass in the number of substep you want to run per frame.
+        substep(30);
+
+        // Render point to the screen.
+        render();
+    }
+
+    private void parseJsonData(JSONObject mpm88) {
         JSONArray json_programs = (JSONArray) ((JSONObject) mpm88.get("aot_data")).get("kernels");
         programs = new Program[json_programs.size()];
         Iterator json_program_iterator = json_programs.iterator();
@@ -111,9 +149,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+    private void generateSSBO() {
         int[] temp = new int[1];
         GLES32.glGenBuffers(1, temp, 0);
         color_buf = temp[0];
@@ -125,13 +161,17 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             GLES32.glGenBuffers(1, temp, 0);
             ndarrays[i].setSsbo(temp[0]);
         }
+    }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void compileComputeShaders() {
         for (int i = 0; i < programs.length; i++) {
             Kernel[] cur_kernels = programs[i].getKernels();
             for (int j = 0; j < cur_kernels.length; j++) {
                 int shader = GLES32.glCreateShader(GLES32.GL_COMPUTE_SHADER);
-                InputStream raw_shader = this.context.getResources().openRawResource(context.getResources().getIdentifier(
-                        cur_kernels[j].getName(), "raw", context.getPackageName()
+                InputStream raw_shader = this.context.getResources().openRawResource(this.context.getResources().getIdentifier(
+                        cur_kernels[j].getName(), "raw", this.context.getPackageName()
                 ));
                 String string_shader = new BufferedReader(
                         new InputStreamReader(raw_shader, StandardCharsets.UTF_8))
@@ -171,7 +211,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 cur_kernels[j].setShader_program(shader_program);
             }
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void compileRenderShaders() {
         int mVertShader = GLES32.glCreateShader(GLES32.GL_VERTEX_SHADER);
         int mFragShader = GLES32.glCreateShader(GLES32.GL_FRAGMENT_SHADER);
         InputStream rawVertShader = this.context.getResources().openRawResource(R.raw.vertshader);
@@ -239,7 +282,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         {
             throw new RuntimeException("Error creating program.");
         }
+    }
 
+    private void fillData() {
+        // Fill shape info into arg buffer.
         int[] data = new int[8*8+16];
         for (int i = 0; i < ndarrays.length; i++) {
             int dim = ndarrays[i].getDim();
@@ -259,14 +305,16 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         args = ByteBuffer.allocateDirect(data.length*4).order(ByteOrder.nativeOrder()).asIntBuffer();
         args.put(data).position(0);
 
+        // Fill color info into color buffer.
         float[] data_v = new float[64*64*4];
         for (int i = 0 ; i < 64*64*4; i++) {
             data_v[i] = 0.9f;
         }
         color = ByteBuffer.allocateDirect(data_v.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
         color.put(data_v).position(0);
+    }
 
-
+    private void init() {
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 80, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
@@ -294,19 +342,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
     }
 
-    @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
-        GLES32.glViewport(0, 0, width, height);
-    }
-
-    @Override
-    public void onDrawFrame(GL10 gl) {
-        GLES32.glClearColor(0f, 0f, 0f, 1f);
-        GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
-
+    private void substep(int step) {
         Integer[] bind_idx = programs[1].getBind_idx();
         Kernel[] substep_kernel = programs[1].getKernels();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < step; i++) {
             for (int j = 0; j < bind_idx.length; j++) {
                 GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
                 if (!ndarrays[j].init) {
@@ -327,7 +366,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], 0);
             }
         }
+    }
 
+    private void render() {
         GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 
         GLES32.glUseProgram(render_program);
