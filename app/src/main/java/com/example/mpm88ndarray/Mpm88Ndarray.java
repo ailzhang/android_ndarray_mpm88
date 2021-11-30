@@ -101,8 +101,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             );
             r++;
         }
-        //ndarrays[4].setShape(128);
-        //ndarrays[5].setShape(128);
+        ndarrays[4].setShape(128);
+        ndarrays[5].setShape(128);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -285,7 +285,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
 
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
-        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 196608, null, GLES32.GL_DYNAMIC_COPY);
+        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 0, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 1048576, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
@@ -295,7 +295,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         for (int i = 0; i < bind_idx.length; i++) {
             GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], ndarrays[i].getSsbo());
             if (!ndarrays[i].init) {
-                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[i].getDim()*ndarrays[i].getShape()*ndarrays[i].getCol()*ndarrays[i].getRow()*4, null, GLES32.GL_DYNAMIC_COPY);
+                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[i].getDim()*(int)(Math.pow(ndarrays[i].getShape(), ndarrays[i].getDim()))*ndarrays[i].getCol()*ndarrays[i].getRow()*4, null, GLES32.GL_DYNAMIC_COPY);
                 ndarrays[i].init = true;
             }
         }
@@ -325,7 +325,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             for (int j = 0; j < bind_idx.length; j++) {
                 GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
                 if (!ndarrays[j].init) {
-                    GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[j].getDim()*ndarrays[j].getShape()*ndarrays[j].getCol()*ndarrays[j].getRow()*4, null, GLES32.GL_DYNAMIC_COPY);
+                    GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[j].getDim()*(int)(Math.pow(ndarrays[j].getShape(), ndarrays[j].getDim()))*ndarrays[j].getCol()*ndarrays[j].getRow()*4, null, GLES32.GL_DYNAMIC_COPY);
                     ndarrays[j].init = true;
                 }
             }
