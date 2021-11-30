@@ -1,14 +1,12 @@
 #version 310 es
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 precision highp float;
+layout(std430, binding = 0) buffer data_i32 { int _data_i32_[];}; 
+layout(std430, binding = 0) buffer data_f32 { float _data_f32_[];}; 
 layout(std430, binding = 1) buffer gtmp_i32 { int _gtmp_i32_[];}; 
 layout(std430, binding = 1) buffer gtmp_f32 { float _gtmp_f32_[];}; 
 layout(std430, binding = 2) buffer args_i32 { int _args_i32_[];}; 
 layout(std430, binding = 2) buffer args_f32 { float _args_f32_[];}; 
-layout(std430, binding = 6) buffer arr2_i32 { int _arr2_i32_[];}; 
-layout(std430, binding = 6) buffer arr2_f32 { float _arr2_f32_[];}; 
-layout(std430, binding = 5) buffer arr1_i32 { int _arr1_i32_[];}; 
-layout(std430, binding = 5) buffer arr1_f32 { float _arr1_f32_[];}; 
 layout(std430, binding = 4) buffer arr0_i32 { int _arr0_i32_[];}; 
 layout(std430, binding = 4) buffer arr0_f32 { float _arr0_f32_[];}; 
 
@@ -58,39 +56,23 @@ void init_c56_01()
       }
       int W = _li_W << 2;
       _arr0_f32_[W >> 2] = Q;
-      int _li_Z = 0;
-      { // linear seek
-        int _s0_Z = _args_i32_[16 + 1 * 8 + 0];
-        int _s1_Z = _args_i32_[16 + 1 * 8 + 1];
-        _li_Z *= _s0_Z;
-        _li_Z += I;
-        _li_Z *= _s1_Z;
-        _li_Z += S;
-      }
-      int Z = _li_Z << 2;
-      float Aq = float(0.0);
-      _arr1_f32_[Z >> 2] = Aq;
-      int _li_As = 0;
-      { // linear seek
-        int _s0_As = _args_i32_[16 + 1 * 8 + 0];
-        int _s1_As = _args_i32_[16 + 1 * 8 + 1];
-        _li_As *= _s0_As;
-        _li_As += I;
-        _li_As *= _s1_As;
-        _li_As += V;
-      }
-      int As = _li_As << 2;
-      float At = float(-1.0);
-      _arr1_f32_[As >> 2] = At;
-      int _li_Aw = 0;
-      { // linear seek
-        int _s0_Aw = _args_i32_[16 + 2 * 8 + 0];
-        _li_Aw *= _s0_Aw;
-        _li_Aw += I;
-      }
-      int Aw = _li_Aw << 2;
-      float Ax = float(1.0);
-      _arr2_f32_[Aw >> 2] = Ax;
+      float Z = float(0.0);
+      int Bx = 0;
+      int Bz = Bx + 311296 * S; // S0
+      int BA = Bz + 16384; // S1
+      int C2 = int(4095);
+      int C3 = I & C2;
+      int BD = BA + 8 * C3; // S1
+      int BE = BD + 0; // S2
+      _data_f32_[BE >> 2] = Z;
+      float As = float(-1.0);
+      int BO = BD + 4; // S3
+      _data_f32_[BO >> 2] = As;
+      float Av = float(1.0);
+      int BU = Bz + 0; // S4
+      int BX = BU + 4 * C3; // S4
+      int BY = BX + 0; // S5
+      _data_f32_[BY >> 2] = Av;
   }
 }
 
