@@ -285,7 +285,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
 
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
-        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 311296, null, GLES32.GL_DYNAMIC_COPY);
+        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 196608, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 1048576, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
