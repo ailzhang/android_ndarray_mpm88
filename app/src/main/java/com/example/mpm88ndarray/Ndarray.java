@@ -1,31 +1,21 @@
 package com.example.mpm88ndarray;
 
 public class Ndarray {
-    private String name;
-    private String type;
-    private int row;
-    private int col;
     private int dim;
     private int ssbo;
+    private int total_size;
+    private int shape_offset;
     private int[] shape;
+    private int[] element_shape;
     public boolean init;
 
-    public Ndarray(String name, String type, int dim, int[] shape, int row, int col) {
-        this.name = name;
-        this.type = type;
+    public Ndarray(int dim, int shape_offset, int total_size, int[] shape, int[] element_shape) {
         this.dim = dim;
+        this.shape_offset = shape_offset;
+        this.total_size = total_size;
         this.shape = shape;
-        this.row = row;
-        this.col = col;
+        this.element_shape = element_shape;
         this.init = false;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public int getDim() {
@@ -48,11 +38,15 @@ public class Ndarray {
         return shape;
     }
 
-    public int getRow() {
-        return row;
+    public int getTotal_size() {
+        return total_size;
     }
 
-    public int getCol() {
-        return col;
+    public int[] getElement_shape() {
+        return element_shape;
+    }
+
+    public int getShape_offset() {
+        return shape_offset;
     }
 }

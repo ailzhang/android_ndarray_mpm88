@@ -36,6 +36,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private int color_buf;
     private Program[] programs;
     private Ndarray[] ndarrays;
+    private final int NDARRAY_SIZE = 6;
 
     private IntBuffer args;
     private FloatBuffer color;
@@ -95,9 +96,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private void parseJsonData(JSONObject mpm88) {
         JSONArray json_programs = (JSONArray) ((JSONObject) mpm88.get("aot_data")).get("kernels");
         programs = new Program[json_programs.size()];
+        ndarrays = new Ndarray[NDARRAY_SIZE];
         Iterator json_program_iterator = json_programs.iterator();
         int i = 0;
         while (json_program_iterator.hasNext()) {
+            // Initialize program & kernel data structure.
             JSONObject cur_json_program = (JSONObject) ((JSONObject) json_program_iterator.next()).get("program");
             JSONArray json_kernels = (JSONArray) cur_json_program.get("kernels");
             Kernel[] kernels = new Kernel[json_kernels.size()];
@@ -119,33 +122,45 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 bind_idx[j] = ((Long) json_bind_idx.get(String.valueOf(j))).intValue();
             }
             programs[i] = new Program(kernels, bind_idx);
-            i++;
-        }
 
-        JSONArray json_ndarrays = (JSONArray) ((JSONObject) mpm88.get("aot_data")).get("ndarrays");
-        ndarrays = new Ndarray[json_ndarrays.size()];
-        Iterator json_ndarray_iterator = json_ndarrays.iterator();
-        int r = 0;
-        while (json_ndarray_iterator.hasNext()) {
-            JSONObject cur_json_ndarray = (JSONObject) json_ndarray_iterator.next();
-            int dim = ((Long) cur_json_ndarray.get("dim")).intValue();
-            int[] shape = new int[dim];
-            for (int k = 0; k < dim; k++) {
-                shape[k] = 64*64;
-                String name = (String) cur_json_ndarray.get("field_name");
-                if (name.equals("grid_v") || name.equals("grid_m")) {
-                    shape[k] = 128;
+            // Initialize ndarray data structure.
+            JSONObject json_cur_ndarrays = (JSONObject) cur_json_program.get("arr_args");
+            for (int j = 0; j < json_cur_ndarrays.size(); j++) {
+                JSONObject json_ndarray = (JSONObject) json_cur_ndarrays.get(String.valueOf(j));
+                int dim = ((Long) json_ndarray.get("field_dim")).intValue();
+                int[] shape = new int[dim];
+                // Hardcode every shape you want to the specific ndarray.
+                for (int d = 0; d < dim; d++) {
+                    shape[d] = 64*64;
+                    if (j == 4 || j == 5) {
+                        shape[d] = 128;
+                    }
                 }
+                JSONArray json_element_array = (JSONArray) json_ndarray.get("element_shapes");
+                int[] element_shape = new int[json_element_array.size()];
+                Iterator json_element_array_iterator = json_element_array.iterator();
+                int c = 0;
+                while (json_element_array_iterator.hasNext()) {
+                    element_shape[c] = ((Long) json_element_array_iterator.next()).intValue();
+                    c++;
+                }
+                int total_size = 1;
+                for (int z = 0; z < shape.length; z++) {
+                    total_size *= shape[z];
+                }
+                for (int z = 0; z < element_shape.length; z++) {
+                    total_size *= element_shape[z];
+                }
+                ndarrays[j] = new Ndarray(
+                        dim,
+                        ((Long) json_ndarray.get("shape_offset_in_bytes_in_args_buf")).intValue(),
+                        total_size * 4,
+                        shape,
+                        element_shape
+                );
             }
-            ndarrays[r] = new Ndarray(
-                    (String) cur_json_ndarray.get("field_name"),
-                    (String) cur_json_ndarray.get("dtype_name"),
-                    dim,
-                    shape,
-                    ((Long) cur_json_ndarray.get("row_num")).intValue(),
-                    ((Long) cur_json_ndarray.get("column_num")).intValue()
-            );
-            r++;
+
+            i++;
         }
     }
 
@@ -288,18 +303,14 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         // Fill shape info into arg buffer.
         int[] data = new int[8*8+16];
         for (int i = 0; i < ndarrays.length; i++) {
-            int dim = ndarrays[i].getDim();
-            int row = ndarrays[i].getRow();
-            int col = ndarrays[i].getCol();
             int[] shape = ndarrays[i].getShape();
+            int[] element_shape = ndarrays[i].getElement_shape();
+            int offset = ndarrays[i].getShape_offset() / 4;
             for (int j = 0; j < shape.length; j++) {
-                data[16 + i*8 + j] = shape[j];
+                data[offset + j] = shape[j];
             }
-            if (row == 1) {
-                data[16 + i*8 + dim] = col;
-            } else {
-                data[16 + i*8 + dim] = row;
-                data[16 + i*8 + dim+1] = col;
+            for (int j = 0; j < element_shape.length; j++) {
+                data[offset + j + shape.length] = element_shape[j];
             }
         }
         args = ByteBuffer.allocateDirect(data.length*4).order(ByteOrder.nativeOrder()).asIntBuffer();
@@ -323,12 +334,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         for (int i = 0; i < bind_idx.length; i++) {
             GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], ndarrays[i].getSsbo());
             if (!ndarrays[i].init) {
-                int total_shape = 1;
-                int[] shape = ndarrays[i].getShape();
-                for (int z = 0; z < shape.length; z++) {
-                    total_shape *= shape[z];
-                }
-                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, total_shape*ndarrays[i].getCol()*ndarrays[i].getRow()*4, null, GLES32.GL_DYNAMIC_COPY);
+                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[i].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
                 ndarrays[i].init = true;
             }
         }
@@ -349,12 +355,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             for (int j = 0; j < bind_idx.length; j++) {
                 GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
                 if (!ndarrays[j].init) {
-                    int total_shape = 1;
-                    int[] shape = ndarrays[j].getShape();
-                    for (int z = 0; z < shape.length; z++) {
-                        total_shape *= shape[z];
-                    }
-                    GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, total_shape*ndarrays[j].getCol()*ndarrays[j].getRow()*4, null, GLES32.GL_DYNAMIC_COPY);
+                    GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[j].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
                     ndarrays[j].init = true;
                 }
             }

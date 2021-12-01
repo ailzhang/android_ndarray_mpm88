@@ -1,4 +1,4 @@
-#version 310 es
+#version 320 es
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 precision highp float;
 layout(std430, binding = 1) buffer gtmp_i32 { int _gtmp_i32_[];}; 
@@ -12,7 +12,7 @@ layout(std430, binding = 4) buffer arr4_f32 { float _arr4_f32_[];};
 
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
-void substep_c54_01()
+void substep_c42_01()
 { // range for
   // range known at runtime
   int _beg = 0, _end = _gtmp_i32_[0 >> 2];
@@ -74,5 +74,5 @@ void substep_c54_01()
 
 void main()
 {
-  substep_c54_01();
+  substep_c42_01();
 }
