@@ -37,6 +37,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private Program[] programs;
     private Ndarray[] ndarrays;
     private final int NDARRAY_SIZE = 6;
+    private final String[] kernel_names = {"init", "substep"};
 
     private IntBuffer args;
     private FloatBuffer color;
@@ -94,22 +95,20 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     }
 
     private void parseJsonData(JSONObject mpm88) {
-        JSONArray json_programs = (JSONArray) ((JSONObject) mpm88.get("aot_data")).get("kernels");
+        JSONObject json_programs = (JSONObject) ((JSONObject) mpm88.get("aot_data")).get("kernels");
         programs = new Program[json_programs.size()];
         ndarrays = new Ndarray[NDARRAY_SIZE];
-        Iterator json_program_iterator = json_programs.iterator();
-        int i = 0;
-        while (json_program_iterator.hasNext()) {
+        for (int i = 0; i < json_programs.size(); i++) {
             // Initialize program & kernel data structure.
-            JSONObject cur_json_program = (JSONObject) ((JSONObject) json_program_iterator.next()).get("program");
-            JSONArray json_kernels = (JSONArray) cur_json_program.get("kernels");
+            JSONObject cur_json_program = (JSONObject) json_programs.get(kernel_names[i]);
+            JSONArray json_kernels = (JSONArray) cur_json_program.get("tasks");
             Kernel[] kernels = new Kernel[json_kernels.size()];
             Iterator json_kernel_iterator = json_kernels.iterator();
             int k = 0;
             while (json_kernel_iterator.hasNext()) {
                 JSONObject cur_json_kernel = (JSONObject) json_kernel_iterator.next();
                 kernels[k] = new Kernel(
-                        (String) cur_json_kernel.get("kernel_name"),
+                        (String) cur_json_kernel.get("name"),
                         ((Long) cur_json_kernel.get("workgroup_size")).intValue(),
                         ((Long) cur_json_kernel.get("num_groups")).intValue()
                 );
@@ -136,7 +135,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                         shape[d] = 128;
                     }
                 }
-                JSONArray json_element_array = (JSONArray) json_ndarray.get("element_shapes");
+                JSONArray json_element_array = (JSONArray) json_ndarray.get("element_shape");
                 int[] element_shape = new int[json_element_array.size()];
                 Iterator json_element_array_iterator = json_element_array.iterator();
                 int c = 0;
@@ -159,8 +158,6 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                         element_shape
                 );
             }
-
-            i++;
         }
     }
 
