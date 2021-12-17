@@ -88,7 +88,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
-        substep(30);
+        substep(50);
 
         // Render point to the screen.
         render();
@@ -338,6 +338,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         Kernel[] init_kernel = programs[0].getKernels();
         for (int i = 0; i < init_kernel.length; i++) {
             GLES32.glUseProgram(init_kernel[i].getShader_program());
+            GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
             GLES32.glDispatchCompute(init_kernel[i].getNum_groups(), 1, 1);
         }
         for (int i = 0; i < bind_idx.length; i++) {
@@ -358,6 +359,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             }
             for (int j = 0; j < substep_kernel.length; j++) {
                 GLES32.glUseProgram(substep_kernel[j].getShader_program());
+                GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
                 GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
             }
             for (int j = 0; j < bind_idx.length; j++) {
