@@ -23,9 +23,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Mpm88Ndarray implements GLSurfaceView.Renderer {
