@@ -6,7 +6,7 @@ layout(std430, binding = 2) buffer args_i32 { int _args_i32_[];};
 
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
-void init_c56_00()
+void init_c46_00()
 { // serial
   int B = _args_i32_[16 + 0 * 8 + 0];
   int C = 0;
@@ -15,5 +15,5 @@ void init_c56_00()
 
 void main()
 {
-  init_c56_00();
+  init_c46_00();
 }

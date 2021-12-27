@@ -12,7 +12,7 @@ layout(std430, binding = 4) buffer arr4_f32 { float _arr4_f32_[];};
 
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
-void substep_c54_01()
+void substep_c44_01()
 { // range for
   // range known at runtime
   int _beg = 0, _end = _gtmp_i32_[0 >> 2];
@@ -74,5 +74,5 @@ void substep_c54_01()
 
 void main()
 {
-  substep_c54_01();
+  substep_c44_01();
 }

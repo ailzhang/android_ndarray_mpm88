@@ -15,7 +15,7 @@ layout(std430, binding = 4) buffer arr0_f32 { float _arr0_f32_[];};
 uvec4 _rand_; void _init_rand() { int RAND_STATE = 1024; uint i = (7654321u + gl_GlobalInvocationID.x) * (1234567u + 9723451u * uint(_gtmp_i32_[RAND_STATE])); _rand_.x = 123456789u * i * 1000000007u; _rand_.y = 362436069u; _rand_.z = 521288629u; _rand_.w = 88675123u; _gtmp_i32_[RAND_STATE] += 1; } uint _rand_u32() { uint t = _rand_.x ^ (_rand_.x << 11); _rand_.xyz = _rand_.yzw; _rand_.w = (_rand_.w ^ (_rand_.w >> 19)) ^ (t ^ (t >> 8)); return _rand_.w * 1000000007u; } float _rand_f32() { return float(_rand_u32()) * (1.0 / 4294967296.0); } int _rand_i32() { return int(_rand_u32()); }
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
-void init_c56_01()
+void init_c46_01()
 { // range for
   // range known at runtime
   int _beg = 0, _end = _gtmp_i32_[0 >> 2];
@@ -97,5 +97,5 @@ void init_c56_01()
 void main()
 {
   _init_rand();
-  init_c56_01();
+  init_c46_01();
 }
