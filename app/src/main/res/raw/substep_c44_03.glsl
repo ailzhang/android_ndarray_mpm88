@@ -27,510 +27,403 @@ void substep_c44_03()
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
-      int Az = _itv;
-      int AA = 12;
-      int AB = _gtmp_i32_[AA >> 2];
-      int AC = Az - AB * int(Az / AB);
-      int AE = int(0);
-      int _li_AF = 0;
+      int AW = _itv;
+      int AX = 12;
+      int AY = _gtmp_i32_[AX >> 2];
+      int AZ = AW - AY * int(AW / AY);
+      int B1 = int(0);
+      int _li_B2 = 0;
       { // linear seek
-        int _s0_AF = _args_i32_[16 + 0 * 8 + 0];
-        int _s1_AF = _args_i32_[16 + 0 * 8 + 1];
-        _li_AF *= _s0_AF;
-        _li_AF += AC;
-        _li_AF *= _s1_AF;
-        _li_AF += AE;
+        int _s0_B2 = _args_i32_[16 + 0 * 8 + 0];
+        int _s1_B2 = _args_i32_[16 + 0 * 8 + 1];
+        _li_B2 *= _s0_B2;
+        _li_B2 += AZ;
+        _li_B2 *= _s1_B2;
+        _li_B2 += B1;
       }
-      int AF = _li_AF << 2;
-      float AG = _arr0_f32_[AF >> 2];
-      float AH = float(128.0);
-      float AI = AG * AH;
-      int AJ = int(1);
-      int _li_AK = 0;
+      int B2 = _li_B2 << 2;
+      float B3 = _arr0_f32_[B2 >> 2];
+      int B4 = 16;
+      int B5 = _gtmp_i32_[B4 >> 2];
+      float B6 = float(B5);
+      float B7 = B3 * B6;
+      int B8 = int(1);
+      int _li_B9 = 0;
       { // linear seek
-        int _s0_AK = _args_i32_[16 + 0 * 8 + 0];
-        int _s1_AK = _args_i32_[16 + 0 * 8 + 1];
-        _li_AK *= _s0_AK;
-        _li_AK += AC;
-        _li_AK *= _s1_AK;
-        _li_AK += AJ;
+        int _s0_B9 = _args_i32_[16 + 0 * 8 + 0];
+        int _s1_B9 = _args_i32_[16 + 0 * 8 + 1];
+        _li_B9 *= _s0_B9;
+        _li_B9 += AZ;
+        _li_B9 *= _s1_B9;
+        _li_B9 += B8;
       }
-      int AK = _li_AK << 2;
-      float AL = _arr0_f32_[AK >> 2];
-      float AM = AL * AH;
-      float AN = float(0.5);
-      float AO = AI - AN;
-      float AP = AM - AN;
-      int AQ = int(AO);
-      int AR = int(AP);
-      float AS = float(AQ);
-      float AT = float(AR);
-      float AU = AI - AS;
-      float AV = AM - AT;
-      float AW = float(1.5);
-      float AX = AW - AU;
-      float AY = AW - AV;
-      float AZ = AX * AX;
-      float B0 = AY * AY;
-      float B1 = AZ * AN;
-      float B2 = B0 * AN;
-      float B3 = float(1.0);
-      float B4 = AU - B3;
-      float B5 = AV - B3;
-      float B6 = B4 * B4;
-      float B7 = B5 * B5;
-      float B8 = float(0.75);
-      float B9 = B8 - B6;
-      float Ba = B8 - B7;
-      float Bb = AU - AN;
-      float Bc = AV - AN;
-      float Bd = Bb * Bb;
-      float Be = Bc * Bc;
-      float Bf = Bd * AN;
-      float Bg = Be * AN;
-      int _li_Bi = 0;
+      int B9 = _li_B9 << 2;
+      float Ba = _arr0_f32_[B9 >> 2];
+      float Bb = Ba * B6;
+      float Bc = float(0.5);
+      float Bd = B7 - Bc;
+      float Be = Bb - Bc;
+      int Bf = int(Bd);
+      int Bg = int(Be);
+      float Bh = float(Bf);
+      float Bi = float(Bg);
+      float Bj = B7 - Bh;
+      float Bk = Bb - Bi;
+      float Bl = float(1.5);
+      float Bm = Bl - Bj;
+      float Bn = Bl - Bk;
+      float Bo = Bm * Bm;
+      float Bp = Bn * Bn;
+      float Bq = Bo * Bc;
+      float Br = Bp * Bc;
+      float Bs = float(1.0);
+      float Bt = Bj - Bs;
+      float Bu = Bk - Bs;
+      float Bv = Bt * Bt;
+      float Bw = Bu * Bu;
+      float Bx = float(0.75);
+      float By = Bx - Bv;
+      float Bz = Bx - Bw;
+      float BA = Bj - Bc;
+      float BB = Bk - Bc;
+      float BC = BA * BA;
+      float BD = BB * BB;
+      float BE = BC * Bc;
+      float BF = BD * Bc;
+      int BG = 20;
+      float BH = _gtmp_f32_[BG >> 2];
+      float BI = float(-BH);
+      int BJ = 24;
+      float BK = _gtmp_f32_[BJ >> 2];
+      float BL = BI * BK;
+      int _li_BN = 0;
       { // linear seek
-        int _s0_Bi = _args_i32_[16 + 2 * 8 + 0];
-        _li_Bi *= _s0_Bi;
-        _li_Bi += AC;
+        int _s0_BN = _args_i32_[16 + 2 * 8 + 0];
+        _li_BN *= _s0_BN;
+        _li_BN += AZ;
       }
-      int Bi = _li_Bi << 2;
-      float Bj = _arr2_f32_[Bi >> 2];
-      float Bk = Bj - B3;
-      float Bl = float(-0.08);
-      float Bm = Bk * Bl;
-      int _li_Bo = 0;
+      int BN = _li_BN << 2;
+      float BO = _arr2_f32_[BN >> 2];
+      float BP = BO - Bs;
+      float BQ = BL * BP;
+      float BR = float(4.0);
+      float BS = BQ * BR;
+      float BT = BS * B6;
+      float BU = BT * B6;
+      float BV = float(400.0);
+      float BW = BU * BV;
+      int _li_BY = 0;
       { // linear seek
-        int _s0_Bo = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_Bo = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_Bo = _args_i32_[16 + 3 * 8 + 2];
-        _li_Bo *= _s0_Bo;
-        _li_Bo += AC;
-        _li_Bo *= _s1_Bo;
-        _li_Bo += AE;
-        _li_Bo *= _s2_Bo;
-        _li_Bo += AE;
+        int _s0_BY = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_BY = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_BY = _args_i32_[16 + 3 * 8 + 2];
+        _li_BY *= _s0_BY;
+        _li_BY += AZ;
+        _li_BY *= _s1_BY;
+        _li_BY += B1;
+        _li_BY *= _s2_BY;
+        _li_BY += B1;
       }
-      int Bo = _li_Bo << 2;
-      float Bp = _arr3_f32_[Bo >> 2];
-      float Bq = float(1.5258789e-05);
-      float Br = Bp * Bq;
-      int _li_Bs = 0;
+      int BY = _li_BY << 2;
+      float BZ = _arr3_f32_[BY >> 2];
+      float C0 = BK * BZ;
+      int _li_C1 = 0;
       { // linear seek
-        int _s0_Bs = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_Bs = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_Bs = _args_i32_[16 + 3 * 8 + 2];
-        _li_Bs *= _s0_Bs;
-        _li_Bs += AC;
-        _li_Bs *= _s1_Bs;
-        _li_Bs += AE;
-        _li_Bs *= _s2_Bs;
-        _li_Bs += AJ;
+        int _s0_C1 = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_C1 = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_C1 = _args_i32_[16 + 3 * 8 + 2];
+        _li_C1 *= _s0_C1;
+        _li_C1 += AZ;
+        _li_C1 *= _s1_C1;
+        _li_C1 += B1;
+        _li_C1 *= _s2_C1;
+        _li_C1 += B8;
       }
-      int Bs = _li_Bs << 2;
-      float Bt = _arr3_f32_[Bs >> 2];
-      float Bu = Bt * Bq;
-      int _li_Bv = 0;
-      { // linear seek
-        int _s0_Bv = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_Bv = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_Bv = _args_i32_[16 + 3 * 8 + 2];
-        _li_Bv *= _s0_Bv;
-        _li_Bv += AC;
-        _li_Bv *= _s1_Bv;
-        _li_Bv += AJ;
-        _li_Bv *= _s2_Bv;
-        _li_Bv += AE;
-      }
-      int Bv = _li_Bv << 2;
-      float Bw = _arr3_f32_[Bv >> 2];
-      float Bx = Bw * Bq;
-      int _li_By = 0;
-      { // linear seek
-        int _s0_By = _args_i32_[16 + 3 * 8 + 0];
-        int _s1_By = _args_i32_[16 + 3 * 8 + 1];
-        int _s2_By = _args_i32_[16 + 3 * 8 + 2];
-        _li_By *= _s0_By;
-        _li_By += AC;
-        _li_By *= _s1_By;
-        _li_By += AJ;
-        _li_By *= _s2_By;
-        _li_By += AJ;
-      }
-      int By = _li_By << 2;
-      float Bz = _arr3_f32_[By >> 2];
-      float BA = Bz * Bq;
-      float BB = Bm + Br;
-      float BC = Bm + BA;
-      float BD = float(0.0);
-      float BE = BD - AU;
-      float BF = BD - AV;
-      float BG = float(0.0078125);
-      float BH = BE * BG;
-      float BI = BF * BG;
-      float BJ = B1 * B2;
-      int _li_BL = 0;
-      { // linear seek
-        int _s0_BL = _args_i32_[16 + 1 * 8 + 0];
-        int _s1_BL = _args_i32_[16 + 1 * 8 + 1];
-        _li_BL *= _s0_BL;
-        _li_BL += AC;
-        _li_BL *= _s1_BL;
-        _li_BL += AE;
-      }
-      int BL = _li_BL << 2;
-      float BM = _arr1_f32_[BL >> 2];
-      float BN = BM * Bq;
-      int _li_BO = 0;
-      { // linear seek
-        int _s0_BO = _args_i32_[16 + 1 * 8 + 0];
-        int _s1_BO = _args_i32_[16 + 1 * 8 + 1];
-        _li_BO *= _s0_BO;
-        _li_BO += AC;
-        _li_BO *= _s1_BO;
-        _li_BO += AJ;
-      }
-      int BO = _li_BO << 2;
-      float BP = _arr1_f32_[BO >> 2];
-      float BQ = BP * Bq;
-      float BR = BB * BH;
-      float BS = Bu * BI;
-      float BT = BR + BS;
-      float BU = Bx * BH;
-      float BV = BC * BI;
-      float BW = BU + BV;
-      float BX = BN + BT;
-      float BY = BQ + BW;
-      float BZ = BJ * BX;
-      float C0 = BJ * BY;
-      int _li_C2 = 0;
-      { // linear seek
-        int _s0_C2 = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_C2 = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_C2 = _args_i32_[16 + 4 * 8 + 2];
-        _li_C2 *= _s0_C2;
-        _li_C2 += AQ;
-        _li_C2 *= _s1_C2;
-        _li_C2 += AR;
-        _li_C2 *= _s2_C2;
-        _li_C2 += AE;
-      }
-      int C2 = _li_C2 << 2;
-      float C3;
-      { // Begin Atomic Op
-      C3 = atomicAdd_arr4_f32(C2 >> 2, BZ);
-      } // End Atomic Op
+      int C1 = _li_C1 << 2;
+      float C2 = _arr3_f32_[C1 >> 2];
+      float C3 = BK * C2;
       int _li_C4 = 0;
       { // linear seek
-        int _s0_C4 = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_C4 = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_C4 = _args_i32_[16 + 4 * 8 + 2];
+        int _s0_C4 = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_C4 = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_C4 = _args_i32_[16 + 3 * 8 + 2];
         _li_C4 *= _s0_C4;
-        _li_C4 += AQ;
+        _li_C4 += AZ;
         _li_C4 *= _s1_C4;
-        _li_C4 += AR;
+        _li_C4 += B8;
         _li_C4 *= _s2_C4;
-        _li_C4 += AJ;
+        _li_C4 += B1;
       }
       int C4 = _li_C4 << 2;
-      float C5;
-      { // Begin Atomic Op
-      C5 = atomicAdd_arr4_f32(C4 >> 2, C0);
-      } // End Atomic Op
-      float C6 = BJ * Bq;
-      int _li_C8 = 0;
+      float C5 = _arr3_f32_[C4 >> 2];
+      float C6 = BK * C5;
+      int _li_C7 = 0;
       { // linear seek
-        int _s0_C8 = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_C8 = _args_i32_[16 + 5 * 8 + 1];
-        _li_C8 *= _s0_C8;
-        _li_C8 += AQ;
-        _li_C8 *= _s1_C8;
-        _li_C8 += AR;
+        int _s0_C7 = _args_i32_[16 + 3 * 8 + 0];
+        int _s1_C7 = _args_i32_[16 + 3 * 8 + 1];
+        int _s2_C7 = _args_i32_[16 + 3 * 8 + 2];
+        _li_C7 *= _s0_C7;
+        _li_C7 += AZ;
+        _li_C7 *= _s1_C7;
+        _li_C7 += B8;
+        _li_C7 *= _s2_C7;
+        _li_C7 += B8;
       }
-      int C8 = _li_C8 << 2;
-      float C9;
-      { // Begin Atomic Op
-      C9 = atomicAdd_arr5_f32(C8 >> 2, C6);
-      } // End Atomic Op
-      float Ca = B3 - AV;
-      float Cb = Ca * BG;
-      float Cc = B1 * Ba;
-      int Cd = AR + AJ;
-      float Ce = _arr1_f32_[BL >> 2];
-      float Cf = Ce * Bq;
-      float Cg = _arr1_f32_[BO >> 2];
-      float Ch = Cg * Bq;
-      float Ci = Bu * Cb;
-      float Cj = BR + Ci;
-      float Ck = BC * Cb;
-      float Cl = BU + Ck;
-      float Cm = Cf + Cj;
-      float Cn = Ch + Cl;
-      float Co = Cc * Cm;
-      float Cp = Cc * Cn;
-      int _li_Cq = 0;
+      int C7 = _li_C7 << 2;
+      float C8 = _arr3_f32_[C7 >> 2];
+      float C9 = BK * C8;
+      float Ca = BW + C0;
+      float Cb = BW + C9;
+      float Cc = float(0.0);
+      float Cd = Cc - Bj;
+      float Ce = Cc - Bk;
+      int Cf = 28;
+      float Cg = _gtmp_f32_[Cf >> 2];
+      float Ch = Cd * Cg;
+      float Ci = Ce * Cg;
+      float Cj = Bq * Br;
+      int _li_Cl = 0;
       { // linear seek
-        int _s0_Cq = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Cq = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Cq = _args_i32_[16 + 4 * 8 + 2];
-        _li_Cq *= _s0_Cq;
-        _li_Cq += AQ;
-        _li_Cq *= _s1_Cq;
-        _li_Cq += Cd;
-        _li_Cq *= _s2_Cq;
-        _li_Cq += AE;
+        int _s0_Cl = _args_i32_[16 + 1 * 8 + 0];
+        int _s1_Cl = _args_i32_[16 + 1 * 8 + 1];
+        _li_Cl *= _s0_Cl;
+        _li_Cl += AZ;
+        _li_Cl *= _s1_Cl;
+        _li_Cl += B1;
       }
-      int Cq = _li_Cq << 2;
-      float Cr;
-      { // Begin Atomic Op
-      Cr = atomicAdd_arr4_f32(Cq >> 2, Co);
-      } // End Atomic Op
-      int _li_Cs = 0;
+      int Cl = _li_Cl << 2;
+      float Cm = _arr1_f32_[Cl >> 2];
+      float Cn = BK * Cm;
+      int _li_Co = 0;
       { // linear seek
-        int _s0_Cs = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Cs = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Cs = _args_i32_[16 + 4 * 8 + 2];
-        _li_Cs *= _s0_Cs;
-        _li_Cs += AQ;
-        _li_Cs *= _s1_Cs;
-        _li_Cs += Cd;
-        _li_Cs *= _s2_Cs;
-        _li_Cs += AJ;
+        int _s0_Co = _args_i32_[16 + 1 * 8 + 0];
+        int _s1_Co = _args_i32_[16 + 1 * 8 + 1];
+        _li_Co *= _s0_Co;
+        _li_Co += AZ;
+        _li_Co *= _s1_Co;
+        _li_Co += B8;
       }
-      int Cs = _li_Cs << 2;
-      float Ct;
-      { // Begin Atomic Op
-      Ct = atomicAdd_arr4_f32(Cs >> 2, Cp);
-      } // End Atomic Op
-      float Cu = Cc * Bq;
-      int _li_Cv = 0;
+      int Co = _li_Co << 2;
+      float Cp = _arr1_f32_[Co >> 2];
+      float Cq = BK * Cp;
+      float Cr = Ca * Ch;
+      float Cs = C3 * Ci;
+      float Ct = Cr + Cs;
+      float Cu = C6 * Ch;
+      float Cv = Cb * Ci;
+      float Cw = Cu + Cv;
+      float Cx = Cn + Ct;
+      float Cy = Cq + Cw;
+      float Cz = Cj * Cx;
+      float CA = Cj * Cy;
+      int _li_CC = 0;
       { // linear seek
-        int _s0_Cv = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_Cv = _args_i32_[16 + 5 * 8 + 1];
-        _li_Cv *= _s0_Cv;
-        _li_Cv += AQ;
-        _li_Cv *= _s1_Cv;
-        _li_Cv += Cd;
+        int _s0_CC = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_CC = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_CC = _args_i32_[16 + 4 * 8 + 2];
+        _li_CC *= _s0_CC;
+        _li_CC += Bf;
+        _li_CC *= _s1_CC;
+        _li_CC += Bg;
+        _li_CC *= _s2_CC;
+        _li_CC += B1;
       }
-      int Cv = _li_Cv << 2;
-      float Cw;
+      int CC = _li_CC << 2;
+      float CD;
       { // Begin Atomic Op
-      Cw = atomicAdd_arr5_f32(Cv >> 2, Cu);
+      CD = atomicAdd_arr4_f32(CC >> 2, Cz);
       } // End Atomic Op
-      float Cx = float(2.0);
-      float Cy = Cx - AV;
-      float Cz = Cy * BG;
-      float CA = B1 * Bg;
-      int CB = int(2);
-      int CC = AR + CB;
-      float CD = _arr1_f32_[BL >> 2];
-      float CE = CD * Bq;
-      float CF = _arr1_f32_[BO >> 2];
-      float CG = CF * Bq;
-      float CH = Bu * Cz;
-      float CI = BR + CH;
-      float CJ = BC * Cz;
-      float CK = BU + CJ;
-      float CL = CE + CI;
-      float CM = CG + CK;
-      float CN = CA * CL;
-      float CO = CA * CM;
-      int _li_CP = 0;
+      int _li_CE = 0;
       { // linear seek
-        int _s0_CP = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_CP = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_CP = _args_i32_[16 + 4 * 8 + 2];
-        _li_CP *= _s0_CP;
-        _li_CP += AQ;
-        _li_CP *= _s1_CP;
-        _li_CP += CC;
-        _li_CP *= _s2_CP;
-        _li_CP += AE;
+        int _s0_CE = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_CE = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_CE = _args_i32_[16 + 4 * 8 + 2];
+        _li_CE *= _s0_CE;
+        _li_CE += Bf;
+        _li_CE *= _s1_CE;
+        _li_CE += Bg;
+        _li_CE *= _s2_CE;
+        _li_CE += B8;
       }
-      int CP = _li_CP << 2;
-      float CQ;
+      int CE = _li_CE << 2;
+      float CF;
       { // Begin Atomic Op
-      CQ = atomicAdd_arr4_f32(CP >> 2, CN);
+      CF = atomicAdd_arr4_f32(CE >> 2, CA);
       } // End Atomic Op
-      int _li_CR = 0;
+      float CG = Cj * BK;
+      int _li_CI = 0;
       { // linear seek
-        int _s0_CR = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_CR = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_CR = _args_i32_[16 + 4 * 8 + 2];
-        _li_CR *= _s0_CR;
-        _li_CR += AQ;
-        _li_CR *= _s1_CR;
-        _li_CR += CC;
-        _li_CR *= _s2_CR;
-        _li_CR += AJ;
+        int _s0_CI = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_CI = _args_i32_[16 + 5 * 8 + 1];
+        _li_CI *= _s0_CI;
+        _li_CI += Bf;
+        _li_CI *= _s1_CI;
+        _li_CI += Bg;
       }
-      int CR = _li_CR << 2;
-      float CS;
+      int CI = _li_CI << 2;
+      float CJ;
       { // Begin Atomic Op
-      CS = atomicAdd_arr4_f32(CR >> 2, CO);
+      CJ = atomicAdd_arr5_f32(CI >> 2, CG);
       } // End Atomic Op
-      float CT = CA * Bq;
-      int _li_CU = 0;
+      float CK = Bs - Bk;
+      float CL = CK * Cg;
+      float CM = Bq * Bz;
+      int CN = Bg + B8;
+      float CO = _arr1_f32_[Cl >> 2];
+      float CP = BK * CO;
+      float CQ = _arr1_f32_[Co >> 2];
+      float CR = BK * CQ;
+      float CS = C3 * CL;
+      float CT = Cr + CS;
+      float CU = Cb * CL;
+      float CV = Cu + CU;
+      float CW = CP + CT;
+      float CX = CR + CV;
+      float CY = CM * CW;
+      float CZ = CM * CX;
+      int _li_D0 = 0;
       { // linear seek
-        int _s0_CU = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_CU = _args_i32_[16 + 5 * 8 + 1];
-        _li_CU *= _s0_CU;
-        _li_CU += AQ;
-        _li_CU *= _s1_CU;
-        _li_CU += CC;
+        int _s0_D0 = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_D0 = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_D0 = _args_i32_[16 + 4 * 8 + 2];
+        _li_D0 *= _s0_D0;
+        _li_D0 += Bf;
+        _li_D0 *= _s1_D0;
+        _li_D0 += CN;
+        _li_D0 *= _s2_D0;
+        _li_D0 += B1;
       }
-      int CU = _li_CU << 2;
-      float CV;
+      int D0 = _li_D0 << 2;
+      float D1;
       { // Begin Atomic Op
-      CV = atomicAdd_arr5_f32(CU >> 2, CT);
+      D1 = atomicAdd_arr4_f32(D0 >> 2, CY);
       } // End Atomic Op
-      float CW = B3 - AU;
-      float CX = CW * BG;
-      float CY = B9 * B2;
-      int CZ = AQ + AJ;
-      float D0 = _arr1_f32_[BL >> 2];
-      float D1 = D0 * Bq;
-      float D2 = _arr1_f32_[BO >> 2];
-      float D3 = D2 * Bq;
-      float D4 = BB * CX;
-      float D5 = D4 + BS;
-      float D6 = Bx * CX;
-      float D7 = D6 + BV;
-      float D8 = D1 + D5;
-      float D9 = D3 + D7;
-      float Da = CY * D8;
-      float Db = CY * D9;
-      int _li_Dc = 0;
+      int _li_D2 = 0;
       { // linear seek
-        int _s0_Dc = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Dc = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Dc = _args_i32_[16 + 4 * 8 + 2];
-        _li_Dc *= _s0_Dc;
-        _li_Dc += CZ;
-        _li_Dc *= _s1_Dc;
-        _li_Dc += AR;
-        _li_Dc *= _s2_Dc;
-        _li_Dc += AE;
+        int _s0_D2 = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_D2 = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_D2 = _args_i32_[16 + 4 * 8 + 2];
+        _li_D2 *= _s0_D2;
+        _li_D2 += Bf;
+        _li_D2 *= _s1_D2;
+        _li_D2 += CN;
+        _li_D2 *= _s2_D2;
+        _li_D2 += B8;
       }
-      int Dc = _li_Dc << 2;
-      float Dd;
+      int D2 = _li_D2 << 2;
+      float D3;
       { // Begin Atomic Op
-      Dd = atomicAdd_arr4_f32(Dc >> 2, Da);
+      D3 = atomicAdd_arr4_f32(D2 >> 2, CZ);
       } // End Atomic Op
-      int _li_De = 0;
+      float D4 = CM * BK;
+      int _li_D5 = 0;
       { // linear seek
-        int _s0_De = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_De = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_De = _args_i32_[16 + 4 * 8 + 2];
-        _li_De *= _s0_De;
-        _li_De += CZ;
-        _li_De *= _s1_De;
-        _li_De += AR;
-        _li_De *= _s2_De;
-        _li_De += AJ;
+        int _s0_D5 = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_D5 = _args_i32_[16 + 5 * 8 + 1];
+        _li_D5 *= _s0_D5;
+        _li_D5 += Bf;
+        _li_D5 *= _s1_D5;
+        _li_D5 += CN;
       }
-      int De = _li_De << 2;
-      float Df;
+      int D5 = _li_D5 << 2;
+      float D6;
       { // Begin Atomic Op
-      Df = atomicAdd_arr4_f32(De >> 2, Db);
+      D6 = atomicAdd_arr5_f32(D5 >> 2, D4);
       } // End Atomic Op
-      float Dg = CY * Bq;
-      int _li_Dh = 0;
+      float D7 = float(2.0);
+      float D8 = D7 - Bk;
+      float D9 = D8 * Cg;
+      float Da = Bq * BF;
+      int Db = int(2);
+      int Dc = Bg + Db;
+      float Dd = _arr1_f32_[Cl >> 2];
+      float De = BK * Dd;
+      float Df = _arr1_f32_[Co >> 2];
+      float Dg = BK * Df;
+      float Dh = C3 * D9;
+      float Di = Cr + Dh;
+      float Dj = Cb * D9;
+      float Dk = Cu + Dj;
+      float Dl = De + Di;
+      float Dm = Dg + Dk;
+      float Dn = Da * Dl;
+      float Do = Da * Dm;
+      int _li_Dp = 0;
       { // linear seek
-        int _s0_Dh = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_Dh = _args_i32_[16 + 5 * 8 + 1];
-        _li_Dh *= _s0_Dh;
-        _li_Dh += CZ;
-        _li_Dh *= _s1_Dh;
-        _li_Dh += AR;
+        int _s0_Dp = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_Dp = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_Dp = _args_i32_[16 + 4 * 8 + 2];
+        _li_Dp *= _s0_Dp;
+        _li_Dp += Bf;
+        _li_Dp *= _s1_Dp;
+        _li_Dp += Dc;
+        _li_Dp *= _s2_Dp;
+        _li_Dp += B1;
       }
-      int Dh = _li_Dh << 2;
-      float Di;
+      int Dp = _li_Dp << 2;
+      float Dq;
       { // Begin Atomic Op
-      Di = atomicAdd_arr5_f32(Dh >> 2, Dg);
+      Dq = atomicAdd_arr4_f32(Dp >> 2, Dn);
       } // End Atomic Op
-      float Dj = B9 * Ba;
-      float Dk = _arr1_f32_[BL >> 2];
-      float Dl = Dk * Bq;
-      float Dm = _arr1_f32_[BO >> 2];
-      float Dn = Dm * Bq;
-      float Do = D4 + Ci;
-      float Dp = D6 + Ck;
-      float Dq = Dl + Do;
-      float Dr = Dn + Dp;
-      float Ds = Dj * Dq;
-      float Dt = Dj * Dr;
+      int _li_Dr = 0;
+      { // linear seek
+        int _s0_Dr = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_Dr = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_Dr = _args_i32_[16 + 4 * 8 + 2];
+        _li_Dr *= _s0_Dr;
+        _li_Dr += Bf;
+        _li_Dr *= _s1_Dr;
+        _li_Dr += Dc;
+        _li_Dr *= _s2_Dr;
+        _li_Dr += B8;
+      }
+      int Dr = _li_Dr << 2;
+      float Ds;
+      { // Begin Atomic Op
+      Ds = atomicAdd_arr4_f32(Dr >> 2, Do);
+      } // End Atomic Op
+      float Dt = Da * BK;
       int _li_Du = 0;
       { // linear seek
-        int _s0_Du = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Du = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Du = _args_i32_[16 + 4 * 8 + 2];
+        int _s0_Du = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_Du = _args_i32_[16 + 5 * 8 + 1];
         _li_Du *= _s0_Du;
-        _li_Du += CZ;
+        _li_Du += Bf;
         _li_Du *= _s1_Du;
-        _li_Du += Cd;
-        _li_Du *= _s2_Du;
-        _li_Du += AE;
+        _li_Du += Dc;
       }
       int Du = _li_Du << 2;
       float Dv;
       { // Begin Atomic Op
-      Dv = atomicAdd_arr4_f32(Du >> 2, Ds);
+      Dv = atomicAdd_arr5_f32(Du >> 2, Dt);
       } // End Atomic Op
-      int _li_Dw = 0;
-      { // linear seek
-        int _s0_Dw = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Dw = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Dw = _args_i32_[16 + 4 * 8 + 2];
-        _li_Dw *= _s0_Dw;
-        _li_Dw += CZ;
-        _li_Dw *= _s1_Dw;
-        _li_Dw += Cd;
-        _li_Dw *= _s2_Dw;
-        _li_Dw += AJ;
-      }
-      int Dw = _li_Dw << 2;
-      float Dx;
-      { // Begin Atomic Op
-      Dx = atomicAdd_arr4_f32(Dw >> 2, Dt);
-      } // End Atomic Op
-      float Dy = Dj * Bq;
-      int _li_Dz = 0;
-      { // linear seek
-        int _s0_Dz = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_Dz = _args_i32_[16 + 5 * 8 + 1];
-        _li_Dz *= _s0_Dz;
-        _li_Dz += CZ;
-        _li_Dz *= _s1_Dz;
-        _li_Dz += Cd;
-      }
-      int Dz = _li_Dz << 2;
-      float DA;
-      { // Begin Atomic Op
-      DA = atomicAdd_arr5_f32(Dz >> 2, Dy);
-      } // End Atomic Op
-      float DB = B9 * Bg;
-      float DC = _arr1_f32_[BL >> 2];
-      float DD = DC * Bq;
-      float DE = _arr1_f32_[BO >> 2];
-      float DF = DE * Bq;
-      float DG = D4 + CH;
-      float DH = D6 + CJ;
-      float DI = DD + DG;
-      float DJ = DF + DH;
-      float DK = DB * DI;
-      float DL = DB * DJ;
+      float Dw = Bs - Bj;
+      float Dx = Dw * Cg;
+      float Dy = By * Br;
+      int Dz = Bf + B8;
+      float DA = _arr1_f32_[Cl >> 2];
+      float DB = BK * DA;
+      float DC = _arr1_f32_[Co >> 2];
+      float DD = BK * DC;
+      float DE = Ca * Dx;
+      float DF = DE + Cs;
+      float DG = C6 * Dx;
+      float DH = DG + Cv;
+      float DI = DB + DF;
+      float DJ = DD + DH;
+      float DK = Dy * DI;
+      float DL = Dy * DJ;
       int _li_DM = 0;
       { // linear seek
         int _s0_DM = _args_i32_[16 + 4 * 8 + 0];
         int _s1_DM = _args_i32_[16 + 4 * 8 + 1];
         int _s2_DM = _args_i32_[16 + 4 * 8 + 2];
         _li_DM *= _s0_DM;
-        _li_DM += CZ;
+        _li_DM += Dz;
         _li_DM *= _s1_DM;
-        _li_DM += CC;
+        _li_DM += Bg;
         _li_DM *= _s2_DM;
-        _li_DM += AE;
+        _li_DM += B1;
       }
       int DM = _li_DM << 2;
       float DN;
@@ -543,179 +436,179 @@ void substep_c44_03()
         int _s1_DO = _args_i32_[16 + 4 * 8 + 1];
         int _s2_DO = _args_i32_[16 + 4 * 8 + 2];
         _li_DO *= _s0_DO;
-        _li_DO += CZ;
+        _li_DO += Dz;
         _li_DO *= _s1_DO;
-        _li_DO += CC;
+        _li_DO += Bg;
         _li_DO *= _s2_DO;
-        _li_DO += AJ;
+        _li_DO += B8;
       }
       int DO = _li_DO << 2;
       float DP;
       { // Begin Atomic Op
       DP = atomicAdd_arr4_f32(DO >> 2, DL);
       } // End Atomic Op
-      float DQ = DB * Bq;
+      float DQ = Dy * BK;
       int _li_DR = 0;
       { // linear seek
         int _s0_DR = _args_i32_[16 + 5 * 8 + 0];
         int _s1_DR = _args_i32_[16 + 5 * 8 + 1];
         _li_DR *= _s0_DR;
-        _li_DR += CZ;
+        _li_DR += Dz;
         _li_DR *= _s1_DR;
-        _li_DR += CC;
+        _li_DR += Bg;
       }
       int DR = _li_DR << 2;
       float DS;
       { // Begin Atomic Op
       DS = atomicAdd_arr5_f32(DR >> 2, DQ);
       } // End Atomic Op
-      float DT = Cx - AU;
-      float DU = DT * BG;
-      float DV = Bf * B2;
-      int DW = AQ + CB;
-      float DX = _arr1_f32_[BL >> 2];
-      float DY = DX * Bq;
-      float DZ = _arr1_f32_[BO >> 2];
-      float E0 = DZ * Bq;
-      float E1 = BB * DU;
-      float E2 = E1 + BS;
-      float E3 = Bx * DU;
-      float E4 = E3 + BV;
-      float E5 = DY + E2;
-      float E6 = E0 + E4;
-      float E7 = DV * E5;
-      float E8 = DV * E6;
+      float DT = By * Bz;
+      float DU = _arr1_f32_[Cl >> 2];
+      float DV = BK * DU;
+      float DW = _arr1_f32_[Co >> 2];
+      float DX = BK * DW;
+      float DY = DE + CS;
+      float DZ = DG + CU;
+      float E0 = DV + DY;
+      float E1 = DX + DZ;
+      float E2 = DT * E0;
+      float E3 = DT * E1;
+      int _li_E4 = 0;
+      { // linear seek
+        int _s0_E4 = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_E4 = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_E4 = _args_i32_[16 + 4 * 8 + 2];
+        _li_E4 *= _s0_E4;
+        _li_E4 += Dz;
+        _li_E4 *= _s1_E4;
+        _li_E4 += CN;
+        _li_E4 *= _s2_E4;
+        _li_E4 += B1;
+      }
+      int E4 = _li_E4 << 2;
+      float E5;
+      { // Begin Atomic Op
+      E5 = atomicAdd_arr4_f32(E4 >> 2, E2);
+      } // End Atomic Op
+      int _li_E6 = 0;
+      { // linear seek
+        int _s0_E6 = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_E6 = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_E6 = _args_i32_[16 + 4 * 8 + 2];
+        _li_E6 *= _s0_E6;
+        _li_E6 += Dz;
+        _li_E6 *= _s1_E6;
+        _li_E6 += CN;
+        _li_E6 *= _s2_E6;
+        _li_E6 += B8;
+      }
+      int E6 = _li_E6 << 2;
+      float E7;
+      { // Begin Atomic Op
+      E7 = atomicAdd_arr4_f32(E6 >> 2, E3);
+      } // End Atomic Op
+      float E8 = DT * BK;
       int _li_E9 = 0;
       { // linear seek
-        int _s0_E9 = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_E9 = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_E9 = _args_i32_[16 + 4 * 8 + 2];
+        int _s0_E9 = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_E9 = _args_i32_[16 + 5 * 8 + 1];
         _li_E9 *= _s0_E9;
-        _li_E9 += DW;
+        _li_E9 += Dz;
         _li_E9 *= _s1_E9;
-        _li_E9 += AR;
-        _li_E9 *= _s2_E9;
-        _li_E9 += AE;
+        _li_E9 += CN;
       }
       int E9 = _li_E9 << 2;
       float Ea;
       { // Begin Atomic Op
-      Ea = atomicAdd_arr4_f32(E9 >> 2, E7);
+      Ea = atomicAdd_arr5_f32(E9 >> 2, E8);
       } // End Atomic Op
-      int _li_Eb = 0;
+      float Eb = By * BF;
+      float Ec = _arr1_f32_[Cl >> 2];
+      float Ed = BK * Ec;
+      float Ee = _arr1_f32_[Co >> 2];
+      float Ef = BK * Ee;
+      float Eg = DE + Dh;
+      float Eh = DG + Dj;
+      float Ei = Ed + Eg;
+      float Ej = Ef + Eh;
+      float Ek = Eb * Ei;
+      float El = Eb * Ej;
+      int _li_Em = 0;
       { // linear seek
-        int _s0_Eb = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Eb = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Eb = _args_i32_[16 + 4 * 8 + 2];
-        _li_Eb *= _s0_Eb;
-        _li_Eb += DW;
-        _li_Eb *= _s1_Eb;
-        _li_Eb += AR;
-        _li_Eb *= _s2_Eb;
-        _li_Eb += AJ;
+        int _s0_Em = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_Em = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_Em = _args_i32_[16 + 4 * 8 + 2];
+        _li_Em *= _s0_Em;
+        _li_Em += Dz;
+        _li_Em *= _s1_Em;
+        _li_Em += Dc;
+        _li_Em *= _s2_Em;
+        _li_Em += B1;
       }
-      int Eb = _li_Eb << 2;
-      float Ec;
+      int Em = _li_Em << 2;
+      float En;
       { // Begin Atomic Op
-      Ec = atomicAdd_arr4_f32(Eb >> 2, E8);
+      En = atomicAdd_arr4_f32(Em >> 2, Ek);
       } // End Atomic Op
-      float Ed = DV * Bq;
-      int _li_Ee = 0;
+      int _li_Eo = 0;
       { // linear seek
-        int _s0_Ee = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_Ee = _args_i32_[16 + 5 * 8 + 1];
-        _li_Ee *= _s0_Ee;
-        _li_Ee += DW;
-        _li_Ee *= _s1_Ee;
-        _li_Ee += AR;
+        int _s0_Eo = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_Eo = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_Eo = _args_i32_[16 + 4 * 8 + 2];
+        _li_Eo *= _s0_Eo;
+        _li_Eo += Dz;
+        _li_Eo *= _s1_Eo;
+        _li_Eo += Dc;
+        _li_Eo *= _s2_Eo;
+        _li_Eo += B8;
       }
-      int Ee = _li_Ee << 2;
-      float Ef;
+      int Eo = _li_Eo << 2;
+      float Ep;
       { // Begin Atomic Op
-      Ef = atomicAdd_arr5_f32(Ee >> 2, Ed);
+      Ep = atomicAdd_arr4_f32(Eo >> 2, El);
       } // End Atomic Op
-      float Eg = Bf * Ba;
-      float Eh = _arr1_f32_[BL >> 2];
-      float Ei = Eh * Bq;
-      float Ej = _arr1_f32_[BO >> 2];
-      float Ek = Ej * Bq;
-      float El = E1 + Ci;
-      float Em = E3 + Ck;
-      float En = Ei + El;
-      float Eo = Ek + Em;
-      float Ep = Eg * En;
-      float Eq = Eg * Eo;
+      float Eq = Eb * BK;
       int _li_Er = 0;
       { // linear seek
-        int _s0_Er = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Er = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Er = _args_i32_[16 + 4 * 8 + 2];
+        int _s0_Er = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_Er = _args_i32_[16 + 5 * 8 + 1];
         _li_Er *= _s0_Er;
-        _li_Er += DW;
+        _li_Er += Dz;
         _li_Er *= _s1_Er;
-        _li_Er += Cd;
-        _li_Er *= _s2_Er;
-        _li_Er += AE;
+        _li_Er += Dc;
       }
       int Er = _li_Er << 2;
       float Es;
       { // Begin Atomic Op
-      Es = atomicAdd_arr4_f32(Er >> 2, Ep);
+      Es = atomicAdd_arr5_f32(Er >> 2, Eq);
       } // End Atomic Op
-      int _li_Et = 0;
-      { // linear seek
-        int _s0_Et = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_Et = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_Et = _args_i32_[16 + 4 * 8 + 2];
-        _li_Et *= _s0_Et;
-        _li_Et += DW;
-        _li_Et *= _s1_Et;
-        _li_Et += Cd;
-        _li_Et *= _s2_Et;
-        _li_Et += AJ;
-      }
-      int Et = _li_Et << 2;
-      float Eu;
-      { // Begin Atomic Op
-      Eu = atomicAdd_arr4_f32(Et >> 2, Eq);
-      } // End Atomic Op
-      float Ev = Eg * Bq;
-      int _li_Ew = 0;
-      { // linear seek
-        int _s0_Ew = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_Ew = _args_i32_[16 + 5 * 8 + 1];
-        _li_Ew *= _s0_Ew;
-        _li_Ew += DW;
-        _li_Ew *= _s1_Ew;
-        _li_Ew += Cd;
-      }
-      int Ew = _li_Ew << 2;
-      float Ex;
-      { // Begin Atomic Op
-      Ex = atomicAdd_arr5_f32(Ew >> 2, Ev);
-      } // End Atomic Op
-      float Ey = Bf * Bg;
-      float Ez = _arr1_f32_[BL >> 2];
-      float EA = Ez * Bq;
-      float EB = _arr1_f32_[BO >> 2];
-      float EC = EB * Bq;
-      float ED = E1 + CH;
-      float EE = E3 + CJ;
-      float EF = EA + ED;
-      float EG = EC + EE;
-      float EH = Ey * EF;
-      float EI = Ey * EG;
+      float Et = D7 - Bj;
+      float Eu = Et * Cg;
+      float Ev = BE * Br;
+      int Ew = Bf + Db;
+      float Ex = _arr1_f32_[Cl >> 2];
+      float Ey = BK * Ex;
+      float Ez = _arr1_f32_[Co >> 2];
+      float EA = BK * Ez;
+      float EB = Ca * Eu;
+      float EC = EB + Cs;
+      float ED = C6 * Eu;
+      float EE = ED + Cv;
+      float EF = Ey + EC;
+      float EG = EA + EE;
+      float EH = Ev * EF;
+      float EI = Ev * EG;
       int _li_EJ = 0;
       { // linear seek
         int _s0_EJ = _args_i32_[16 + 4 * 8 + 0];
         int _s1_EJ = _args_i32_[16 + 4 * 8 + 1];
         int _s2_EJ = _args_i32_[16 + 4 * 8 + 2];
         _li_EJ *= _s0_EJ;
-        _li_EJ += DW;
+        _li_EJ += Ew;
         _li_EJ *= _s1_EJ;
-        _li_EJ += CC;
+        _li_EJ += Bg;
         _li_EJ *= _s2_EJ;
-        _li_EJ += AE;
+        _li_EJ += B1;
       }
       int EJ = _li_EJ << 2;
       float EK;
@@ -728,31 +621,151 @@ void substep_c44_03()
         int _s1_EL = _args_i32_[16 + 4 * 8 + 1];
         int _s2_EL = _args_i32_[16 + 4 * 8 + 2];
         _li_EL *= _s0_EL;
-        _li_EL += DW;
+        _li_EL += Ew;
         _li_EL *= _s1_EL;
-        _li_EL += CC;
+        _li_EL += Bg;
         _li_EL *= _s2_EL;
-        _li_EL += AJ;
+        _li_EL += B8;
       }
       int EL = _li_EL << 2;
       float EM;
       { // Begin Atomic Op
       EM = atomicAdd_arr4_f32(EL >> 2, EI);
       } // End Atomic Op
-      float EN = Ey * Bq;
+      float EN = Ev * BK;
       int _li_EO = 0;
       { // linear seek
         int _s0_EO = _args_i32_[16 + 5 * 8 + 0];
         int _s1_EO = _args_i32_[16 + 5 * 8 + 1];
         _li_EO *= _s0_EO;
-        _li_EO += DW;
+        _li_EO += Ew;
         _li_EO *= _s1_EO;
-        _li_EO += CC;
+        _li_EO += Bg;
       }
       int EO = _li_EO << 2;
       float EP;
       { // Begin Atomic Op
       EP = atomicAdd_arr5_f32(EO >> 2, EN);
+      } // End Atomic Op
+      float EQ = BE * Bz;
+      float ER = _arr1_f32_[Cl >> 2];
+      float ES = BK * ER;
+      float ET = _arr1_f32_[Co >> 2];
+      float EU = BK * ET;
+      float EV = EB + CS;
+      float EW = ED + CU;
+      float EX = ES + EV;
+      float EY = EU + EW;
+      float EZ = EQ * EX;
+      float F0 = EQ * EY;
+      int _li_F1 = 0;
+      { // linear seek
+        int _s0_F1 = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_F1 = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_F1 = _args_i32_[16 + 4 * 8 + 2];
+        _li_F1 *= _s0_F1;
+        _li_F1 += Ew;
+        _li_F1 *= _s1_F1;
+        _li_F1 += CN;
+        _li_F1 *= _s2_F1;
+        _li_F1 += B1;
+      }
+      int F1 = _li_F1 << 2;
+      float F2;
+      { // Begin Atomic Op
+      F2 = atomicAdd_arr4_f32(F1 >> 2, EZ);
+      } // End Atomic Op
+      int _li_F3 = 0;
+      { // linear seek
+        int _s0_F3 = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_F3 = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_F3 = _args_i32_[16 + 4 * 8 + 2];
+        _li_F3 *= _s0_F3;
+        _li_F3 += Ew;
+        _li_F3 *= _s1_F3;
+        _li_F3 += CN;
+        _li_F3 *= _s2_F3;
+        _li_F3 += B8;
+      }
+      int F3 = _li_F3 << 2;
+      float F4;
+      { // Begin Atomic Op
+      F4 = atomicAdd_arr4_f32(F3 >> 2, F0);
+      } // End Atomic Op
+      float F5 = EQ * BK;
+      int _li_F6 = 0;
+      { // linear seek
+        int _s0_F6 = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_F6 = _args_i32_[16 + 5 * 8 + 1];
+        _li_F6 *= _s0_F6;
+        _li_F6 += Ew;
+        _li_F6 *= _s1_F6;
+        _li_F6 += CN;
+      }
+      int F6 = _li_F6 << 2;
+      float F7;
+      { // Begin Atomic Op
+      F7 = atomicAdd_arr5_f32(F6 >> 2, F5);
+      } // End Atomic Op
+      float F8 = BE * BF;
+      float F9 = _arr1_f32_[Cl >> 2];
+      float Fa = BK * F9;
+      float Fb = _arr1_f32_[Co >> 2];
+      float Fc = BK * Fb;
+      float Fd = EB + Dh;
+      float Fe = ED + Dj;
+      float Ff = Fa + Fd;
+      float Fg = Fc + Fe;
+      float Fh = F8 * Ff;
+      float Fi = F8 * Fg;
+      int _li_Fj = 0;
+      { // linear seek
+        int _s0_Fj = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_Fj = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_Fj = _args_i32_[16 + 4 * 8 + 2];
+        _li_Fj *= _s0_Fj;
+        _li_Fj += Ew;
+        _li_Fj *= _s1_Fj;
+        _li_Fj += Dc;
+        _li_Fj *= _s2_Fj;
+        _li_Fj += B1;
+      }
+      int Fj = _li_Fj << 2;
+      float Fk;
+      { // Begin Atomic Op
+      Fk = atomicAdd_arr4_f32(Fj >> 2, Fh);
+      } // End Atomic Op
+      int _li_Fl = 0;
+      { // linear seek
+        int _s0_Fl = _args_i32_[16 + 4 * 8 + 0];
+        int _s1_Fl = _args_i32_[16 + 4 * 8 + 1];
+        int _s2_Fl = _args_i32_[16 + 4 * 8 + 2];
+        _li_Fl *= _s0_Fl;
+        _li_Fl += Ew;
+        _li_Fl *= _s1_Fl;
+        _li_Fl += Dc;
+        _li_Fl *= _s2_Fl;
+        _li_Fl += B8;
+      }
+      int Fl = _li_Fl << 2;
+      float Fm;
+      { // Begin Atomic Op
+      Fm = atomicAdd_arr4_f32(Fl >> 2, Fi);
+      } // End Atomic Op
+      float Fn = F8 * BK;
+      int _li_Fo = 0;
+      { // linear seek
+        int _s0_Fo = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_Fo = _args_i32_[16 + 5 * 8 + 1];
+        _li_Fo *= _s0_Fo;
+        _li_Fo += Ew;
+        _li_Fo *= _s1_Fo;
+        _li_Fo += Dc;
+      }
+      int Fo = _li_Fo << 2;
+      float Fp;
+      { // Begin Atomic Op
+      Fp = atomicAdd_arr5_f32(Fo >> 2, Fn);
       } // End Atomic Op
   }
 }

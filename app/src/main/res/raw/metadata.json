@@ -3,37 +3,37 @@
   "kernels": {"substep": {
       "tasks": [{
           "name": "substep_c44_00",
-          "src": "mpm88_ndarray/substep_c44_00.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_00.glsl",
           "workgroup_size": 1,
           "num_groups": 1},{
           "name": "substep_c44_01",
-          "src": "mpm88_ndarray/substep_c44_01.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_01.glsl",
           "workgroup_size": 128,
-          "num_groups": 128},{
+          "num_groups": 256},{
           "name": "substep_c44_02",
-          "src": "mpm88_ndarray/substep_c44_02.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_02.glsl",
           "workgroup_size": 1,
           "num_groups": 1},{
           "name": "substep_c44_03",
-          "src": "mpm88_ndarray/substep_c44_03.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_03.glsl",
           "workgroup_size": 128,
-          "num_groups": 128},{
+          "num_groups": 256},{
           "name": "substep_c44_04",
-          "src": "mpm88_ndarray/substep_c44_04.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_04.glsl",
           "workgroup_size": 1,
           "num_groups": 1},{
           "name": "substep_c44_05",
-          "src": "mpm88_ndarray/substep_c44_05.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_05.glsl",
           "workgroup_size": 128,
-          "num_groups": 128},{
+          "num_groups": 256},{
           "name": "substep_c44_06",
-          "src": "mpm88_ndarray/substep_c44_06.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_06.glsl",
           "workgroup_size": 1,
           "num_groups": 1},{
           "name": "substep_c44_07",
-          "src": "mpm88_ndarray/substep_c44_07.glsl",
+          "src": "mpm88_ndarray_aot/substep_c44_07.glsl",
           "workgroup_size": 128,
-          "num_groups": 128}],
+          "num_groups": 256}],
       "arg_count": 6,
       "ret_count": 0,
       "args_buf_size": 256,
@@ -67,11 +67,11 @@
       "used.arr_arg_to_bind_idx": {"1": 9,"3": 8,"2": 7,"0": 6,"5": 5,"4": 4}},"init": {
       "tasks": [{
           "name": "init_c46_00",
-          "src": "mpm88_ndarray/init_c46_00.glsl",
+          "src": "mpm88_ndarray_aot/init_c46_00.glsl",
           "workgroup_size": 1,
           "num_groups": 1},{
           "name": "init_c46_01",
-          "src": "mpm88_ndarray/init_c46_01.glsl",
+          "src": "mpm88_ndarray_aot/init_c46_01.glsl",
           "workgroup_size": 128,
           "num_groups": 256}],
       "arg_count": 3,

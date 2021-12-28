@@ -22,15 +22,15 @@ const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void substep_c44_04()
 { // serial
-  int ER = _args_i32_[16 + 5 * 8 + 0];
-  int ES = 24;
-  _gtmp_i32_[ES >> 2] = ER;
-  int EU = _args_i32_[16 + 5 * 8 + 1];
-  int EV = 20;
-  _gtmp_i32_[EV >> 2] = EU;
-  int EX = ER * EU;
-  int EY = 16;
-  _gtmp_i32_[EY >> 2] = EX;
+  int Fr = _args_i32_[16 + 5 * 8 + 0];
+  int Fs = 40;
+  _gtmp_i32_[Fs >> 2] = Fr;
+  int Fu = _args_i32_[16 + 5 * 8 + 1];
+  int Fv = 36;
+  _gtmp_i32_[Fv >> 2] = Fu;
+  int Fx = Fr * Fu;
+  int Fy = 32;
+  _gtmp_i32_[Fy >> 2] = Fx;
 }
 
 void main()

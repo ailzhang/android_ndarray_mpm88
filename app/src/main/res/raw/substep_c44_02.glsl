@@ -14,9 +14,9 @@ const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void substep_c44_02()
 { // serial
-  int Av = _args_i32_[16 + 0 * 8 + 0];
-  int Aw = 12;
-  _gtmp_i32_[Aw >> 2] = Av;
+  int AS = _args_i32_[16 + 0 * 8 + 0];
+  int AT = 12;
+  _gtmp_i32_[AT >> 2] = AS;
 }
 
 void main()

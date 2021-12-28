@@ -36,6 +36,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private Program[] programs;
     private Ndarray[] ndarrays;
     private final int NDARRAY_SIZE = 6;
+    private final int NUM_PARTICLE = 8192;
+    private final int NUM_GRID = 128;
     private final String[] kernel_names = {"init", "substep"};
 
     private IntBuffer args;
@@ -93,6 +95,97 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         render();
     }
 
+    private void fillData() {
+        // Fill shape info into arg buffer.
+        int[] data = new int[8*8+16];
+        for (int i = 0; i < ndarrays.length; i++) {
+            int[] shape = ndarrays[i].getShape();
+            int[] element_shape = ndarrays[i].getElement_shape();
+            int offset = ndarrays[i].getShape_offset() / 4;
+            for (int j = 0; j < shape.length; j++) {
+                data[offset + j] = shape[j];
+            }
+            for (int j = 0; j < element_shape.length; j++) {
+                data[offset + j + shape.length] = element_shape[j];
+            }
+        }
+        args = ByteBuffer.allocateDirect(data.length*4).order(ByteOrder.nativeOrder()).asIntBuffer();
+        args.put(data).position(0);
+
+        // Fill color info into color buffer.
+        float[] data_v = new float[NUM_PARTICLE*4];
+        for (int i = 0 ; i < NUM_PARTICLE*4; i++) {
+            data_v[i] = 0.9f;
+        }
+        color = ByteBuffer.allocateDirect(data_v.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        color.put(data_v).position(0);
+    }
+
+    private void init() {
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
+        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 80, null, GLES32.GL_STATIC_COPY);
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf[buf_cnt]);
+        buf_cnt++;
+        Integer[] bind_idx = programs[0].getBind_idx();
+        for (int i = 0; i < bind_idx.length; i++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], ndarrays[i].getSsbo());
+            if (!ndarrays[i].init) {
+                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[i].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
+                ndarrays[i].init = true;
+            }
+        }
+        Kernel[] init_kernel = programs[0].getKernels();
+        for (int i = 0; i < init_kernel.length; i++) {
+            GLES32.glUseProgram(init_kernel[i].getShader_program());
+            GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
+            GLES32.glDispatchCompute(init_kernel[i].getNum_groups(), 1, 1);
+        }
+        for (int i = 0; i < bind_idx.length; i++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], 0);
+        }
+    }
+
+    private void substep(int step) {
+        if (buf_cnt == 32) buf_cnt = 0;
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf[buf_cnt]);
+        buf_cnt++;
+        Integer[] bind_idx = programs[1].getBind_idx();
+        Kernel[] substep_kernel = programs[1].getKernels();
+        for (int j = 0; j < bind_idx.length; j++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
+            if (!ndarrays[j].init) {
+                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[j].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
+                ndarrays[j].init = true;
+            }
+        }
+        for (int i = 0; i < step; i++) {
+            for (int j = 0; j < substep_kernel.length; j++) {
+                GLES32.glUseProgram(substep_kernel[j].getShader_program());
+                GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
+                GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
+            }
+        }
+        for (int j = 0; j < bind_idx.length; j++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], 0);
+        }
+    }
+
+    private void render() {
+        //GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
+
+        GLES32.glUseProgram(render_program);
+        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
+        GLES32.glEnableVertexAttribArray(0);
+        GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
+
+        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
+        GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, NUM_PARTICLE*4*4, color, GLES32.GL_STATIC_DRAW);
+        GLES32.glEnableVertexAttribArray(1);
+        GLES32.glVertexAttribPointer(1, 4, GLES32.GL_FLOAT, false, 4*4, 0);
+
+        GLES32.glDrawArrays(GLES32.GL_POINTS, 0, NUM_PARTICLE);
+    }
+
     private void parseJsonData(JSONObject mpm88) {
         JSONObject json_programs = (JSONObject) ((JSONObject) mpm88.get("aot_data")).get("kernels");
         programs = new Program[json_programs.size()];
@@ -129,9 +222,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 int[] shape = new int[dim];
                 // Hardcode every shape you want to the specific ndarray.
                 for (int d = 0; d < dim; d++) {
-                    shape[d] = 8192;
+                    shape[d] = NUM_PARTICLE;
                     if (j == 4 || j == 5) {
-                        shape[d] = 128;
+                        shape[d] = NUM_GRID;
                     }
                 }
                 JSONArray json_element_array = (JSONArray) json_ndarray.get("element_shape");
@@ -302,94 +395,4 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
     }
 
-    private void fillData() {
-        // Fill shape info into arg buffer.
-        int[] data = new int[8*8+16];
-        for (int i = 0; i < ndarrays.length; i++) {
-            int[] shape = ndarrays[i].getShape();
-            int[] element_shape = ndarrays[i].getElement_shape();
-            int offset = ndarrays[i].getShape_offset() / 4;
-            for (int j = 0; j < shape.length; j++) {
-                data[offset + j] = shape[j];
-            }
-            for (int j = 0; j < element_shape.length; j++) {
-                data[offset + j + shape.length] = element_shape[j];
-            }
-        }
-        args = ByteBuffer.allocateDirect(data.length*4).order(ByteOrder.nativeOrder()).asIntBuffer();
-        args.put(data).position(0);
-
-        // Fill color info into color buffer.
-        float[] data_v = new float[8192*4];
-        for (int i = 0 ; i < 8192*4; i++) {
-            data_v[i] = 0.9f;
-        }
-        color = ByteBuffer.allocateDirect(data_v.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        color.put(data_v).position(0);
-    }
-
-    private void init() {
-        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
-        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 80, null, GLES32.GL_STATIC_COPY);
-        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf[buf_cnt]);
-        buf_cnt++;
-        Integer[] bind_idx = programs[0].getBind_idx();
-        for (int i = 0; i < bind_idx.length; i++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], ndarrays[i].getSsbo());
-            if (!ndarrays[i].init) {
-                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[i].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
-                ndarrays[i].init = true;
-            }
-        }
-        Kernel[] init_kernel = programs[0].getKernels();
-        for (int i = 0; i < init_kernel.length; i++) {
-            GLES32.glUseProgram(init_kernel[i].getShader_program());
-            GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
-            GLES32.glDispatchCompute(init_kernel[i].getNum_groups(), 1, 1);
-        }
-        for (int i = 0; i < bind_idx.length; i++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], 0);
-        }
-    }
-
-    private void substep(int step) {
-        if (buf_cnt == 32) buf_cnt = 0;
-        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf[buf_cnt]);
-        buf_cnt++;
-        Integer[] bind_idx = programs[1].getBind_idx();
-        Kernel[] substep_kernel = programs[1].getKernels();
-        for (int j = 0; j < bind_idx.length; j++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
-            if (!ndarrays[j].init) {
-                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[j].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
-                ndarrays[j].init = true;
-            }
-        }
-        for (int i = 0; i < step; i++) {
-            for (int j = 0; j < substep_kernel.length; j++) {
-                GLES32.glUseProgram(substep_kernel[j].getShader_program());
-                GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
-                GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
-            }
-        }
-        for (int j = 0; j < bind_idx.length; j++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], 0);
-        }
-    }
-
-    private void render() {
-        //GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
-
-        GLES32.glUseProgram(render_program);
-        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
-        GLES32.glEnableVertexAttribArray(0);
-        GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
-
-        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
-        GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, 8192*4*4, color, GLES32.GL_STATIC_DRAW);
-        GLES32.glEnableVertexAttribArray(1);
-        GLES32.glVertexAttribPointer(1, 4, GLES32.GL_FLOAT, false, 4*4, 0);
-
-        GLES32.glDrawArrays(GLES32.GL_POINTS, 0, 8192);
-    }
 }

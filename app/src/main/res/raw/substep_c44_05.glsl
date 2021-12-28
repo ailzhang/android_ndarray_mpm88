@@ -23,111 +23,118 @@ const float nan = 0.0f / 0.0f;
 void substep_c44_05()
 { // range for
   // range known at runtime
-  int _beg = 0, _end = _gtmp_i32_[16 >> 2];
+  int _beg = 0, _end = _gtmp_i32_[32 >> 2];
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
-      float F1 = float(0.0);
-      int F2 = int(1);
-      int F3 = int(125);
-      int F4 = int(3);
-      float F5 = float(-0.00196);
-      int F6 = int(0);
-      float F7 = float(1.0);
-      int F8 = _itv;
-      int F9 = 20;
-      int Fa = _gtmp_i32_[F9 >> 2];
-      int Fb = F8 - Fa * int(F8 / Fa);
-      int Fc = F8 / Fa;
-      int Fd = 24;
-      int Fe = _gtmp_i32_[Fd >> 2];
-      int Ff = Fc - Fe * int(Fc / Fe);
-      int _li_Fh = 0;
+      float FB = float(0.0);
+      int FC = int(1);
+      int FD = int(3);
+      float FE = float(9.8);
+      int FF = int(0);
+      float FG = float(1.0);
+      int FH = _itv;
+      int FI = 36;
+      int FJ = _gtmp_i32_[FI >> 2];
+      int FK = FH - FJ * int(FH / FJ);
+      int FL = FH / FJ;
+      int FM = 40;
+      int FN = _gtmp_i32_[FM >> 2];
+      int FO = FL - FN * int(FL / FN);
+      int _li_FQ = 0;
       { // linear seek
-        int _s0_Fh = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_Fh = _args_i32_[16 + 5 * 8 + 1];
-        _li_Fh *= _s0_Fh;
-        _li_Fh += Ff;
-        _li_Fh *= _s1_Fh;
-        _li_Fh += Fb;
+        int _s0_FQ = _args_i32_[16 + 5 * 8 + 0];
+        int _s1_FQ = _args_i32_[16 + 5 * 8 + 1];
+        _li_FQ *= _s0_FQ;
+        _li_FQ += FO;
+        _li_FQ *= _s1_FQ;
+        _li_FQ += FK;
       }
-      int Fh = _li_Fh << 2;
-      float Fi = _arr5_f32_[Fh >> 2];
-      int Fj = -int(Fi > F1);
-      int Fk = Fj & F2;
-      if (Fk != 0) {
-        float Fm = _arr5_f32_[Fh >> 2];
-        float Fn = F7 / Fm;
-        int _li_Fp = 0;
+      int FQ = _li_FQ << 2;
+      float FR = _arr5_f32_[FQ >> 2];
+      int FS = -int(FR > FB);
+      int FT = FS & FC;
+      if (FT != 0) {
+        float FV = _arr5_f32_[FQ >> 2];
+        float FW = FG / FV;
+        int _li_FY = 0;
         { // linear seek
-          int _s0_Fp = _args_i32_[16 + 4 * 8 + 0];
-          int _s1_Fp = _args_i32_[16 + 4 * 8 + 1];
-          int _s2_Fp = _args_i32_[16 + 4 * 8 + 2];
-          _li_Fp *= _s0_Fp;
-          _li_Fp += Ff;
-          _li_Fp *= _s1_Fp;
-          _li_Fp += Fb;
-          _li_Fp *= _s2_Fp;
-          _li_Fp += F6;
+          int _s0_FY = _args_i32_[16 + 4 * 8 + 0];
+          int _s1_FY = _args_i32_[16 + 4 * 8 + 1];
+          int _s2_FY = _args_i32_[16 + 4 * 8 + 2];
+          _li_FY *= _s0_FY;
+          _li_FY += FO;
+          _li_FY *= _s1_FY;
+          _li_FY += FK;
+          _li_FY *= _s2_FY;
+          _li_FY += FF;
         }
-        int Fp = _li_Fp << 2;
-        float Fq = _arr4_f32_[Fp >> 2];
-        float Fr = Fn * Fq;
-        int _li_Fs = 0;
+        int FY = _li_FY << 2;
+        float FZ = _arr4_f32_[FY >> 2];
+        float G0 = FW * FZ;
+        int _li_G1 = 0;
         { // linear seek
-          int _s0_Fs = _args_i32_[16 + 4 * 8 + 0];
-          int _s1_Fs = _args_i32_[16 + 4 * 8 + 1];
-          int _s2_Fs = _args_i32_[16 + 4 * 8 + 2];
-          _li_Fs *= _s0_Fs;
-          _li_Fs += Ff;
-          _li_Fs *= _s1_Fs;
-          _li_Fs += Fb;
-          _li_Fs *= _s2_Fs;
-          _li_Fs += F2;
+          int _s0_G1 = _args_i32_[16 + 4 * 8 + 0];
+          int _s1_G1 = _args_i32_[16 + 4 * 8 + 1];
+          int _s2_G1 = _args_i32_[16 + 4 * 8 + 2];
+          _li_G1 *= _s0_G1;
+          _li_G1 += FO;
+          _li_G1 *= _s1_G1;
+          _li_G1 += FK;
+          _li_G1 *= _s2_G1;
+          _li_G1 += FC;
         }
-        int Fs = _li_Fs << 2;
-        float Ft = _arr4_f32_[Fs >> 2];
-        float Fu = Fn * Ft;
-        _arr4_f32_[Fp >> 2] = Fr;
-        _arr4_f32_[Fs >> 2] = Fu;
-        float Fx;
+        int G1 = _li_G1 << 2;
+        float G2 = _arr4_f32_[G1 >> 2];
+        float G3 = FW * G2;
+        _arr4_f32_[FY >> 2] = G0;
+        _arr4_f32_[G1 >> 2] = G3;
+        int G6 = 20;
+        float G7 = _gtmp_f32_[G6 >> 2];
+        float G8 = G7 * FE;
+        float G9 = float(-G8);
+        float Ga;
         { // Begin Atomic Op
-        Fx = atomicAdd_arr4_f32(Fs >> 2, F5);
+        Ga = atomicAdd_arr4_f32(G1 >> 2, G9);
         } // End Atomic Op
-        int Fy = -int(Ff < F4);
-        int Fz = Fy & F2;
-        int FA = -int(Fr < F1);
-        int FB = FA & F2;
-        int FC = Fz & FB;
-        if (FC != 0) {
-          _arr4_f32_[Fp >> 2] = F1;
+        int Gb = -int(FO < FD);
+        int Gc = Gb & FC;
+        int Gd = -int(G0 < FB);
+        int Ge = Gd & FC;
+        int Gf = Gc & Ge;
+        if (Gf != 0) {
+          _arr4_f32_[FY >> 2] = FB;
         }
-        int FF = -int(Ff > F3);
-        int FG = FF & F2;
-        float FH = _arr4_f32_[Fp >> 2];
-        int FI = -int(FH > F1);
-        int FJ = FI & F2;
-        int FK = FG & FJ;
-        if (FK != 0) {
-          _arr4_f32_[Fp >> 2] = F1;
+        int Gi = _args_i32_[16 + 4 * 8 + 0];
+        int Gj = Gi - FD;
+        int Gk = -int(FO > Gj);
+        int Gl = Gk & FC;
+        float Gm = _arr4_f32_[FY >> 2];
+        int Gn = -int(Gm > FB);
+        int Go = Gn & FC;
+        int Gp = Gl & Go;
+        if (Gp != 0) {
+          _arr4_f32_[FY >> 2] = FB;
         }
-        int FN = -int(Fb < F4);
-        int FO = FN & F2;
-        float FP = _arr4_f32_[Fs >> 2];
-        int FQ = -int(FP < F1);
-        int FR = FQ & F2;
-        int FS = FO & FR;
-        if (FS != 0) {
-          _arr4_f32_[Fs >> 2] = F1;
+        int Gs = -int(FK < FD);
+        int Gt = Gs & FC;
+        float Gu = _arr4_f32_[G1 >> 2];
+        int Gv = -int(Gu < FB);
+        int Gw = Gv & FC;
+        int Gx = Gt & Gw;
+        if (Gx != 0) {
+          _arr4_f32_[G1 >> 2] = FB;
         }
-        int FV = -int(Fb > F3);
-        int FW = FV & F2;
-        float FX = _arr4_f32_[Fs >> 2];
-        int FY = -int(FX > F1);
-        int FZ = FY & F2;
-        int G0 = FW & FZ;
-        if (G0 != 0) {
-          _arr4_f32_[Fs >> 2] = F1;
+        int GA = _args_i32_[16 + 4 * 8 + 0];
+        int GB = GA - FD;
+        int GC = -int(FK > GB);
+        int GD = GC & FC;
+        float GE = _arr4_f32_[G1 >> 2];
+        int GF = -int(GE > FB);
+        int GG = GF & FC;
+        int GH = GD & GG;
+        if (GH != 0) {
+          _arr4_f32_[G1 >> 2] = FB;
         }
       }
   }

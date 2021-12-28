@@ -22,9 +22,9 @@ const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void substep_c44_06()
 { // serial
-  int G4 = _args_i32_[16 + 0 * 8 + 0];
-  int G5 = 28;
-  _gtmp_i32_[G5 >> 2] = G4;
+  int GL = _args_i32_[16 + 0 * 8 + 0];
+  int GM = 44;
+  _gtmp_i32_[GM >> 2] = GL;
 }
 
 void main()

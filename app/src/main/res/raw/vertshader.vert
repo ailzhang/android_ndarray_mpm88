@@ -12,5 +12,5 @@ void main() {
     v_v4FillColor = a_v4FillColor;
     gl_Position = vec4(a_v4Position.xy*2.0 - 1.0, 1, 1);
     //gl_Position = a_v4Position;
-    gl_PointSize = 10.0f;
+    gl_PointSize = 8.0f;
 }
