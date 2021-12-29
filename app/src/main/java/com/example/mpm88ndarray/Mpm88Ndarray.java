@@ -43,6 +43,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private IntBuffer args;
     private FloatBuffer color;
 
+    private long startTime;
+
     public Mpm88Ndarray(Context _context) {
         context = _context;
         // Open Json file.
@@ -75,6 +77,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         generateSSBO();
         // Run init kernel once at the beginning.
         init();
+
+        startTime = System.nanoTime();
     }
 
     @Override
@@ -93,6 +97,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         // Render point to the screen.
         render();
+
+        long fps = 1000000000 / (System.nanoTime() - startTime);
+        Log.d("FPS", "fps: " + fps);
+        startTime = System.nanoTime();
     }
 
     private void fillData() {
