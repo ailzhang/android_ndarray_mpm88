@@ -14,61 +14,59 @@ const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
 void substep_c44_01()
 { // range for
-  // range known at runtime
-  int _beg = 0, _end = _gtmp_i32_[0 >> 2];
+  // range from args buffer
+  int Y = _args_i32_[16 + 5 * 8 + 0];
+  int Z = _args_i32_[16 + 5 * 8 + 1];
+  int AE = Y * Z;
+  int _beg = 0, _end = AE;
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
-      int Ay = _itv;
-      int Az = 4;
-      int AA = _gtmp_i32_[Az >> 2];
-      int AB = Ay - AA * int(Ay / AA);
-      int AC = Ay / AA;
-      int AD = 8;
-      int AE = _gtmp_i32_[AD >> 2];
-      int AF = AC - AE * int(AC / AE);
-      int AH = int(0);
-      int _li_AI = 0;
+      int Y = _args_i32_[16 + 5 * 8 + 0];
+      int Z = _args_i32_[16 + 5 * 8 + 1];
+      int Aq = _itv;
+      int Ar = Aq - Z * int(Aq / Z);
+      int As = Aq / Z;
+      int At = As - Y * int(As / Y);
+      int Av = int(0);
+      int _li_Aw = 0;
+      int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
+      int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
+      int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
       { // linear seek
-        int _s0_AI = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_AI = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_AI = _args_i32_[16 + 4 * 8 + 2];
-        _li_AI *= _s0_AI;
-        _li_AI += AF;
-        _li_AI *= _s1_AI;
-        _li_AI += AB;
-        _li_AI *= _s2_AI;
-        _li_AI += AH;
+        _li_Aw *= _s0_arr4;
+        _li_Aw += At;
+        _li_Aw *= _s1_arr4;
+        _li_Aw += Ar;
+        _li_Aw *= _s2_arr4;
+        _li_Aw += Av;
       }
-      int AI = _li_AI << 2;
-      float AJ = float(0.0);
-      _arr4_f32_[AI >> 2] = AJ;
-      int AL = int(1);
-      int _li_AM = 0;
+      int Aw = _li_Aw << 2;
+      float Ax = float(0.0);
+      _arr4_f32_[Aw >> 2] = Ax;
+      int Az = int(1);
+      int _li_AA = 0;
       { // linear seek
-        int _s0_AM = _args_i32_[16 + 4 * 8 + 0];
-        int _s1_AM = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_AM = _args_i32_[16 + 4 * 8 + 2];
-        _li_AM *= _s0_AM;
-        _li_AM += AF;
-        _li_AM *= _s1_AM;
-        _li_AM += AB;
-        _li_AM *= _s2_AM;
-        _li_AM += AL;
+        _li_AA *= _s0_arr4;
+        _li_AA += At;
+        _li_AA *= _s1_arr4;
+        _li_AA += Ar;
+        _li_AA *= _s2_arr4;
+        _li_AA += Az;
       }
-      int AM = _li_AM << 2;
-      _arr4_f32_[AM >> 2] = AJ;
-      int _li_AP = 0;
+      int AA = _li_AA << 2;
+      _arr4_f32_[AA >> 2] = Ax;
+      int _li_AD = 0;
+      int _s0_arr5 = _args_i32_[16 + 5 * 8 + 0];
+      int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
       { // linear seek
-        int _s0_AP = _args_i32_[16 + 5 * 8 + 0];
-        int _s1_AP = _args_i32_[16 + 5 * 8 + 1];
-        _li_AP *= _s0_AP;
-        _li_AP += AF;
-        _li_AP *= _s1_AP;
-        _li_AP += AB;
+        _li_AD *= _s0_arr5;
+        _li_AD += At;
+        _li_AD *= _s1_arr5;
+        _li_AD += Ar;
       }
-      int AP = _li_AP << 2;
-      _arr5_f32_[AP >> 2] = AJ;
+      int AD = _li_AD << 2;
+      _arr5_f32_[AD >> 2] = Ax;
   }
 }
 
