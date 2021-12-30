@@ -2,20 +2,20 @@
 "aot_data": {
   "kernels": {"substep": {
       "tasks": [{
-          "name": "substep_c44_00",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_00.glsl",
+          "name": "substep_field_00",
+          "src": "aot/mpm88_no_nv_extension/substep_field_00.glsl",
           "workgroup_size": 32,
           "num_groups": 128},{
-          "name": "substep_c44_01",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_01.glsl",
+          "name": "substep_field_01",
+          "src": "aot/mpm88_no_nv_extension/substep_field_01.glsl",
           "workgroup_size": 32,
           "num_groups": 128},{
-          "name": "substep_c44_02",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_02.glsl",
+          "name": "substep_field_02",
+          "src": "aot/mpm88_no_nv_extension/substep_field_02.glsl",
           "workgroup_size": 32,
           "num_groups": 128},{
-          "name": "substep_c44_03",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_03.glsl",
+          "name": "substep_field_03",
+          "src": "aot/mpm88_no_nv_extension/substep_field_03.glsl",
           "workgroup_size": 32,
           "num_groups": 128}],
       "arg_count": 0,
@@ -26,8 +26,8 @@
       "arr_args": {},
       "used.arr_arg_to_bind_idx": {}},"init": {
       "tasks": [{
-          "name": "init_c46_00",
-          "src": "aot/mpm88_no_nv_extension/init_c46_00.glsl",
+          "name": "init_field_00",
+          "src": "aot/mpm88_no_nv_extension/init_field_00.glsl",
           "workgroup_size": 128,
           "num_groups": 32}],
       "arg_count": 0,

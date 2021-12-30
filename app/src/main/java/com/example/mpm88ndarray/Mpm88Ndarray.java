@@ -36,22 +36,31 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private int color_buf;
     private Program[] programs;
     private Ndarray[] ndarrays;
-    private final int NDARRAY_SIZE = 0;
-    private final int NDARRAY_NUM_PARTICLE = 4096;
-    private final int NDARRAY_NUM_GRID = 64;
-    private final int SUBSTEP = 25;
-    private final String[] kernel_names = {"init", "substep"};
-
     private IntBuffer args;
     private FloatBuffer color;
 
     private long startTime;
 
+    // Args to set for runtime.
+    private final boolean USE_NDARRAY = false;
+    // These three args only affects ndarray version (when USE_NDARRAY is set to true).
+    private int NDARRAY_SIZE = 6;
+    private int NDARRAY_NUM_PARTICLE = 4096;
+    private final int NDARRAY_NUM_GRID = 64;
+
+    private final int SUBSTEP = 25;
+    private final String[] kernel_names = {"init", "substep"};
+
     public Mpm88Ndarray(Context _context) {
         context = _context;
         // Open Json file.
         JSONParser parser = new JSONParser();
-        InputStream jsonfile = this.context.getResources().openRawResource(R.raw.metadata);
+        InputStream jsonfile;
+        if (USE_NDARRAY) {
+            jsonfile = this.context.getResources().openRawResource(R.raw.metadata_ndarray);
+        } else {
+            jsonfile = this.context.getResources().openRawResource(R.raw.metadata_field);
+        }
         JSONObject mpm88;
         try {
             mpm88 = (JSONObject) parser.parse(new InputStreamReader(jsonfile, "utf-8"));
@@ -61,6 +70,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             return;
         }
 
+        if (!USE_NDARRAY) {
+            NDARRAY_SIZE = 0;
+            // Field has fixed particle size, so we hack here for field version.
+            NDARRAY_NUM_PARTICLE = 4096;
+        }
         // -----------------------------------------------------------------------------------------
         // Parse Json data.
         parseJsonData(mpm88);
@@ -96,16 +110,16 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
         //for (int i = 0; i < 10000; i++) {
-            substep(SUBSTEP);
+        substep(SUBSTEP);
 
-            //GLES32.glFinish();
-            // Render point to the screen.
-            render();
+        //GLES32.glFinish();
+        // Render point to the screen.
+        render();
 
-            double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
-            Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
-            Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
-            startTime = System.nanoTime();
+        double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
+        Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
+        Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
+        startTime = System.nanoTime();
         //}
     }
 
@@ -190,11 +204,17 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 
         GLES32.glUseProgram(render_program);
-        //GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
-        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
+        if (USE_NDARRAY) {
+            GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
+        } else {
+            GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
+        }
         GLES32.glEnableVertexAttribArray(0);
-        //GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
-        GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32768);
+        if (USE_NDARRAY) {
+            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
+        } else {
+            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32768);
+        }
 
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
         GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, NDARRAY_NUM_PARTICLE *4*4, color, GLES32.GL_STATIC_DRAW);
