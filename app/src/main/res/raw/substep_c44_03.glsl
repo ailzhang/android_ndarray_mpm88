@@ -1,5 +1,5 @@
 #version 310 es
-layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
+layout(local_size_x = 32, local_size_y = 1, local_size_z = 1) in;
 precision highp float;
 layout(std430, binding = 0) buffer data_i32 { int _data_i32_[];}; 
 layout(std430, binding = 0) buffer data_f32 { float _data_f32_[];}; 
@@ -10,20 +10,20 @@ void substep_c44_03()
 { // range for
   // range known at compile time
   int _sid0 = int(gl_GlobalInvocationID.x);
-  for (int _sid = _sid0; _sid < (8192); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
+  for (int _sid = _sid0; _sid < (4096); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
       int Fb = _itv;
       int C3E = 0;
       int Cqa = int(0);
-      int C3G = C3E + 491520 * Cqa; // S0
+      int C3G = C3E + 196608 * Cqa; // S0
       int C3H = C3G + 32768; // S1
-      int Cu5 = int(8191);
+      int Cu5 = int(4095);
       int CtT = Fb & Cu5;
       int Cqc = int(1);
       int C3K = C3H + 8 * CtT; // S1
       int C3L = C3K + 0; // S2
       float Fi = _data_f32_[C3L >> 2];
-      float Fj = float(128.0);
+      float Fj = float(64.0);
       float Fk = Fi * Fj;
       int C3V = C3K + 4; // S3
       float Fm = _data_f32_[C3V >> 2];
@@ -61,15 +61,15 @@ void substep_c44_03()
       float FY = float(0.0);
       float FZ = FY - Fu;
       float G0 = FY - Fw;
-      float G1 = float(0.0078125);
+      float G1 = float(0.015625);
       float G2 = FZ * G1;
       float G3 = G0 * G1;
       float G4 = FC * FD;
-      int C42 = C3G + 360448; // S14
-      int Cgr = int(127);
+      int C42 = C3G + 98304; // S14
+      int Cgr = int(63);
       int Cgs = Fr & Cgr;
       int Cgw = Fs & Cgr;
-      int Cug = int(7);
+      int Cug = int(6);
       int Cuh = Cgs << Cug;
       int Cqr = Cgw + Cuh;
       int C46 = C42 + 8 * Cqr; // S14
@@ -89,7 +89,7 @@ void substep_c44_03()
       float Go = Gm * Gi;
       float Gp = Gm * Gj;
       float Gq = Gm * Gk;
-      float Gr = float(16384.0);
+      float Gr = float(4096.0);
       float Gs = Gn * Gr;
       float Gt = Go * Gr;
       float Gu = Gp * Gr;
@@ -338,7 +338,7 @@ void substep_c44_03()
       float LJ = L7 + LC;
       float LM = La + LD;
       float LP = Ld + LE;
-      int C7v = C3G + 98304; // S4
+      int C7v = C3G + 65536; // S4
       int C7y = C7v + 8 * CtT; // S4
       int C7z = C7y + 0; // S5
       _data_f32_[C7z >> 2] = Ln;
@@ -360,7 +360,7 @@ void substep_c44_03()
       float Mc = Mb + FE;
       float Md = M7 * Mc;
       _data_f32_[C8x >> 2] = Md;
-      int C8N = C3G + 229376; // S7
+      int C8N = C3G + 131072; // S7
       int C8Q = C8N + 16 * CtT; // S7
       int C8R = C8Q + 0; // S8
       _data_f32_[C8R >> 2] = LG;

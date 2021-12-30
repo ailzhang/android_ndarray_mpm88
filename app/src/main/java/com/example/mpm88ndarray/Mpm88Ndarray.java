@@ -37,9 +37,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private Program[] programs;
     private Ndarray[] ndarrays;
     private final int NDARRAY_SIZE = 0;
-    private final int NUM_PARTICLE = 4096;
-    private final int NUM_GRID = 64;
-    private final int SUBSTEP = 50;
+    private final int NDARRAY_NUM_PARTICLE = 4096;
+    private final int NDARRAY_NUM_GRID = 64;
+    private final int SUBSTEP = 25;
     private final String[] kernel_names = {"init", "substep"};
 
     private IntBuffer args;
@@ -127,8 +127,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         args.put(data).position(0);
 
         // Fill color info into color buffer.
-        float[] data_v = new float[NUM_PARTICLE*4];
-        for (int i = 0 ; i < NUM_PARTICLE*4; i++) {
+        float[] data_v = new float[NDARRAY_NUM_PARTICLE *4];
+        for (int i = 0; i < NDARRAY_NUM_PARTICLE *4; i++) {
             data_v[i] = 0.9f;
         }
         color = ByteBuffer.allocateDirect(data_v.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -197,11 +197,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32768);
 
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
-        GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, NUM_PARTICLE*4*4, color, GLES32.GL_STATIC_DRAW);
+        GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, NDARRAY_NUM_PARTICLE *4*4, color, GLES32.GL_STATIC_DRAW);
         GLES32.glEnableVertexAttribArray(1);
         GLES32.glVertexAttribPointer(1, 4, GLES32.GL_FLOAT, false, 4*4, 0);
 
-        GLES32.glDrawArrays(GLES32.GL_POINTS, 0, NUM_PARTICLE);
+        GLES32.glDrawArrays(GLES32.GL_POINTS, 0, NDARRAY_NUM_PARTICLE);
     }
 
     private void parseJsonData(JSONObject mpm88) {
@@ -241,9 +241,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 int[] shape = new int[dim];
                 // Hardcode every shape you want to the specific ndarray.
                 for (int d = 0; d < dim; d++) {
-                    shape[d] = NUM_PARTICLE;
+                    shape[d] = NDARRAY_NUM_PARTICLE;
                     if (j == 4 || j == 5) {
-                        shape[d] = NUM_GRID;
+                        shape[d] = NDARRAY_NUM_GRID;
                     }
                 }
                 JSONArray json_element_array = (JSONArray) json_ndarray.get("element_shape");

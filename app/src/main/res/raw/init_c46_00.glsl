@@ -13,7 +13,7 @@ void init_c46_00()
 { // range for
   // range known at compile time
   int _sid0 = int(gl_GlobalInvocationID.x);
-  for (int _sid = _sid0; _sid < (8192); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
+  for (int _sid = _sid0; _sid < (4096); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
       int B = _itv;
       float C = _rand_f32();
@@ -26,9 +26,9 @@ void init_c46_00()
       float J = I + G;
       int Bl = 0;
       int Cs = int(0);
-      int Bn = Bl + 491520 * Cs; // S0
+      int Bn = Bl + 196608 * Cs; // S0
       int Bo = Bn + 32768; // S1
-      int Ca = int(8191);
+      int Ca = int(4095);
       int Cb = B & Ca;
       int Br = Bo + 8 * Cb; // S1
       int Bs = Br + 0; // S2
@@ -36,7 +36,7 @@ void init_c46_00()
       int BC = Br + 4; // S3
       _data_f32_[BC >> 2] = J;
       float P = float(0.0);
-      int BI = Bn + 98304; // S4
+      int BI = Bn + 65536; // S4
       int BL = BI + 8 * Cb; // S4
       int BM = BL + 0; // S5
       _data_f32_[BM >> 2] = P;
