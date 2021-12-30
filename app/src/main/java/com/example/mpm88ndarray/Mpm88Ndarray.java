@@ -36,10 +36,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private int color_buf;
     private Program[] programs;
     private Ndarray[] ndarrays;
-    private final int NDARRAY_SIZE = 6;
+    private final int NDARRAY_SIZE = 0;
     private final int NUM_PARTICLE = 4096;
     private final int NUM_GRID = 64;
-    private final int SUBSTEP = 25;
+    private final int SUBSTEP = 50;
     private final String[] kernel_names = {"init", "substep"};
 
     private IntBuffer args;
@@ -80,6 +80,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         // Run init kernel once at the beginning.
         init();
 
+        startTime = System.nanoTime();
     }
 
     @Override
@@ -94,11 +95,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
-        startTime = System.nanoTime();
         //for (int i = 0; i < 10000; i++) {
             substep(SUBSTEP);
 
-            GLES32.glFinish();
+            //GLES32.glFinish();
             // Render point to the screen.
             render();
 
@@ -187,13 +187,14 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     }
 
     private void render() {
-        //GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
+        GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 
         GLES32.glUseProgram(render_program);
-        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
-        //GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
+        //GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
+        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
         GLES32.glEnableVertexAttribArray(0);
-        GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
+        //GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
+        GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32768);
 
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
         GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, NUM_PARTICLE*4*4, color, GLES32.GL_STATIC_DRAW);
