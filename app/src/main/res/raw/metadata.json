@@ -8,20 +8,20 @@
           "num_groups": 1},{
           "name": "substep_c44_01",
           "src": "mpm88_ndarray_aot/substep_c44_01.glsl",
-          "workgroup_size": 128,
-          "num_groups": 256},{
+          "workgroup_size": 32,
+          "num_groups": 32},{
           "name": "substep_c44_02",
           "src": "mpm88_ndarray_aot/substep_c44_02.glsl",
-          "workgroup_size": 128,
-          "num_groups": 256},{
+          "workgroup_size": 32,
+          "num_groups": 32},{
           "name": "substep_c44_03",
           "src": "mpm88_ndarray_aot/substep_c44_03.glsl",
-          "workgroup_size": 128,
-          "num_groups": 256},{
+          "workgroup_size": 32,
+          "num_groups": 32},{
           "name": "substep_c44_04",
           "src": "mpm88_ndarray_aot/substep_c44_04.glsl",
-          "workgroup_size": 128,
-          "num_groups": 256}],
+          "workgroup_size": 32,
+          "num_groups": 32}],
       "arg_count": 6,
       "ret_count": 0,
       "args_buf_size": 256,
@@ -52,7 +52,7 @@
           "is_scalar": false,
           "element_shape": [2],
           "shape_offset_in_bytes_in_args_buf": 64}},
-      "used.arr_arg_to_bind_idx": {"1": 9,"3": 8,"2": 7,"0": 6,"5": 5,"4": 4}},"init": {
+      "used.arr_arg_to_bind_idx": {"3": 9,"2": 8,"1": 7,"0": 6,"5": 5,"4": 4}},"init": {
       "tasks": [{
           "name": "init_c46_00",
           "src": "mpm88_ndarray_aot/init_c46_00.glsl",

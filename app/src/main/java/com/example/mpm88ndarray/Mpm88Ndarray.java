@@ -28,15 +28,18 @@ import java.util.stream.Collectors;
 
 public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private Context context;
+    private int root_buf_size;
     private int render_program;
     private int global_tmp_buf;
+    private int root_buf;
     private int arg_buf;
     private int color_buf;
     private Program[] programs;
     private Ndarray[] ndarrays;
     private final int NDARRAY_SIZE = 6;
-    private final int NUM_PARTICLE = 8192;
-    private final int NUM_GRID = 128;
+    private final int NUM_PARTICLE = 4096;
+    private final int NUM_GRID = 64;
+    private final int SUBSTEP = 25;
     private final String[] kernel_names = {"init", "substep"};
 
     private IntBuffer args;
@@ -77,7 +80,6 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         // Run init kernel once at the beginning.
         init();
 
-        startTime = System.nanoTime();
     }
 
     @Override
@@ -92,14 +94,19 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
-        substep(50);
-
-        // Render point to the screen.
-        render();
-
-        long fps = 1000000000 / (System.nanoTime() - startTime);
-        Log.d("FPS", "fps: " + fps);
         startTime = System.nanoTime();
+        //for (int i = 0; i < 10000; i++) {
+            substep(SUBSTEP);
+
+            GLES32.glFinish();
+            // Render point to the screen.
+            render();
+
+            double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
+            Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
+            Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
+            startTime = System.nanoTime();
+        //}
     }
 
     private void fillData() {
@@ -129,6 +136,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     }
 
     private void init() {
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
+        GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, root_buf_size, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 80, null, GLES32.GL_STATIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
@@ -153,6 +162,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     }
 
     private void substep(int step) {
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 64*5, args, GLES32.GL_STATIC_READ);
         Integer[] bind_idx = programs[1].getBind_idx();
@@ -181,6 +191,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         GLES32.glUseProgram(render_program);
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
+        //GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
         GLES32.glEnableVertexAttribArray(0);
         GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
 
@@ -194,6 +205,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
     private void parseJsonData(JSONObject mpm88) {
         JSONObject json_programs = (JSONObject) ((JSONObject) mpm88.get("aot_data")).get("kernels");
+        root_buf_size = ((Long) ((JSONObject) mpm88.get("aot_data")).get("root_buffer_size")).intValue();
         programs = new Program[json_programs.size()];
         ndarrays = new Ndarray[NDARRAY_SIZE];
         for (int i = 0; i < json_programs.size(); i++) {
@@ -267,12 +279,12 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         global_tmp_buf = temp[0];
         GLES32.glGenBuffers(1, temp, 0);
         arg_buf = temp[0];
+        GLES32.glGenBuffers(1, temp, 0);
+        root_buf = temp[0];
         for (int i = 0; i < ndarrays.length; i++) {
             GLES32.glGenBuffers(1, temp, 0);
             ndarrays[i].setSsbo(temp[0]);
         }
-
-        GLES32.glBindBuffer(GLES32.GL_SHADER_STORAGE_BUFFER, arg_buf);
     }
 
 
