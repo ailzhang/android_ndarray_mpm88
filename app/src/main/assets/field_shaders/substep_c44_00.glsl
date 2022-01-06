@@ -12,27 +12,27 @@ void substep_c44_00()
   for (int _sid = _sid0; _sid < (16384); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
       int D = _itv;
-      int ASw = int(7);
-      int ASx = D >> ASw;
+      int T4 = int(7);
+      int T5 = D >> T4;
       float O = float(0.0);
-      int ALi = 0;
-      int AXa = int(0);
-      int ALk = ALi + 491520 * AXa; // S0
-      int ALl = ALk + 360448; // S14
-      int B1X = int(127);
-      int B1M = ASx & B1X;
-      int B1O = D & B1X;
-      int B21 = B1M << ASw;
-      int AXh = B1O + B21;
-      int ALp = ALl + 8 * AXh; // S14
-      int ALq = ALp + 0; // S15
-      _data_f32_[ALq >> 2] = O;
-      int ALC = ALp + 4; // S16
-      _data_f32_[ALC >> 2] = O;
-      int ALJ = ALk + 163840; // S17
-      int ALN = ALJ + 4 * AXh; // S17
-      int ALO = ALN + 0; // S18
-      _data_f32_[ALO >> 2] = O;
+      int Qu = 0;
+      int UC = int(0);
+      int Qw = Qu + 491520 * UC; // S0
+      int Qx = Qw + 360448; // S14
+      int Wj = int(127);
+      int W8 = T5 & Wj;
+      int Wa = D & Wj;
+      int Wn = W8 << T4;
+      int UJ = Wa + Wn;
+      int QB = Qx + 8 * UJ; // S14
+      int QC = QB + 0; // S15
+      _data_f32_[QC >> 2] = O;
+      int QO = QB + 4; // S16
+      _data_f32_[QO >> 2] = O;
+      int QV = Qw + 163840; // S17
+      int QZ = QV + 4 * UJ; // S17
+      int R0 = QZ + 0; // S18
+      _data_f32_[R0 >> 2] = O;
   }
 }
 
