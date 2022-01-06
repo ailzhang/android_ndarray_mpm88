@@ -44,7 +44,8 @@ void substep_c44_02()
       int AJ = _li_AJ << 2;
       float AK = _arr0_f32_[AJ >> 2];
       int AL = 0;
-      float AM = _gtmp_f32_[AL >> 2];
+      float AM = float(128);
+      //float AM = _gtmp_f32_[AL >> 2];
       float AN = AK * AM;
       int AO = int(1);
       int _li_AP = 0;
@@ -88,10 +89,12 @@ void substep_c44_02()
       float Bk = Bi * AS;
       float Bl = Bj * AS;
       int Bm = 4;
-      float Bn = _gtmp_f32_[Bm >> 2];
+      float Bn = float(0.0002);
+      //float Bn = _gtmp_f32_[Bm >> 2];
       float Bo = float(-Bn);
       int Bp = 8;
-      float Bq = _gtmp_f32_[Bp >> 2];
+      float Bq = 1.0 / 256.0 / 256.0;
+      //float Bq = _gtmp_f32_[Bp >> 2];
       float Br = Bo * Bq;
       int _li_Bt = 0;
       int _s0_arr2 = _args_i32_[16 + 2 * 8 + 0];
