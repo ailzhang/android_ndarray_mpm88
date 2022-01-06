@@ -3,24 +3,16 @@
   "kernels": {"substep": {
       "tasks": [{
           "name": "substep_ndarray_00",
-          "src": "mpm88_ndarray_aot/substep_ndarray_00.glsl",
+          "src": "ndarray_aot/substep_ndarray_00.glsl",
           "workgroup_size": 1,
           "num_groups": 1},{
           "name": "substep_ndarray_01",
-          "src": "mpm88_ndarray_aot/substep_ndarray_01.glsl",
-          "workgroup_size": 32,
+          "src": "ndarray_aot/substep_ndarray_01.glsl",
+          "workgroup_size": 128,
           "num_groups": 256},{
           "name": "substep_ndarray_02",
-          "src": "mpm88_ndarray_aot/substep_ndarray_02.glsl",
-          "workgroup_size": 32,
-          "num_groups": 256},{
-          "name": "substep_ndarray_03",
-          "src": "mpm88_ndarray_aot/substep_ndarray_03.glsl",
-          "workgroup_size": 32,
-          "num_groups": 256},{
-          "name": "substep_ndarray_04",
-          "src": "mpm88_ndarray_aot/substep_ndarray_04.glsl",
-          "workgroup_size": 32,
+          "src": "ndarray_aot/substep_ndarray_02.glsl",
+          "workgroup_size": 128,
           "num_groups": 256}],
       "arg_count": 6,
       "ret_count": 0,
@@ -31,19 +23,7 @@
           "field_dim": 2,
           "is_scalar": true,
           "element_shape": [],
-          "shape_offset_in_bytes_in_args_buf": 224},"4": {
-          "field_dim": 2,
-          "is_scalar": false,
-          "element_shape": [2],
-          "shape_offset_in_bytes_in_args_buf": 192},"3": {
-          "field_dim": 1,
-          "is_scalar": false,
-          "element_shape": [2,2],
-          "shape_offset_in_bytes_in_args_buf": 160},"2": {
-          "field_dim": 1,
-          "is_scalar": true,
-          "element_shape": [],
-          "shape_offset_in_bytes_in_args_buf": 128},"1": {
+          "shape_offset_in_bytes_in_args_buf": 224},"1": {
           "field_dim": 1,
           "is_scalar": false,
           "element_shape": [2],
@@ -51,11 +31,23 @@
           "field_dim": 1,
           "is_scalar": false,
           "element_shape": [2],
-          "shape_offset_in_bytes_in_args_buf": 64}},
-      "used.arr_arg_to_bind_idx": {"3": 9,"2": 8,"1": 7,"0": 6,"5": 5,"4": 4}},"init": {
+          "shape_offset_in_bytes_in_args_buf": 64},"2": {
+          "field_dim": 1,
+          "is_scalar": true,
+          "element_shape": [],
+          "shape_offset_in_bytes_in_args_buf": 128},"3": {
+          "field_dim": 1,
+          "is_scalar": false,
+          "element_shape": [2,2],
+          "shape_offset_in_bytes_in_args_buf": 160},"4": {
+          "field_dim": 2,
+          "is_scalar": false,
+          "element_shape": [2],
+          "shape_offset_in_bytes_in_args_buf": 192}},
+      "used.arr_arg_to_bind_idx": {"1": 9,"5": 5,"0": 6,"4": 4,"2": 7,"3": 8}},"init": {
       "tasks": [{
           "name": "init_ndarray_00",
-          "src": "mpm88_ndarray_aot/init_ndarray_00.glsl",
+          "src": "ndarray_aot/init_ndarray_00.glsl",
           "workgroup_size": 128,
           "num_groups": 256}],
       "arg_count": 3,
@@ -67,16 +59,16 @@
           "field_dim": 1,
           "is_scalar": true,
           "element_shape": [],
-          "shape_offset_in_bytes_in_args_buf": 128},"1": {
+          "shape_offset_in_bytes_in_args_buf": 128},"0": {
           "field_dim": 1,
           "is_scalar": false,
           "element_shape": [2],
-          "shape_offset_in_bytes_in_args_buf": 96},"0": {
+          "shape_offset_in_bytes_in_args_buf": 64},"1": {
           "field_dim": 1,
           "is_scalar": false,
           "element_shape": [2],
-          "shape_offset_in_bytes_in_args_buf": 64}},
-      "used.arr_arg_to_bind_idx": {"2": 6,"1": 5,"0": 4}}},
+          "shape_offset_in_bytes_in_args_buf": 96}},
+      "used.arr_arg_to_bind_idx": {"2": 6,"0": 4,"1": 5}}},
   "kernel_tmpls": {},
   "fields": [],
   "root_buffer_size": 0}}
