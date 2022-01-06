@@ -18,12 +18,12 @@ const float nan = 0.0f / 0.0f;
 void init_c46_00()
 { // range for
   // range from args buffer
-  int B = _args_i32_[16 + 0 * 8 + 0];
+  int B = _args_i32_[32 + 0 * 8 + 0];
   int _beg = 0, _end = B;
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
-      int B = _args_i32_[16 + 0 * 8 + 0];
+      int B = _args_i32_[32 + 0 * 8 + 0];
       int C = _itv;
       int D = C - B * int(C / B);
       float E = _rand_f32();
@@ -36,8 +36,8 @@ void init_c46_00()
       float L = K + I;
       int N = int(0);
       int _li_O = 0;
-      int _s0_arr0 = _args_i32_[16 + 0 * 8 + 0];
-      int _s1_arr0 = _args_i32_[16 + 0 * 8 + 1];
+      int _s0_arr0 = _args_i32_[32 + 0 * 8 + 0];
+      int _s1_arr0 = _args_i32_[32 + 0 * 8 + 1];
       { // linear seek
         _li_O *= _s0_arr0;
         _li_O += D;
@@ -57,8 +57,8 @@ void init_c46_00()
       int R = _li_R << 2;
       _arr0_f32_[R >> 2] = L;
       int _li_U = 0;
-      int _s0_arr1 = _args_i32_[16 + 1 * 8 + 0];
-      int _s1_arr1 = _args_i32_[16 + 1 * 8 + 1];
+      int _s0_arr1 = _args_i32_[32 + 1 * 8 + 0];
+      int _s1_arr1 = _args_i32_[32 + 1 * 8 + 1];
       { // linear seek
         _li_U *= _s0_arr1;
         _li_U += D;
@@ -79,7 +79,7 @@ void init_c46_00()
       float Y = float(-1.0);
       _arr1_f32_[X >> 2] = Y;
       int _li_Ar = 0;
-      int _s0_arr2 = _args_i32_[16 + 2 * 8 + 0];
+      int _s0_arr2 = _args_i32_[32 + 2 * 8 + 0];
       { // linear seek
         _li_Ar *= _s0_arr2;
         _li_Ar += D;

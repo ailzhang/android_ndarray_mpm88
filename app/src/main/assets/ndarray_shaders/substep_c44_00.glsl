@@ -12,7 +12,7 @@ void substep_c44_00()
 { // serial
   float B = float(0.5);
   float C = float(1.0);
-  int D = _args_i32_[16 + 4 * 8 + 0];
+  int D = _args_i32_[32 + 4 * 8 + 0];
   int E = 16;
   _gtmp_i32_[E >> 2] = D;
   float G = float(D);

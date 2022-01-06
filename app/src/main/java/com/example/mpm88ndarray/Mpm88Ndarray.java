@@ -38,11 +38,12 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private Ndarray[] ndarrays;
     private IntBuffer args;
     private FloatBuffer color;
+    private String folder_name;
 
     private long startTime;
 
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = false;
+    private final boolean USE_NDARRAY = true;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     private int NDARRAY_SIZE = 6;
     private int NDARRAY_NUM_PARTICLE = 4096;
@@ -55,11 +56,16 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         context = _context;
         // Open Json file.
         JSONParser parser = new JSONParser();
-        InputStream jsonfile;
+        InputStream jsonfile = null;
         if (USE_NDARRAY) {
-            jsonfile = this.context.getResources().openRawResource(R.raw.metadata_ndarray);
+            folder_name = "ndarray_shaders/";
         } else {
-            jsonfile = this.context.getResources().openRawResource(R.raw.metadata_field);
+            folder_name = "field_shaders/";
+        }
+        try {
+            jsonfile = this.context.getAssets().open(folder_name + "metadata.json");
+        } catch(Exception e) {
+            Log.d("Error", "Mpm88Ndarray: " + e);
         }
         JSONObject mpm88;
         try {
@@ -109,11 +115,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
+
         //for (int i = 0; i < 10000; i++) {
         substep(SUBSTEP);
 
-        //GLES32.glFinish();
-        // Render point to the screen.
+        //GLES32.glFlush();
         render();
 
         double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
@@ -315,9 +321,12 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
             Kernel[] cur_kernels = programs[i].getKernels();
             for (int j = 0; j < cur_kernels.length; j++) {
                 int shader = GLES32.glCreateShader(GLES32.GL_COMPUTE_SHADER);
-                InputStream raw_shader = this.context.getResources().openRawResource(this.context.getResources().getIdentifier(
-                        cur_kernels[j].getName(), "raw", this.context.getPackageName()
-                ));
+                InputStream raw_shader = null;
+                try {
+                    raw_shader = this.context.getAssets().open(folder_name + cur_kernels[j].getName() + ".glsl");
+                } catch (Exception e) {
+                    Log.d("Error", "compileComputeShaders: " + e);
+                }
                 String string_shader = new BufferedReader(
                         new InputStreamReader(raw_shader, StandardCharsets.UTF_8))
                         .lines()
