@@ -102,10 +102,6 @@ void substep_c44_01()
       int VQ = Ul + Wp;
       int SD = Sz + 8 * VQ; // S14
       int SE = SD + 0; // S15
-      float By;
-      { // Begin Atomic Op
-      By = atomicAdd_data_f32(SE >> 2, Bv);
-      } // End Atomic Op
   }
 }
 

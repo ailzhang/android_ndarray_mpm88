@@ -193,23 +193,6 @@ float Bc = 1.0 / 256.0 / 256.0;
       float C1 = BT + BZ;
       float C2 = BM * C0;
       float C3 = BM * C1;
-      int _li_C5 = 0;
-      int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
-      int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
-      int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
-      { // linear seek
-        _li_C5 *= _s0_arr4;
-        _li_C5 += AV;
-        _li_C5 *= _s1_arr4;
-        _li_C5 += AW;
-        _li_C5 *= _s2_arr4;
-        _li_C5 += AI;
-      }
-      int C5 = _li_C5 << 2;
-      float C6;
-      { // Begin Atomic Op
-      C6 = atomicAdd_arr4_f32(C5 >> 2, C2);
-      } // End Atomic Op
 
   }
 }
