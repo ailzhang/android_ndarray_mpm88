@@ -12,26 +12,24 @@ void substep_c44_00()
 { // serial
   float B = float(0.5);
   float C = float(1.0);
-  int D = _args_i32_[32 + 4 * 8 + 0];
-  int E = 16;
-  _gtmp_i32_[E >> 2] = D;
-  float G = float(D);
-  int H = 0;
-  _gtmp_f32_[H >> 2] = G;
-  float J = C / G;
-  int K = 12;
-  _gtmp_f32_[K >> 2] = J;
-  float M = J * B;
-  float N = M * M;
-  int O = 8;
-  _gtmp_f32_[O >> 2] = N;
-  float Q = float(0.0002);
-  float R = float(0.0078125);
-  float S = G * R;
-  float T = Q / S;
-  float U = float(min(T, Q));
-  int V = 4;
-  _gtmp_f32_[V >> 2] = U;
+  int D = _args_i32_[16 + 4 * 8 + 0];
+  float E = float(D);
+  int F = 0;
+  _gtmp_f32_[F >> 2] = E;
+  float H = C / E;
+  int I = 12;
+  _gtmp_f32_[I >> 2] = H;
+  float K = H * B;
+  float L = K * K;
+  int M = 8;
+  _gtmp_f32_[M >> 2] = L;
+  float O = float(0.0002);
+  float P = float(0.0078125);
+  float Q = E * P;
+  float R = O / Q;
+  float S = float(min(R, O));
+  int T = 4;
+  _gtmp_f32_[T >> 2] = S;
 }
 
 void main()

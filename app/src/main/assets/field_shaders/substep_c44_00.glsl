@@ -9,30 +9,30 @@ void substep_c44_00()
 { // range for
   // range known at compile time
   int _sid0 = int(gl_GlobalInvocationID.x);
-  for (int _sid = _sid0; _sid < (4096); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
+  for (int _sid = _sid0; _sid < (16384); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
       int D = _itv;
-      int C9n = int(6);
-      int C9o = D >> C9n;
+      int ASw = int(7);
+      int ASx = D >> ASw;
       float O = float(0.0);
-      int BTj = 0;
-      int Cjv = int(0);
-      int BTl = BTj + 196608 * Cjv; // S0
-      int BTm = BTl + 98304; // S14
-      int Cu0 = int(63);
-      int CtJ = C9o & Cu0;
-      int CtL = D & Cu0;
-      int Cu7 = CtJ << C9n;
-      int CjC = CtL + Cu7;
-      int BTq = BTm + 8 * CjC; // S14
-      int BTr = BTq + 0; // S15
-      _data_f32_[BTr >> 2] = O;
-      int BTD = BTq + 4; // S16
-      _data_f32_[BTD >> 2] = O;
-      int BTK = BTl + 16384; // S17
-      int BTO = BTK + 4 * CjC; // S17
-      int BTP = BTO + 0; // S18
-      _data_f32_[BTP >> 2] = O;
+      int ALi = 0;
+      int AXa = int(0);
+      int ALk = ALi + 491520 * AXa; // S0
+      int ALl = ALk + 360448; // S14
+      int B1X = int(127);
+      int B1M = ASx & B1X;
+      int B1O = D & B1X;
+      int B21 = B1M << ASw;
+      int AXh = B1O + B21;
+      int ALp = ALl + 8 * AXh; // S14
+      int ALq = ALp + 0; // S15
+      _data_f32_[ALq >> 2] = O;
+      int ALC = ALp + 4; // S16
+      _data_f32_[ALC >> 2] = O;
+      int ALJ = ALk + 163840; // S17
+      int ALN = ALJ + 4 * AXh; // S17
+      int ALO = ALN + 0; // S18
+      _data_f32_[ALO >> 2] = O;
   }
 }
 
