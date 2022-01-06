@@ -46,10 +46,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private final boolean USE_NDARRAY = true;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     private int NDARRAY_SIZE = 6;
-    private int NDARRAY_NUM_PARTICLE = 4096;
-    private final int NDARRAY_NUM_GRID = 64;
+    private int NDARRAY_NUM_PARTICLE = 8192;
+    private final int NDARRAY_NUM_GRID = 128;
 
-    private final int SUBSTEP = 25;
+    private final int SUBSTEP = 50;
     private final String[] kernel_names = {"init", "substep"};
 
     public Mpm88Ndarray(Context _context) {
@@ -116,17 +116,19 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
 
-        //for (int i = 0; i < 10000; i++) {
-        substep(SUBSTEP);
+        for (int i = 0; i < 10000; i++) {
+            GLES32.glFinish();
+            startTime = System.nanoTime();
 
-        //GLES32.glFlush();
-        render();
+            substep(SUBSTEP);
+
+        GLES32.glFinish();
+//        render();
 
         double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
         Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
         Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
-        startTime = System.nanoTime();
-        //}
+        }
     }
 
     private void fillData() {
