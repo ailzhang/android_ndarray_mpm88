@@ -43,7 +43,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private long startTime;
 
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = true;
+    private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     private int NDARRAY_SIZE = 6;
     private int NDARRAY_NUM_PARTICLE = 8192;
@@ -126,7 +126,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 //        render();
 
         double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
-        Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
+//        Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
         Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
         }
     }
@@ -198,10 +198,19 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
         for (int i = 0; i < step; i++) {
             for (int j = 0; j < substep_kernel.length; j++) {
-                if (j == 0 || j==2) continue;
+                if (USE_NDARRAY && (j == 0 || j==2)) continue;
+                if (!USE_NDARRAY && j == 1) continue;
+
                 GLES32.glUseProgram(substep_kernel[j].getShader_program());
                 GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
-                GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
+                int numgroups = substep_kernel[j].getNum_groups();
+                if (USE_NDARRAY) {
+                    if (j == 1) numgroups = NDARRAY_NUM_GRID * NDARRAY_NUM_GRID / substep_kernel[j].getWorkgroup_size();
+                    if (j == 2) numgroups = NDARRAY_NUM_PARTICLE / substep_kernel[j].getWorkgroup_size();
+                }
+//                        Log.d("numgroups", "" + numgroups);
+
+                GLES32.glDispatchCompute(numgroups, 1, 1);
             }
         }
         for (int j = 0; j < bind_idx.length; j++) {
