@@ -17,8 +17,8 @@ void substep_c44_01()
   // range from args buffer
   int W = _args_i32_[16 + 5 * 8 + 0];
   int X = _args_i32_[16 + 5 * 8 + 1];
-  int AA = W * X;
-  int _beg = 0, _end = AA;
+  int Ax = W * X;
+  int _beg = 0, _end = Ax;
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
