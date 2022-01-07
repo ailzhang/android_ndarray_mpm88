@@ -23,18 +23,30 @@ const float nan = 0.0f / 0.0f;
 void substep_c44_02()
 { // range for
   // range from args buffer
-  int AE = _args_i32_[16 + 0 * 8 + 0];
+  int AE = 8192;
+      int _s0_arr0 = 8192;
+      int _s1_arr0 = 2;
+      int _s0_arr1 = 8192;
+      int _s1_arr1 = 2;
+      int _s0_arr2 = 8192;
+      int _s0_arr3 = 8192;
+      int _s1_arr3 = 2;
+      int _s2_arr3 = 2;
+      int _s0_arr4 = 128;
+      int _s1_arr4 = 128;
+      int _s2_arr4 = 2;
+      int _s0_arr5 = 128;
+      int _s1_arr5 = 128;
   int _beg = 0, _end = AE;
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
-      int AE = _args_i32_[16 + 0 * 8 + 0];
+
+      int AE = 8192;
       int AF = _itv;
       int AG = AF - AE * int(AF / AE);
       int AI = int(0);
       int _li_AJ = 0;
-      int _s0_arr0 = _args_i32_[16 + 0 * 8 + 0];
-      int _s1_arr0 = _args_i32_[16 + 0 * 8 + 1];
       { // linear seek
         _li_AJ *= _s0_arr0;
         _li_AJ += AG;
@@ -97,7 +109,6 @@ void substep_c44_02()
       //float Bq = _gtmp_f32_[Bp >> 2];
       float Br = Bo * Bq;
       int _li_Bt = 0;
-      int _s0_arr2 = _args_i32_[16 + 2 * 8 + 0];
       { // linear seek
         _li_Bt *= _s0_arr2;
         _li_Bt += AG;
@@ -113,9 +124,6 @@ void substep_c44_02()
       float BB = float(400.0);
       float BC = BA * BB;
       int _li_BE = 0;
-      int _s0_arr3 = _args_i32_[16 + 3 * 8 + 0];
-      int _s1_arr3 = _args_i32_[16 + 3 * 8 + 1];
-      int _s2_arr3 = _args_i32_[16 + 3 * 8 + 2];
       { // linear seek
         _li_BE *= _s0_arr3;
         _li_BE += AG;
@@ -169,14 +177,12 @@ void substep_c44_02()
       float BT = BS - AZ;
       float BU = BS - B0;
       int BV = 12;
-      float BW = 1.0 / 128.0;
+      float BW = float(0.0078125);
       //float BW = _gtmp_f32_[BV >> 2];
       float BX = BT * BW;
       float BY = BU * BW;
       float BZ = B6 * B7;
       int _li_C1 = 0;
-      int _s0_arr1 = _args_i32_[16 + 1 * 8 + 0];
-      int _s1_arr1 = _args_i32_[16 + 1 * 8 + 1];
       { // linear seek
         _li_C1 *= _s0_arr1;
         _li_C1 += AG;
@@ -207,9 +213,6 @@ void substep_c44_02()
       float Cf = BZ * Cd;
       float Cg = BZ * Ce;
       int _li_Ci = 0;
-      int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
-      int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
-      int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
       { // linear seek
         _li_Ci *= _s0_arr4;
         _li_Ci += AV;
@@ -239,8 +242,6 @@ void substep_c44_02()
       } // End Atomic Op
       float Cm = BZ * Bq;
       int _li_Co = 0;
-      int _s0_arr5 = _args_i32_[16 + 5 * 8 + 0];
-      int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
       { // linear seek
         _li_Co *= _s0_arr5;
         _li_Co += AV;
