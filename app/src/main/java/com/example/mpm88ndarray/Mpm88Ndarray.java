@@ -43,7 +43,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private long startTime;
 
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = false;
+    private final boolean USE_NDARRAY = true;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     private int NDARRAY_SIZE = 6;
     private int NDARRAY_NUM_PARTICLE = 8192;
@@ -198,8 +198,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
         for (int i = 0; i < step; i++) {
             for (int j = 0; j < substep_kernel.length; j++) {
-                if (USE_NDARRAY && (j == 0 || j==2)) continue;
-                if (!USE_NDARRAY && j == 1) continue;
+                if (USE_NDARRAY && (j == 0)) continue;
+//                if (!USE_NDARRAY && j == 1) continue;
 
                 GLES32.glUseProgram(substep_kernel[j].getShader_program());
                 GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
