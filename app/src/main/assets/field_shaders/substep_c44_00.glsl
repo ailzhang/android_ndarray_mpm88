@@ -27,12 +27,6 @@ void substep_c44_00()
       int QB = Qx + 8 * UJ; // S14
       int QC = QB + 0; // S15
       _data_f32_[QC >> 2] = O;
-      int QO = QB + 4; // S16
-      _data_f32_[QO >> 2] = O;
-      int QV = Qw + 163840; // S17
-      int QZ = QV + 4 * UJ; // S17
-      int R0 = QZ + 0; // S18
-      _data_f32_[R0 >> 2] = O;
   }
 }
 
