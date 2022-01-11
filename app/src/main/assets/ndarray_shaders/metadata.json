@@ -5,19 +5,19 @@
           "name": "substep_c44_00",
           "src": "mpm99_ndarray_no_nv_extension/substep_c44_00.glsl",
           "workgroup_size": 128,
-          "num_groups": 256},{
+          "num_groups": 32},{
           "name": "substep_c44_01",
           "src": "mpm99_ndarray_no_nv_extension/substep_c44_01.glsl",
           "workgroup_size": 128,
-          "num_groups": 256},{
+          "num_groups": 32},{
           "name": "substep_c44_02",
           "src": "mpm99_ndarray_no_nv_extension/substep_c44_02.glsl",
           "workgroup_size": 128,
-          "num_groups": 256},{
+          "num_groups": 32},{
           "name": "substep_c44_03",
           "src": "mpm99_ndarray_no_nv_extension/substep_c44_03.glsl",
           "workgroup_size": 128,
-          "num_groups": 256}],
+          "num_groups": 32}],
       "arg_count": 7,
       "ret_count": 0,
       "args_buf_size": 288,
