@@ -5,8 +5,10 @@ layout(std430, binding = 1) buffer gtmp_i32 { int _gtmp_i32_[];};
 layout(std430, binding = 1) buffer gtmp_f32 { float _gtmp_f32_[];}; 
 layout(std430, binding = 2) buffer args_i32 { int _args_i32_[];}; 
 layout(std430, binding = 2) buffer args_f32 { float _args_f32_[];}; 
-layout(std430, binding = 6) buffer arr2_i32 { int _arr2_i32_[];}; 
-layout(std430, binding = 6) buffer arr2_f32 { float _arr2_f32_[];}; 
+layout(std430, binding = 7) buffer arr2_i32 { int _arr2_i32_[];}; 
+layout(std430, binding = 7) buffer arr2_f32 { float _arr2_f32_[];}; 
+layout(std430, binding = 6) buffer arr3_i32 { int _arr3_i32_[];}; 
+layout(std430, binding = 6) buffer arr3_f32 { float _arr3_f32_[];}; 
 layout(std430, binding = 5) buffer arr1_i32 { int _arr1_i32_[];}; 
 layout(std430, binding = 5) buffer arr1_f32 { float _arr1_f32_[];}; 
 layout(std430, binding = 4) buffer arr0_i32 { int _arr0_i32_[];}; 
@@ -18,12 +20,12 @@ const float nan = 0.0f / 0.0f;
 void init_c46_00()
 { // range for
   // range from args buffer
-  int B = _args_i32_[32 + 0 * 8 + 0];
+  int B = _args_i32_[16 + 0 * 8 + 0];
   int _beg = 0, _end = B;
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
-      int B = _args_i32_[32 + 0 * 8 + 0];
+      int B = _args_i32_[16 + 0 * 8 + 0];
       int C = _itv;
       int D = C - B * int(C / B);
       float E = _rand_f32();
@@ -36,8 +38,8 @@ void init_c46_00()
       float L = K + I;
       int N = int(0);
       int _li_O = 0;
-      int _s0_arr0 = _args_i32_[32 + 0 * 8 + 0];
-      int _s1_arr0 = _args_i32_[32 + 0 * 8 + 1];
+      int _s0_arr0 = _args_i32_[16 + 0 * 8 + 0];
+      int _s1_arr0 = _args_i32_[16 + 0 * 8 + 1];
       { // linear seek
         _li_O *= _s0_arr0;
         _li_O += D;
@@ -57,8 +59,8 @@ void init_c46_00()
       int R = _li_R << 2;
       _arr0_f32_[R >> 2] = L;
       int _li_U = 0;
-      int _s0_arr1 = _args_i32_[32 + 1 * 8 + 0];
-      int _s1_arr1 = _args_i32_[32 + 1 * 8 + 1];
+      int _s0_arr1 = _args_i32_[16 + 1 * 8 + 0];
+      int _s1_arr1 = _args_i32_[16 + 1 * 8 + 1];
       { // linear seek
         _li_U *= _s0_arr1;
         _li_U += D;
@@ -76,17 +78,63 @@ void init_c46_00()
         _li_X += Q;
       }
       int X = _li_X << 2;
-      float Y = float(-1.0);
-      _arr1_f32_[X >> 2] = Y;
-      int _li_Ar = 0;
-      int _s0_arr2 = _args_i32_[32 + 2 * 8 + 0];
+      _arr1_f32_[X >> 2] = V;
+      int _li_Aq = 0;
+      int _s0_arr3 = _args_i32_[16 + 3 * 8 + 0];
+      int _s1_arr3 = _args_i32_[16 + 3 * 8 + 1];
+      int _s2_arr3 = _args_i32_[16 + 3 * 8 + 2];
       { // linear seek
-        _li_Ar *= _s0_arr2;
-        _li_Ar += D;
+        _li_Aq *= _s0_arr3;
+        _li_Aq += D;
+        _li_Aq *= _s1_arr3;
+        _li_Aq += N;
+        _li_Aq *= _s2_arr3;
+        _li_Aq += N;
       }
-      int Ar = _li_Ar << 2;
-      float As = float(1.0);
-      _arr2_f32_[Ar >> 2] = As;
+      int Aq = _li_Aq << 2;
+      float Ar = float(1.0);
+      _arr3_f32_[Aq >> 2] = Ar;
+      int _li_At = 0;
+      { // linear seek
+        _li_At *= _s0_arr3;
+        _li_At += D;
+        _li_At *= _s1_arr3;
+        _li_At += N;
+        _li_At *= _s2_arr3;
+        _li_At += Q;
+      }
+      int At = _li_At << 2;
+      _arr3_f32_[At >> 2] = V;
+      int _li_Av = 0;
+      { // linear seek
+        _li_Av *= _s0_arr3;
+        _li_Av += D;
+        _li_Av *= _s1_arr3;
+        _li_Av += Q;
+        _li_Av *= _s2_arr3;
+        _li_Av += N;
+      }
+      int Av = _li_Av << 2;
+      _arr3_f32_[Av >> 2] = V;
+      int _li_Ax = 0;
+      { // linear seek
+        _li_Ax *= _s0_arr3;
+        _li_Ax += D;
+        _li_Ax *= _s1_arr3;
+        _li_Ax += Q;
+        _li_Ax *= _s2_arr3;
+        _li_Ax += Q;
+      }
+      int Ax = _li_Ax << 2;
+      _arr3_f32_[Ax >> 2] = Ar;
+      int _li_AA = 0;
+      int _s0_arr2 = _args_i32_[16 + 2 * 8 + 0];
+      { // linear seek
+        _li_AA *= _s0_arr2;
+        _li_AA += D;
+      }
+      int AA = _li_AA << 2;
+      _arr2_f32_[AA >> 2] = Ar;
   }
 }
 

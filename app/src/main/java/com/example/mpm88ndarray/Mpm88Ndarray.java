@@ -42,10 +42,13 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
     private long startTime;
 
+    // Render or test max fps.
+    private final boolean SHOW_MAX_FPS = false;
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = true;
+    private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
-    private int NDARRAY_SIZE = 6;
+    // Remember to change location in parseJsonData when changing to mpm_int.
+    private int NDARRAY_SIZE = 7;
     private int NDARRAY_NUM_PARTICLE = 4096;
     private final int NDARRAY_NUM_GRID = 64;
 
@@ -101,6 +104,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         init();
 
         startTime = System.nanoTime();
+
+        int [] temp = new int[1];
+        GLES32.glGetIntegerv(GLES32.GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS, temp, 0);
+        Log.d("BINDING", "onSurfaceCreated: " + temp[0]);
     }
 
     @Override
@@ -116,17 +123,27 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
 
-        //for (int i = 0; i < 10000; i++) {
-        substep(SUBSTEP);
+        if (SHOW_MAX_FPS) {
+            for (int i = 0; i < 10000; i++) {
+                substep(SUBSTEP);
 
-        //GLES32.glFlush();
-        render();
+                GLES32.glFlush();
 
-        double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
-        Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
-        Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
-        startTime = System.nanoTime();
-        //}
+                double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
+                Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
+                Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
+                startTime = System.nanoTime();
+            }
+        } else {
+            substep(SUBSTEP);
+
+            render();
+
+            double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
+            Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
+            Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
+            startTime = System.nanoTime();
+        }
     }
 
     private void fillData() {
