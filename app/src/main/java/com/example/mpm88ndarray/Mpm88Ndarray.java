@@ -45,12 +45,12 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     // Render or test max fps.
     private final boolean SHOW_MAX_FPS = true;
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = true;
+    private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     // Remember to change location in parseJsonData when changing to mpm_int.
-    private int NDARRAY_SIZE = 7;
+    private int NDARRAY_SIZE = 6;
     private int NDARRAY_NUM_PARTICLE = 4096;
-    private final int NDARRAY_NUM_GRID = 64;
+    private final int NDARRAY_NUM_GRID = 96;
 
     private final int SUBSTEP = 25;
     private final String[] kernel_names = {"init", "substep"};

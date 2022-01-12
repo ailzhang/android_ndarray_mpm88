@@ -3,19 +3,19 @@
   "kernels": {"substep": {
       "tasks": [{
           "name": "substep_c44_00",
-          "src": "mpm99_no_nv_extension/substep_c44_00.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_00.glsl",
           "workgroup_size": 128,
-          "num_groups": 32},{
+          "num_groups": 128},{
           "name": "substep_c44_01",
-          "src": "mpm99_no_nv_extension/substep_c44_01.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_01.glsl",
           "workgroup_size": 128,
           "num_groups": 32},{
           "name": "substep_c44_02",
-          "src": "mpm99_no_nv_extension/substep_c44_02.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_02.glsl",
           "workgroup_size": 128,
-          "num_groups": 32},{
+          "num_groups": 128},{
           "name": "substep_c44_03",
-          "src": "mpm99_no_nv_extension/substep_c44_03.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_03.glsl",
           "workgroup_size": 128,
           "num_groups": 32}],
       "arg_count": 0,
@@ -27,7 +27,7 @@
       "used.arr_arg_to_bind_idx": {}},"init": {
       "tasks": [{
           "name": "init_c46_00",
-          "src": "mpm99_no_nv_extension/init_c46_00.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/init_c46_00.glsl",
           "workgroup_size": 128,
           "num_groups": 32}],
       "arg_count": 0,
@@ -42,7 +42,7 @@
       "field_name": "x",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 32768,
+      "mem_offset_in_parent": 16384,
       "shape": [4096],
       "is_scalar": false,
       "row_num": 1,
@@ -50,7 +50,7 @@
       "field_name": "v",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 65536,
+      "mem_offset_in_parent": 49152,
       "shape": [4096],
       "is_scalar": false,
       "row_num": 1,
@@ -58,7 +58,7 @@
       "field_name": "C",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 131072,
+      "mem_offset_in_parent": 81920,
       "shape": [4096],
       "is_scalar": false,
       "row_num": 2,
@@ -71,20 +71,20 @@
       "is_scalar": true,
       "row_num": 1,
       "column_num": 1},{
-      "field_name": "grid_v_int",
-      "dtype": 5124,
-      "dtype_name": "i32",
-      "mem_offset_in_parent": 98304,
-      "shape": [64,64],
+      "field_name": "grid_v",
+      "dtype": 5126,
+      "dtype_name": "f32",
+      "mem_offset_in_parent": 212992,
+      "shape": [96,96],
       "is_scalar": false,
       "row_num": 1,
       "column_num": 2},{
-      "field_name": "grid_m_int",
-      "dtype": 5124,
-      "dtype_name": "i32",
-      "mem_offset_in_parent": 16384,
-      "shape": [64,64],
+      "field_name": "grid_m",
+      "dtype": 5126,
+      "dtype_name": "f32",
+      "mem_offset_in_parent": 147456,
+      "shape": [96,96],
       "is_scalar": true,
       "row_num": 1,
       "column_num": 1}],
-  "root_buffer_size": 262144}}
+  "root_buffer_size": 344064}}
