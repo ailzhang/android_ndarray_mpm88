@@ -4,18 +4,22 @@
       "tasks": [{
           "name": "substep_c44_00",
           "src": "aot/mpm88_ndarray_no_nv_extension/substep_c44_00.glsl",
-          "workgroup_size": 128,
-          "num_groups": 128},{
+          "workgroup_size": 1,
+          "num_groups": 1},{
           "name": "substep_c44_01",
           "src": "aot/mpm88_ndarray_no_nv_extension/substep_c44_01.glsl",
           "workgroup_size": 128,
-          "num_groups": 64},{
+          "num_groups": 128},{
           "name": "substep_c44_02",
           "src": "aot/mpm88_ndarray_no_nv_extension/substep_c44_02.glsl",
           "workgroup_size": 128,
-          "num_groups": 128},{
+          "num_groups": 64},{
           "name": "substep_c44_03",
           "src": "aot/mpm88_ndarray_no_nv_extension/substep_c44_03.glsl",
+          "workgroup_size": 128,
+          "num_groups": 128},{
+          "name": "substep_c44_04",
+          "src": "aot/mpm88_ndarray_no_nv_extension/substep_c44_04.glsl",
           "workgroup_size": 128,
           "num_groups": 64}],
       "arg_count": 6,

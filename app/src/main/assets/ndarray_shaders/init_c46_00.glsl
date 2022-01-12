@@ -23,6 +23,7 @@ void init_c46_00()
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
+      int B = _args_i32_[16 + 0 * 8 + 0];
       int C = _itv;
       int D = C - B * int(C / B);
       float E = _rand_f32();
@@ -34,33 +35,58 @@ void init_c46_00()
       float K = F * G;
       float L = K + I;
       int N = int(0);
+      int _li_O = 0;
       int _s0_arr0 = _args_i32_[16 + 0 * 8 + 0];
       int _s1_arr0 = _args_i32_[16 + 0 * 8 + 1];
-      int O = D;
-      O *= _s1_arr0;
-      O += N;
-      _arr0_f32_[O] = J;
+      { // linear seek
+        _li_O *= _s0_arr0;
+        _li_O += D;
+        _li_O *= _s1_arr0;
+        _li_O += N;
+      }
+      int O = _li_O << 2;
+      _arr0_f32_[O >> 2] = J;
       int Q = int(1);
-      int R = D;
-      R *= _s1_arr0;
-      R += Q;
-      _arr0_f32_[R] = L;
+      int _li_R = 0;
+      { // linear seek
+        _li_R *= _s0_arr0;
+        _li_R += D;
+        _li_R *= _s1_arr0;
+        _li_R += Q;
+      }
+      int R = _li_R << 2;
+      _arr0_f32_[R >> 2] = L;
+      int _li_U = 0;
       int _s0_arr1 = _args_i32_[16 + 1 * 8 + 0];
       int _s1_arr1 = _args_i32_[16 + 1 * 8 + 1];
-      int U = D;
-      U *= _s1_arr1;
-      U += N;
+      { // linear seek
+        _li_U *= _s0_arr1;
+        _li_U += D;
+        _li_U *= _s1_arr1;
+        _li_U += N;
+      }
+      int U = _li_U << 2;
       float V = float(0.0);
-      _arr1_f32_[U] = V;
-      int X = D;
-      X *= _s1_arr1;
-      X += Q;
+      _arr1_f32_[U >> 2] = V;
+      int _li_X = 0;
+      { // linear seek
+        _li_X *= _s0_arr1;
+        _li_X += D;
+        _li_X *= _s1_arr1;
+        _li_X += Q;
+      }
+      int X = _li_X << 2;
       float Y = float(-1.0);
-      _arr1_f32_[X] = Y;
+      _arr1_f32_[X >> 2] = Y;
+      int _li_Ar = 0;
       int _s0_arr2 = _args_i32_[16 + 2 * 8 + 0];
-      int Ar = D;
+      { // linear seek
+        _li_Ar *= _s0_arr2;
+        _li_Ar += D;
+      }
+      int Ar = _li_Ar << 2;
       float As = float(1.0);
-      _arr2_f32_[Ar] = As;
+      _arr2_f32_[Ar >> 2] = As;
   }
 }
 
