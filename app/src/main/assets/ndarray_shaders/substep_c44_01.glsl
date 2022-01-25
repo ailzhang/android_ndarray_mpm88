@@ -26,20 +26,22 @@ void substep_c44_01()
   int _s1_arr3 = 2;
   int _s2_arr3 = 2;
   int _s2_arr4 = 2;
-  int U = _args_i32_[16 + 0 * 8 + 0];
+  //int U = _args_i32_[16 + 0 * 8 + 0];
+  int U = 8192;
   int _beg = 0, _end = U;
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
       int V = _itv;
-      int W = V - U * int(V / U);
+      //int W = V - U * int(V / U);
+      int W = V & 8191;
       int Y = int(0);
       int Z = W;
       Z *= _s1_arr0;
       Z += Y;
       float Aq = _arr0_f32_[Z];
-      int Ar = _args_i32_[16 + 4 * 8 + 0];
-      float As = float(Ar);
+      //int Ar = _args_i32_[16 + 4 * 8 + 0];
+      float As = float(128);
       float At = Aq * As;
       int Au = int(1);
       int Av = Z + Au;
@@ -101,6 +103,7 @@ void substep_c44_01()
       Bo *= _s2_arr3;
       Bo += Y;
       float Bp = _arr3_f32_[Bo];
+      Ba = float(1.5258789e-05);
       float Bq = Ba * Bp;
       int Br = Bo + Au;
       float Bs = _arr3_f32_[Br];
@@ -140,7 +143,8 @@ void substep_c44_01()
       float BW = BO + BU;
       float BX = BH * BV;
       float BY = BH * BW;
-      int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
+      //int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
+      int _s1_arr4 =  128;
       int C0 = AB;
       int CAB = C0 * _s1_arr4;
       C0 = CAB + AC;
@@ -156,261 +160,14 @@ void substep_c44_01()
       C3 = atomicAdd_arr4_f32(C2, BY);
       } // End Atomic Op
       float C4 = BH * Ba;
-      int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
+      //int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
+      int _s1_arr5 = 128;
       int C6 = AB;
       C6 *= _s1_arr5;
       C6 += AC;
       float C7;
       { // Begin Atomic Op
       C7 = atomicAdd_arr5_f32(C6, C4);
-      } // End Atomic Op
-      float C8 = AO - AG;
-      float C9 = C8 * B8;
-      float Ca = AM * AV;
-      int Cb = AC + Au;
-      float Cc = Bt * C9;
-      float Cd = BP + Cc;
-      float Ce = BB * C9;
-      float Cf = BS + Ce;
-      float Cg = BL + Cd;
-      float Ch = BO + Cf;
-      float Ci = Ca * Cg;
-      float Cj = Ca * Ch;
-      int Ck = CAB + Cb;
-      Ck *= _s2_arr4;
-      Ck += Y;
-      float Cl;
-      { // Begin Atomic Op
-      Cl = atomicAdd_arr4_f32(Ck, Ci);
-      } // End Atomic Op
-      int Cm = Ck + Au;
-      float Cn;
-      { // Begin Atomic Op
-      Cn = atomicAdd_arr4_f32(Cm, Cj);
-      } // End Atomic Op
-      float Co = Ca * Ba;
-      int Cp = AB;
-      Cp *= _s1_arr5;
-      Cp += Cb;
-      float Cq;
-      { // Begin Atomic Op
-      Cq = atomicAdd_arr5_f32(Cp, Co);
-      } // End Atomic Op
-      float Cr = float(2.0);
-      float Cs = Cr - AG;
-      float Ct = Cs * B8;
-      float Cu = AM * B1;
-      int Cv = int(2);
-      int Cw = AC + Cv;
-      float Cx = Bt * Ct;
-      float Cy = BP + Cx;
-      float Cz = BB * Ct;
-      float CA = BS + Cz;
-      float CB = BL + Cy;
-      float CC = BO + CA;
-      float CD = Cu * CB;
-      float CE = Cu * CC;
-      int CF = CAB + Cw;
-      CF *= _s2_arr4;
-      CF += Y;
-      float CG;
-      { // Begin Atomic Op
-      CG = atomicAdd_arr4_f32(CF, CD);
-      } // End Atomic Op
-      int CH = CF + Au;
-      float CI;
-      { // Begin Atomic Op
-      CI = atomicAdd_arr4_f32(CH, CE);
-      } // End Atomic Op
-      float CJ = Cu * Ba;
-      int CK = AB;
-      CK *= _s1_arr5;
-      CK += Cw;
-      float CL;
-      { // Begin Atomic Op
-      CL = atomicAdd_arr5_f32(CK, CJ);
-      } // End Atomic Op
-      float CM = AO - AF;
-      float CN = CM * B8;
-      float CO = AU * AN;
-      int CP = AB + Au;
-      float CQ = BA * CN;
-      float CR = CQ + BQ;
-      float CS = Bw * CN;
-      float CT = CS + BT;
-      float CU = BL + CR;
-      float CV = BO + CT;
-      float CW = CO * CU;
-      float CX = CO * CV;
-      int CY = CP;
-      int CYP = CY * _s1_arr4;
-      CY = CYP + AC;
-      CY *= _s2_arr4;
-      CY += Y;
-      float CZ;
-      { // Begin Atomic Op
-      CZ = atomicAdd_arr4_f32(CY, CW);
-      } // End Atomic Op
-      int D0 = CY + Au;
-      float D1;
-      { // Begin Atomic Op
-      D1 = atomicAdd_arr4_f32(D0, CX);
-      } // End Atomic Op
-      float D2 = CO * Ba;
-      int D3 = CP;
-      D3 *= _s1_arr5;
-      D3 += AC;
-      float D4;
-      { // Begin Atomic Op
-      D4 = atomicAdd_arr5_f32(D3, D2);
-      } // End Atomic Op
-      float D5 = AU * AV;
-      float D6 = CQ + Cc;
-      float D7 = CS + Ce;
-      float D8 = BL + D6;
-      float D9 = BO + D7;
-      float Da = D5 * D8;
-      float Db = D5 * D9;
-      //int Dc = CP;
-      //Dc *= _s1_arr4;
-      int Dc = CYP + Cb;
-      Dc *= _s2_arr4;
-      Dc += Y;
-      float Dd;
-      { // Begin Atomic Op
-      Dd = atomicAdd_arr4_f32(Dc, Da);
-      } // End Atomic Op
-      int De = Dc + Au;
-      float Df;
-      { // Begin Atomic Op
-      Df = atomicAdd_arr4_f32(De, Db);
-      } // End Atomic Op
-      float Dg = D5 * Ba;
-      int Dh = CP;
-      Dh *= _s1_arr5;
-      Dh += Cb;
-      float Di;
-      { // Begin Atomic Op
-      Di = atomicAdd_arr5_f32(Dh, Dg);
-      } // End Atomic Op
-      float Dj = AU * B1;
-      float Dk = CQ + Cx;
-      float Dl = CS + Cz;
-      float Dm = BL + Dk;
-      float Dn = BO + Dl;
-      float Do = Dj * Dm;
-      float Dp = Dj * Dn;
-      //int Dq = CP;
-      //Dq *= _s1_arr4;
-      int Dq = CYP + Cw;
-      Dq *= _s2_arr4;
-      Dq += Y;
-      float Dr;
-      { // Begin Atomic Op
-      Dr = atomicAdd_arr4_f32(Dq, Do);
-      } // End Atomic Op
-      int Ds = Dq + Au;
-      float Dt;
-      { // Begin Atomic Op
-      Dt = atomicAdd_arr4_f32(Ds, Dp);
-      } // End Atomic Op
-      float Du = Dj * Ba;
-      int Dv = CP;
-      Dv *= _s1_arr5;
-      Dv += Cw;
-      float Dw;
-      { // Begin Atomic Op
-      Dw = atomicAdd_arr5_f32(Dv, Du);
-      } // End Atomic Op
-      float Dx = Cr - AF;
-      float Dy = Dx * B8;
-      float Dz = B0 * AN;
-      int DA = AB + Cv;
-      float DB = BA * Dy;
-      float DC = DB + BQ;
-      float DD = Bw * Dy;
-      float DE = DD + BT;
-      float DF = BL + DC;
-      float DG = BO + DE;
-      float DH = Dz * DF;
-      float DI = Dz * DG;
-      //int DJ = DA;
-      int DJA = DA * _s1_arr4;
-      int DJ = DJA + AC;
-      DJ *= _s2_arr4;
-      DJ += Y;
-      float DK;
-      { // Begin Atomic Op
-      DK = atomicAdd_arr4_f32(DJ, DH);
-      } // End Atomic Op
-      int DL = DJ + Au;
-      float DM;
-      { // Begin Atomic Op
-      DM = atomicAdd_arr4_f32(DL, DI);
-      } // End Atomic Op
-      float DN = Dz * Ba;
-      int DO = DA;
-      DO *= _s1_arr5;
-      DO += AC;
-      float DP;
-      { // Begin Atomic Op
-      DP = atomicAdd_arr5_f32(DO, DN);
-      } // End Atomic Op
-      float DQ = B0 * AV;
-      float DR = DB + Cc;
-      float DS = DD + Ce;
-      float DT = BL + DR;
-      float DU = BO + DS;
-      float DV = DQ * DT;
-      float DW = DQ * DU;
-      //int DX = DA;
-      //DX *= _s1_arr4;
-      int DX = DJA + Cb;
-      DX *= _s2_arr4;
-      DX += Y;
-      float DY;
-      { // Begin Atomic Op
-      DY = atomicAdd_arr4_f32(DX, DV);
-      } // End Atomic Op
-      int DZ = DX + Au;
-      float E0;
-      { // Begin Atomic Op
-      E0 = atomicAdd_arr4_f32(DZ, DW);
-      } // End Atomic Op
-      float E1 = DQ * Ba;
-      int E2 = DA;
-      E2 *= _s1_arr5;
-      E2 += Cb;
-      float E3;
-      { // Begin Atomic Op
-      E3 = atomicAdd_arr5_f32(E2, E1);
-      } // End Atomic Op
-      float E4 = B0 * B1;
-      float E5 = DB + Cx;
-      float E6 = DD + Cz;
-      float E7 = BL + E5;
-      float E8 = BO + E6;
-      float E9 = E4 * E7;
-      float Ea = E4 * E8;
-      int Eb = DJA + Cw;
-      Eb *= _s2_arr4;
-      Eb += Y;
-      float Ec;
-      { // Begin Atomic Op
-      Ec = atomicAdd_arr4_f32(Eb, E9);
-      } // End Atomic Op
-      int Ed = Eb + Au;
-      float Ee;
-      { // Begin Atomic Op
-      Ee = atomicAdd_arr4_f32(Ed, Ea);
-      } // End Atomic Op
-      float Ef = E4 * Ba;
-      int Eg = DA;
-      Eg *= _s1_arr5;
-      Eg += Cw;
-      float Eh;
-      { // Begin Atomic Op
-      Eh = atomicAdd_arr5_f32(Eg, Ef);
       } // End Atomic Op
   }
 }
