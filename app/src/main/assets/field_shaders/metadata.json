@@ -3,21 +3,21 @@
   "kernels": {"substep": {
       "tasks": [{
           "name": "substep_c44_00",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_00.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_00.glsl",
           "workgroup_size": 128,
-          "num_groups": 32},{
+          "num_groups": 128},{
           "name": "substep_c44_01",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_01.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_01.glsl",
           "workgroup_size": 128,
-          "num_groups": 32},{
+          "num_groups": 64},{
           "name": "substep_c44_02",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_02.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_02.glsl",
           "workgroup_size": 128,
-          "num_groups": 32},{
+          "num_groups": 128},{
           "name": "substep_c44_03",
-          "src": "aot/mpm88_no_nv_extension/substep_c44_03.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/substep_c44_03.glsl",
           "workgroup_size": 128,
-          "num_groups": 32}],
+          "num_groups": 64}],
       "arg_count": 0,
       "ret_count": 0,
       "args_buf_size": 0,
@@ -27,9 +27,9 @@
       "used.arr_arg_to_bind_idx": {}},"init": {
       "tasks": [{
           "name": "init_c46_00",
-          "src": "aot/mpm88_no_nv_extension/init_c46_00.glsl",
+          "src": "data/aot/mpm88_no_nv_extension/init_c46_00.glsl",
           "workgroup_size": 128,
-          "num_groups": 32}],
+          "num_groups": 64}],
       "arg_count": 0,
       "ret_count": 0,
       "args_buf_size": 0,
@@ -43,48 +43,42 @@
       "dtype": 5126,
       "dtype_name": "f32",
       "mem_offset_in_parent": 32768,
-      "shape": [4096],
+      "shape": [8192],
       "is_scalar": false,
-      "row_num": 1,
-      "column_num": 2},{
+      "element_shape": [1,2]},{
       "field_name": "v",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 65536,
-      "shape": [4096],
+      "mem_offset_in_parent": 98304,
+      "shape": [8192],
       "is_scalar": false,
-      "row_num": 1,
-      "column_num": 2},{
+      "element_shape": [1,2]},{
       "field_name": "C",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 131072,
-      "shape": [4096],
+      "mem_offset_in_parent": 229376,
+      "shape": [8192],
       "is_scalar": false,
-      "row_num": 2,
-      "column_num": 2},{
+      "element_shape": [2,2]},{
       "field_name": "J",
       "dtype": 5126,
       "dtype_name": "f32",
       "mem_offset_in_parent": 0,
-      "shape": [4096],
+      "shape": [8192],
       "is_scalar": true,
-      "row_num": 1,
-      "column_num": 1},{
+      "element_shape": []},{
       "field_name": "grid_v",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 98304,
-      "shape": [64,64],
+      "mem_offset_in_parent": 360448,
+      "shape": [128,128],
       "is_scalar": false,
-      "row_num": 1,
-      "column_num": 2},{
+      "element_shape": [1,2]},{
       "field_name": "grid_m",
       "dtype": 5126,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 16384,
-      "shape": [64,64],
+      "mem_offset_in_parent": 163840,
+      "shape": [128,128],
       "is_scalar": true,
-      "row_num": 1,
-      "column_num": 1}],
-  "root_buffer_size": 196608}}
+      "element_shape": []}],
+  "root_buffer_size": 491520}}

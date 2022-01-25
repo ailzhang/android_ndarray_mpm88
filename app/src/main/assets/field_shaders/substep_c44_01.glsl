@@ -10,20 +10,20 @@ void substep_c44_01()
 { // range for
   // range known at compile time
   int _sid0 = int(gl_GlobalInvocationID.x);
-  for (int _sid = _sid0; _sid < (4096); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
+  for (int _sid = _sid0; _sid < (8192); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
       int W = _itv;
       int BTS = 0;
       int CjT = int(0);
-      int BTU = BTS + 196608 * CjT; // S0
+      int BTU = BTS + 491520 * CjT; // S0
       int BTV = BTU + 32768; // S1
-      int Cu2 = int(4095);
+      int Cu2 = int(8191);
       int CtN = W & Cu2;
       int CjV = int(1);
       int BTY = BTV + 8 * CtN; // S1
       int BTZ = BTY + 0; // S2
       float At = _data_f32_[BTZ >> 2];
-      float Au = float(64.0);
+      float Au = float(128.0);
       float Av = At * Au;
       int BU9 = BTY + 4; // S3
       float Ax = _data_f32_[BU9 >> 2];
@@ -65,11 +65,11 @@ void substep_c44_01()
       float B5 = B4 - AP;
       float B6 = float(-0.08);
       float B7 = B5 * B6;
-      int BUp = BTU + 131072; // S7
+      int BUp = BTU + 229376; // S7
       int BUs = BUp + 16 * CtN; // S7
       int BUt = BUs + 0; // S8
       float B9 = _data_f32_[BUt >> 2];
-      float Ba = float(6.1035156e-05);
+      float Ba = float(1.5258789e-05);
       float Bb = B9 * Ba;
       int BUD = BUs + 4; // S9
       float Bd = _data_f32_[BUD >> 2];
@@ -85,11 +85,11 @@ void substep_c44_01()
       float Bn = float(0.0);
       float Bo = Bn - AF;
       float Bp = Bn - AH;
-      float Bq = float(0.015625);
+      float Bq = float(0.0078125);
       float Br = Bo * Bq;
       float Bs = Bp * Bq;
       float Bt = AN * AO;
-      int BV3 = BTU + 65536; // S4
+      int BV3 = BTU + 98304; // S4
       int BV6 = BV3 + 8 * CtN; // S4
       int BV7 = BV6 + 0; // S5
       float Bv = _data_f32_[BV7 >> 2];
@@ -107,11 +107,11 @@ void substep_c44_01()
       float BH = Bz + BF;
       float BI = Bt * BG;
       float BJ = Bt * BH;
-      int BVo = BTU + 98304; // S14
-      int Caz = int(63);
+      int BVo = BTU + 360448; // S14
+      int Caz = int(127);
       int CaA = AC & Caz;
       int CaE = AD & Caz;
-      int Cu8 = int(6);
+      int Cu8 = int(7);
       int Cu9 = CaA << Cu8;
       int CkJ = CaE + Cu9;
       int BVs = BVo + 8 * CkJ; // S14
@@ -126,7 +126,7 @@ void substep_c44_01()
       BN = atomicAdd_data_f32(BVF >> 2, BJ);
       } // End Atomic Op
       float BO = Bt * Ba;
-      int BVM = BTU + 16384; // S17
+      int BVM = BTU + 163840; // S17
       int BVQ = BVM + 4 * CkJ; // S17
       int BVR = BVQ + 0; // S18
       float BQ;

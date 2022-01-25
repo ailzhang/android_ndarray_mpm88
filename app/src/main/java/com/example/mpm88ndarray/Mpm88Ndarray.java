@@ -43,13 +43,13 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private long startTime;
 
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = true;
+    private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     private int NDARRAY_SIZE = 6;
-    private int NDARRAY_NUM_PARTICLE = 4096;
-    private final int NDARRAY_NUM_GRID = 64;
+    private int NDARRAY_NUM_PARTICLE = 8192;
+    private final int NDARRAY_NUM_GRID = 128;
 
-    private final int SUBSTEP = 25;
+    private final int SUBSTEP = 50;
     private final String[] kernel_names = {"init", "substep"};
 
     public Mpm88Ndarray(Context _context) {
@@ -79,7 +79,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         if (!USE_NDARRAY) {
             NDARRAY_SIZE = 0;
             // Field has fixed particle size, so we hack here for field version.
-            NDARRAY_NUM_PARTICLE = 4096;
+            NDARRAY_NUM_PARTICLE = 8192;
         }
         // -----------------------------------------------------------------------------------------
         // Parse Json data.
@@ -119,12 +119,12 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         //for (int i = 0; i < 10000; i++) {
         substep(SUBSTEP);
 
-        //GLES32.glFlush();
-        render();
+        GLES32.glFlush();
+//        render();
 
         double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
         Log.d("SUBSTEP_TIME", "" + substep_time * 1e6 + "us");
-        Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
+//        Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
         startTime = System.nanoTime();
         //}
     }

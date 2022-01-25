@@ -10,19 +10,19 @@ void substep_c44_02()
 { // range for
   // range known at compile time
   int _sid0 = int(gl_GlobalInvocationID.x);
-  for (int _sid = _sid0; _sid < (4096); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
+  for (int _sid = _sid0; _sid < (16384); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
-      int Cgb = int(63);
+      int Cgb = int(127);
       int E5 = _itv;
-      int Ce1 = int(6);
+      int Ce1 = int(7);
       int Ce2 = E5 >> Ce1;
       int Ce4 = Ce2 & Cgb;
       int Ce8 = E5 & Cgb;
       float Ef = float(0.0);
       int C0z = 0;
       int Co6 = int(0);
-      int C0B = C0z + 196608 * Co6; // S0
-      int C0C = C0B + 16384; // S17
+      int C0B = C0z + 491520 * Co6; // S0
+      int C0C = C0B + 163840; // S17
       int Co8 = int(1);
       int Cuf = Ce4 << Ce1;
       int Cod = Ce8 + Cuf;
@@ -33,7 +33,7 @@ void substep_c44_02()
       int Ek = Ei & Co8;
       if (Ek != 0) {
         float Em = _data_f32_[C0H >> 2];
-        int C10 = C0B + 98304; // S14
+        int C10 = C0B + 360448; // S14
         int C14 = C10 + 8 * Cod; // S14
         int C15 = C14 + 0; // S15
         float Eo = _data_f32_[C15 >> 2];
@@ -45,7 +45,7 @@ void substep_c44_02()
         _data_f32_[C1h >> 2] = Es;
       }
       float Ew = float(-0.00196);
-      int C1M = C0B + 98304; // S14
+      int C1M = C0B + 360448; // S14
       int C1Q = C1M + 8 * Cod; // S14
       int C1R = C1Q + 4; // S16
       float Ex = _data_f32_[C1R >> 2];
@@ -62,7 +62,7 @@ void substep_c44_02()
       if (EH != 0) {
         _data_f32_[C2f >> 2] = Ef;
       }
-      int EK = int(61);
+      int EK = int(125);
       int EL = -int(Ce4 > EK);
       int EM = EL & Co8;
       float EN = _data_f32_[C2f >> 2];
