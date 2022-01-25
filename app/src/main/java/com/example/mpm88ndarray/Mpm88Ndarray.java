@@ -196,7 +196,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
         for (int i = 0; i < step; i++) {
 //            int end = substep_kernel.length;
-            int end = 2;
+            int end = 1;
             for (int j = 0; j < end; j++) {
                 GLES32.glUseProgram(substep_kernel[j].getShader_program());
                 GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);

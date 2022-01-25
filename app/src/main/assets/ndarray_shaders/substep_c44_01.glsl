@@ -152,23 +152,9 @@ void substep_c44_01()
       C0 += Y;
       float C1;
       { // Begin Atomic Op
-      C1 = atomicAdd_arr4_f32(C0, BX);
+      //C1 = atomicAdd_arr4_f32(C0, BX);
       } // End Atomic Op
-      int C2 = C0 + Au;
-      float C3;
-      { // Begin Atomic Op
-      C3 = atomicAdd_arr4_f32(C2, BY);
-      } // End Atomic Op
-      float C4 = BH * Ba;
-      //int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
-      int _s1_arr5 = 128;
-      int C6 = AB;
-      C6 *= _s1_arr5;
-      C6 += AC;
-      float C7;
-      { // Begin Atomic Op
-      C7 = atomicAdd_arr5_f32(C6, C4);
-      } // End Atomic Op
+
   }
 }
 

@@ -13,8 +13,11 @@ const float nan = 0.0f / 0.0f;
 void substep_c44_00()
 { // range for
   // range from args buffer
+  //int B = 128;
+  //int C = 128;
   int B = _args_i32_[16 + 5 * 8 + 0];
   int C = _args_i32_[16 + 5 * 8 + 1];
+
   int D = B * C;
   int _beg = 0, _end = D;
   int _sid0 = int(gl_GlobalInvocationID.x);
@@ -26,9 +29,10 @@ void substep_c44_00()
       int G = E / C;
       int H = G - B * int(G / B);
       int J = int(0);
-      int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
       int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
+      //int _s1_arr4 = 128;
       int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
+      //int _s2_arr4 = 2;
       int K = H;
       K *= _s1_arr4;
       K += F;
@@ -43,8 +47,8 @@ void substep_c44_00()
       O *= _s2_arr4;
       O += N;
       _arr4_f32_[O] = L;
-      int _s0_arr5 = _args_i32_[16 + 5 * 8 + 0];
       int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
+      //int _s1_arr5 = 128;
       int R = H;
       R *= _s1_arr5;
       R += F;
