@@ -21,6 +21,11 @@ const float nan = 0.0f / 0.0f;
 void substep_c44_01()
 { // range for
   // range from args buffer
+  int _s1_arr0 = 2;
+  int _s1_arr1 = 2;
+  int _s1_arr3 = 2;
+  int _s2_arr3 = 2;
+  int _s2_arr4 = 2;
   int U = _args_i32_[16 + 0 * 8 + 0];
   int _beg = 0, _end = U;
   int _sid0 = int(gl_GlobalInvocationID.x);
@@ -29,8 +34,6 @@ void substep_c44_01()
       int V = _itv;
       int W = V - U * int(V / U);
       int Y = int(0);
-      int _s0_arr0 = _args_i32_[16 + 0 * 8 + 0];
-      int _s1_arr0 = _args_i32_[16 + 0 * 8 + 1];
       int Z = W;
       Z *= _s1_arr0;
       Z += Y;
@@ -39,9 +42,7 @@ void substep_c44_01()
       float As = float(Ar);
       float At = Aq * As;
       int Au = int(1);
-      int Av = W;
-      Av *= _s1_arr0;
-      Av += Au;
+      int Av = Z + Au;
       float Aw = _arr0_f32_[Av];
       float Ax = Aw * As;
       float Ay = float(0.5);
@@ -84,7 +85,6 @@ void substep_c44_01()
       float B9 = B8 * Ay;
       float Ba = B9 * B9;
       float Bb = B7 * Ba;
-      int _s0_arr2 = _args_i32_[16 + 2 * 8 + 0];
       int Bd = W;
       float Be = _arr2_f32_[Bd];
       float Bf = Be - AO;
@@ -95,35 +95,23 @@ void substep_c44_01()
       float Bk = Bj * As;
       float Bl = float(400.0);
       float Bm = Bk * Bl;
-      int _s0_arr3 = _args_i32_[16 + 3 * 8 + 0];
-      int _s1_arr3 = _args_i32_[16 + 3 * 8 + 1];
-      int _s2_arr3 = _args_i32_[16 + 3 * 8 + 2];
       int Bo = W;
-      Bo *= _s1_arr3;
-      Bo += Y;
+      int Boo = Bo * _s1_arr3;
+      Bo = Boo + Y;
       Bo *= _s2_arr3;
       Bo += Y;
       float Bp = _arr3_f32_[Bo];
       float Bq = Ba * Bp;
-      int Br = W;
-      Br *= _s1_arr3;
-      Br += Y;
-      Br *= _s2_arr3;
-      Br += Au;
+      int Br = Bo + Au;
       float Bs = _arr3_f32_[Br];
       float Bt = Ba * Bs;
-      int Bu = W;
-      Bu *= _s1_arr3;
+      int Bu = Boo;
       Bu += Au;
       Bu *= _s2_arr3;
       Bu += Y;
       float Bv = _arr3_f32_[Bu];
       float Bw = Ba * Bv;
-      int Bx = W;
-      Bx *= _s1_arr3;
-      Bx += Au;
-      Bx *= _s2_arr3;
-      Bx += Au;
+      int Bx = Bu + Au;
       float By = _arr3_f32_[Bx];
       float Bz = Ba * By;
       float BA = Bm + Bq;
@@ -134,16 +122,12 @@ void substep_c44_01()
       float BF = BD * B8;
       float BG = BE * B8;
       float BH = AM * AN;
-      int _s0_arr1 = _args_i32_[16 + 1 * 8 + 0];
-      int _s1_arr1 = _args_i32_[16 + 1 * 8 + 1];
       int BJ = W;
       BJ *= _s1_arr1;
       BJ += Y;
       float BK = _arr1_f32_[BJ];
       float BL = Ba * BK;
-      int BM = W;
-      BM *= _s1_arr1;
-      BM += Au;
+      int BM = BJ + Au;
       float BN = _arr1_f32_[BM];
       float BO = Ba * BN;
       float BP = BA * BF;
@@ -156,29 +140,22 @@ void substep_c44_01()
       float BW = BO + BU;
       float BX = BH * BV;
       float BY = BH * BW;
-      int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
       int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
-      int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
       int C0 = AB;
-      C0 *= _s1_arr4;
-      C0 += AC;
+      int CAB = C0 * _s1_arr4;
+      C0 = CAB + AC;
       C0 *= _s2_arr4;
       C0 += Y;
       float C1;
       { // Begin Atomic Op
       C1 = atomicAdd_arr4_f32(C0, BX);
       } // End Atomic Op
-      int C2 = AB;
-      C2 *= _s1_arr4;
-      C2 += AC;
-      C2 *= _s2_arr4;
-      C2 += Au;
+      int C2 = C0 + Au;
       float C3;
       { // Begin Atomic Op
       C3 = atomicAdd_arr4_f32(C2, BY);
       } // End Atomic Op
       float C4 = BH * Ba;
-      int _s0_arr5 = _args_i32_[16 + 5 * 8 + 0];
       int _s1_arr5 = _args_i32_[16 + 5 * 8 + 1];
       int C6 = AB;
       C6 *= _s1_arr5;
@@ -199,20 +176,14 @@ void substep_c44_01()
       float Ch = BO + Cf;
       float Ci = Ca * Cg;
       float Cj = Ca * Ch;
-      int Ck = AB;
-      Ck *= _s1_arr4;
-      Ck += Cb;
+      int Ck = CAB + Cb;
       Ck *= _s2_arr4;
       Ck += Y;
       float Cl;
       { // Begin Atomic Op
       Cl = atomicAdd_arr4_f32(Ck, Ci);
       } // End Atomic Op
-      int Cm = AB;
-      Cm *= _s1_arr4;
-      Cm += Cb;
-      Cm *= _s2_arr4;
-      Cm += Au;
+      int Cm = Ck + Au;
       float Cn;
       { // Begin Atomic Op
       Cn = atomicAdd_arr4_f32(Cm, Cj);
@@ -239,20 +210,14 @@ void substep_c44_01()
       float CC = BO + CA;
       float CD = Cu * CB;
       float CE = Cu * CC;
-      int CF = AB;
-      CF *= _s1_arr4;
-      CF += Cw;
+      int CF = CAB + Cw;
       CF *= _s2_arr4;
       CF += Y;
       float CG;
       { // Begin Atomic Op
       CG = atomicAdd_arr4_f32(CF, CD);
       } // End Atomic Op
-      int CH = AB;
-      CH *= _s1_arr4;
-      CH += Cw;
-      CH *= _s2_arr4;
-      CH += Au;
+      int CH = CF + Au;
       float CI;
       { // Begin Atomic Op
       CI = atomicAdd_arr4_f32(CH, CE);
@@ -278,19 +243,15 @@ void substep_c44_01()
       float CW = CO * CU;
       float CX = CO * CV;
       int CY = CP;
-      CY *= _s1_arr4;
-      CY += AC;
+      int CYP = CY * _s1_arr4;
+      CY = CYP + AC;
       CY *= _s2_arr4;
       CY += Y;
       float CZ;
       { // Begin Atomic Op
       CZ = atomicAdd_arr4_f32(CY, CW);
       } // End Atomic Op
-      int D0 = CP;
-      D0 *= _s1_arr4;
-      D0 += AC;
-      D0 *= _s2_arr4;
-      D0 += Au;
+      int D0 = CY + Au;
       float D1;
       { // Begin Atomic Op
       D1 = atomicAdd_arr4_f32(D0, CX);
@@ -310,20 +271,16 @@ void substep_c44_01()
       float D9 = BO + D7;
       float Da = D5 * D8;
       float Db = D5 * D9;
-      int Dc = CP;
-      Dc *= _s1_arr4;
-      Dc += Cb;
+      //int Dc = CP;
+      //Dc *= _s1_arr4;
+      int Dc = CYP + Cb;
       Dc *= _s2_arr4;
       Dc += Y;
       float Dd;
       { // Begin Atomic Op
       Dd = atomicAdd_arr4_f32(Dc, Da);
       } // End Atomic Op
-      int De = CP;
-      De *= _s1_arr4;
-      De += Cb;
-      De *= _s2_arr4;
-      De += Au;
+      int De = Dc + Au;
       float Df;
       { // Begin Atomic Op
       Df = atomicAdd_arr4_f32(De, Db);
@@ -343,20 +300,16 @@ void substep_c44_01()
       float Dn = BO + Dl;
       float Do = Dj * Dm;
       float Dp = Dj * Dn;
-      int Dq = CP;
-      Dq *= _s1_arr4;
-      Dq += Cw;
+      //int Dq = CP;
+      //Dq *= _s1_arr4;
+      int Dq = CYP + Cw;
       Dq *= _s2_arr4;
       Dq += Y;
       float Dr;
       { // Begin Atomic Op
       Dr = atomicAdd_arr4_f32(Dq, Do);
       } // End Atomic Op
-      int Ds = CP;
-      Ds *= _s1_arr4;
-      Ds += Cw;
-      Ds *= _s2_arr4;
-      Ds += Au;
+      int Ds = Dq + Au;
       float Dt;
       { // Begin Atomic Op
       Dt = atomicAdd_arr4_f32(Ds, Dp);
@@ -381,20 +334,16 @@ void substep_c44_01()
       float DG = BO + DE;
       float DH = Dz * DF;
       float DI = Dz * DG;
-      int DJ = DA;
-      DJ *= _s1_arr4;
-      DJ += AC;
+      //int DJ = DA;
+      int DJA = DA * _s1_arr4;
+      int DJ = DJA + AC;
       DJ *= _s2_arr4;
       DJ += Y;
       float DK;
       { // Begin Atomic Op
       DK = atomicAdd_arr4_f32(DJ, DH);
       } // End Atomic Op
-      int DL = DA;
-      DL *= _s1_arr4;
-      DL += AC;
-      DL *= _s2_arr4;
-      DL += Au;
+      int DL = DJ + Au;
       float DM;
       { // Begin Atomic Op
       DM = atomicAdd_arr4_f32(DL, DI);
@@ -414,20 +363,16 @@ void substep_c44_01()
       float DU = BO + DS;
       float DV = DQ * DT;
       float DW = DQ * DU;
-      int DX = DA;
-      DX *= _s1_arr4;
-      DX += Cb;
+      //int DX = DA;
+      //DX *= _s1_arr4;
+      int DX = DJA + Cb;
       DX *= _s2_arr4;
       DX += Y;
       float DY;
       { // Begin Atomic Op
       DY = atomicAdd_arr4_f32(DX, DV);
       } // End Atomic Op
-      int DZ = DA;
-      DZ *= _s1_arr4;
-      DZ += Cb;
-      DZ *= _s2_arr4;
-      DZ += Au;
+      int DZ = DX + Au;
       float E0;
       { // Begin Atomic Op
       E0 = atomicAdd_arr4_f32(DZ, DW);
@@ -447,20 +392,14 @@ void substep_c44_01()
       float E8 = BO + E6;
       float E9 = E4 * E7;
       float Ea = E4 * E8;
-      int Eb = DA;
-      Eb *= _s1_arr4;
-      Eb += Cw;
+      int Eb = DJA + Cw;
       Eb *= _s2_arr4;
       Eb += Y;
       float Ec;
       { // Begin Atomic Op
       Ec = atomicAdd_arr4_f32(Eb, E9);
       } // End Atomic Op
-      int Ed = DA;
-      Ed *= _s1_arr4;
-      Ed += Cw;
-      Ed *= _s2_arr4;
-      Ed += Au;
+      int Ed = Eb + Au;
       float Ee;
       { // Begin Atomic Op
       Ee = atomicAdd_arr4_f32(Ed, Ea);
