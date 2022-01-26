@@ -35,7 +35,6 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private int arg_buf;
     private int color_buf;
     private Program[] programs;
-    private Ndarray[] ndarrays;
     private IntBuffer args;
     private FloatBuffer color;
     private String folder_name;
@@ -43,12 +42,11 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private long startTime;
 
     // Render or test max fps.
-    private final boolean SHOW_MAX_FPS = true;
+    private final boolean SHOW_MAX_FPS = false;
     // Args to set for runtime.
-    private final boolean USE_NDARRAY = true;
+    private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
     // Remember to change location in parseJsonData when changing to mpm_int.
-    private int NDARRAY_SIZE = 7;
     private int NDARRAY_NUM_PARTICLE = 4096;
     private final int NDARRAY_NUM_GRID = 64;
 
@@ -80,9 +78,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
 
         if (!USE_NDARRAY) {
-            NDARRAY_SIZE = 0;
             // Field has fixed particle size, so we hack here for field version.
-            NDARRAY_NUM_PARTICLE = 4096;
+            NDARRAY_NUM_PARTICLE = 8192;
         }
         // -----------------------------------------------------------------------------------------
         // Parse Json data.
@@ -97,10 +94,13 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         // Compile render shaders and link render program.
         compileRenderShaders();
         // Fill some data to buffers.
-        fillData();
+        fillColorData();
         // Generate SSBOs.
         generateSSBO();
         // Run init kernel once at the beginning.
+        if (USE_NDARRAY) {
+            fillArgData(0);
+        }
         init();
 
         startTime = System.nanoTime();
@@ -122,6 +122,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT);
 
         // Run substep kernel, pass in the number of substep you want to run per frame.
+        if (USE_NDARRAY) {
+            fillArgData(1);
+        }
 
         if (SHOW_MAX_FPS) {
             for (int i = 0; i < 10000; i++) {
@@ -146,7 +149,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
     }
 
-    private void fillData() {
+    private void fillArgData(int kernel_idx) {
+        Ndarray[] ndarrays = programs[kernel_idx].getNdarrays();
         // Fill shape info into arg buffer.
         int[] data = new int[8*8+16];
         for (int i = 0; i < ndarrays.length; i++) {
@@ -162,7 +166,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         }
         args = ByteBuffer.allocateDirect(data.length*4).order(ByteOrder.nativeOrder()).asIntBuffer();
         args.put(data).position(0);
+    }
 
+    private void fillColorData() {
         // Fill color info into color buffer.
         float[] data_v = new float[NDARRAY_NUM_PARTICLE *4];
         for (int i = 0; i < NDARRAY_NUM_PARTICLE *4; i++) {
@@ -179,22 +185,18 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 80, null, GLES32.GL_STATIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 64*5, args, GLES32.GL_STATIC_READ);
-        Integer[] bind_idx = programs[0].getBind_idx();
-        for (int i = 0; i < bind_idx.length; i++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], ndarrays[i].getSsbo());
-            if (!ndarrays[i].init) {
-                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[i].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
-                ndarrays[i].init = true;
-            }
-        }
+        Ndarray[] init_ndarrays = programs[0].getNdarrays();
         Kernel[] init_kernel = programs[0].getKernels();
+        for (int i = 0; i < init_ndarrays.length; i++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, init_ndarrays[i].getBind_idx(), init_ndarrays[i].getSsbo());
+        }
         for (int i = 0; i < init_kernel.length; i++) {
             GLES32.glUseProgram(init_kernel[i].getShader_program());
             GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
             GLES32.glDispatchCompute(init_kernel[i].getNum_groups(), 1, 1);
         }
-        for (int i = 0; i < bind_idx.length; i++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[i], 0);
+        for (int i = 0; i < init_ndarrays.length; i++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, init_ndarrays[i].getBind_idx(), 0);
         }
     }
 
@@ -202,14 +204,10 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, arg_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 64*5, args, GLES32.GL_STATIC_READ);
-        Integer[] bind_idx = programs[1].getBind_idx();
+        Ndarray[] substep_ndarrays = programs[1].getNdarrays();
         Kernel[] substep_kernel = programs[1].getKernels();
-        for (int j = 0; j < bind_idx.length; j++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], ndarrays[j].getSsbo());
-            if (!ndarrays[j].init) {
-                GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, ndarrays[j].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
-                ndarrays[j].init = true;
-            }
+        for (int j = 0; j < substep_ndarrays.length; j++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, substep_ndarrays[j].getBind_idx(), substep_ndarrays[j].getSsbo());
         }
         for (int i = 0; i < step; i++) {
             for (int j = 0; j < substep_kernel.length; j++) {
@@ -218,8 +216,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 GLES32.glDispatchCompute(substep_kernel[j].getNum_groups(), 1, 1);
             }
         }
-        for (int j = 0; j < bind_idx.length; j++) {
-            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, bind_idx[j], 0);
+        for (int j = 0; j < substep_ndarrays.length; j++) {
+            GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, substep_ndarrays[j].getBind_idx(), 0);
         }
     }
 
@@ -228,7 +226,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         GLES32.glUseProgram(render_program);
         if (USE_NDARRAY) {
-            GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, ndarrays[0].getSsbo());
+            GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, programs[1].getNdarrays()[0].getSsbo());
         } else {
             GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
         }
@@ -251,33 +249,15 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         JSONObject json_programs = (JSONObject) ((JSONObject) mpm88.get("aot_data")).get("kernels");
         root_buf_size = ((Long) ((JSONObject) mpm88.get("aot_data")).get("root_buffer_size")).intValue();
         programs = new Program[json_programs.size()];
-        ndarrays = new Ndarray[NDARRAY_SIZE];
         for (int i = 0; i < json_programs.size(); i++) {
             // Initialize program & kernel data structure.
             JSONObject cur_json_program = (JSONObject) json_programs.get(kernel_names[i]);
             JSONArray json_kernels = (JSONArray) cur_json_program.get("tasks");
-            Kernel[] kernels = new Kernel[json_kernels.size()];
-            Iterator json_kernel_iterator = json_kernels.iterator();
-            int k = 0;
-            while (json_kernel_iterator.hasNext()) {
-                JSONObject cur_json_kernel = (JSONObject) json_kernel_iterator.next();
-                kernels[k] = new Kernel(
-                        (String) cur_json_kernel.get("name"),
-                        ((Long) cur_json_kernel.get("workgroup_size")).intValue(),
-                        ((Long) cur_json_kernel.get("num_groups")).intValue()
-                );
-                k++;
-            }
-
-            JSONObject json_bind_idx = (JSONObject) cur_json_program.get("used.arr_arg_to_bind_idx");
-            Integer[] bind_idx = new Integer[json_bind_idx.size()];
-            for (int j = 0; j < json_bind_idx.size(); j++) {
-                bind_idx[j] = ((Long) json_bind_idx.get(String.valueOf(j))).intValue();
-            }
-            programs[i] = new Program(kernels, bind_idx);
 
             // Initialize ndarray data structure.
             JSONObject json_cur_ndarrays = (JSONObject) cur_json_program.get("arr_args");
+            int ndarray_size = ((Long) cur_json_program.get("args_count")).intValue();
+            Ndarray[] ndarrays = new Ndarray[ndarray_size];
             for (int j = 0; j < json_cur_ndarrays.size(); j++) {
                 JSONObject json_ndarray = (JSONObject) json_cur_ndarrays.get(String.valueOf(j));
                 int dim = ((Long) json_ndarray.get("field_dim")).intValue();
@@ -306,12 +286,52 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
                 }
                 ndarrays[j] = new Ndarray(
                         dim,
-                        ((Long) json_ndarray.get("shape_offset_in_bytes_in_args_buf")).intValue(),
+                        ((Long) json_ndarray.get("shape_offset_in_args_buf")).intValue(),
                         total_size * 4,
+                        ((Long) json_ndarray.get("bind_index")).intValue(),
                         shape,
                         element_shape
                 );
             }
+
+            Kernel[] kernels = new Kernel[json_kernels.size()];
+            Iterator json_kernel_iterator = json_kernels.iterator();
+            int k = 0;
+            while (json_kernel_iterator.hasNext()) {
+                JSONObject cur_json_kernel = (JSONObject) json_kernel_iterator.next();
+                String type = (String) cur_json_kernel.get("type");
+                int gpu_block_size = ((Long) cur_json_kernel.get("gpu_block_size")).intValue();
+                int num_groups = 32;
+                if (type.equals("range_for")) {
+                    String hint = (String) cur_json_kernel.get("range_hint");
+                    if (hint.startsWith("arg")) {
+                        int arg_idx = Integer.parseInt(hint.substring(4));
+                        int[] shape = ndarrays[arg_idx].getShape();
+                        num_groups = 1;
+                        for (int l = 0; l < shape.length; l++) {
+                            num_groups *= shape[l];
+                        }
+                        num_groups = num_groups / gpu_block_size;
+                    } else {
+                        num_groups = Integer.parseInt(hint) / gpu_block_size;
+                    }
+                } else if (type.equals("serial")) {
+                    num_groups = 1;
+                }
+                kernels[k] = new Kernel(
+                        (String) cur_json_kernel.get("name"),
+                        gpu_block_size,
+                        num_groups
+                );
+                k++;
+            }
+
+            //JSONObject json_bind_idx = (JSONObject) cur_json_program.get("used.arr_arg_to_bind_idx");
+            //Integer[] bind_idx = new Integer[json_bind_idx.size()];
+            //for (int j = 0; j < json_bind_idx.size(); j++) {
+            //    bind_idx[j] = ((Long) json_bind_idx.get(String.valueOf(j))).intValue();
+            //}
+            programs[i] = new Program(kernels, ndarrays);
         }
     }
 
@@ -325,9 +345,17 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         arg_buf = temp[0];
         GLES32.glGenBuffers(1, temp, 0);
         root_buf = temp[0];
-        for (int i = 0; i < ndarrays.length; i++) {
+
+        Ndarray[] init_ndarrays = programs[0].getNdarrays();
+        Ndarray[] substep_ndarrays = programs[1].getNdarrays();
+        for (int j = 0; j < substep_ndarrays.length; j++) {
             GLES32.glGenBuffers(1, temp, 0);
-            ndarrays[i].setSsbo(temp[0]);
+            if (j < init_ndarrays.length) {
+                init_ndarrays[j].setSsbo(temp[0]);
+            }
+            substep_ndarrays[j].setSsbo(temp[0]);
+            GLES32.glBindBuffer(GLES32.GL_SHADER_STORAGE_BUFFER, temp[0]);
+            GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, substep_ndarrays[j].getTotal_size(), null, GLES32.GL_DYNAMIC_COPY);
         }
     }
 

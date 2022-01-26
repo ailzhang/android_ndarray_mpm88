@@ -4,18 +4,16 @@ import java.util.Map;
 
 public class Program {
     private Kernel[] kernels;
-    private Integer[] bind_idx;
+    private Ndarray[] ndarrays;
 
-    public Program(Kernel[] kernels, Integer[] bind_idx) {
+    public Program(Kernel[] kernels, Ndarray[] ndarrays) {
         this.kernels = kernels;
-        this.bind_idx = bind_idx;
+        this.ndarrays = ndarrays;
     }
 
     public Kernel[] getKernels() {
         return kernels;
     }
 
-    public Integer[] getBind_idx() {
-        return bind_idx;
-    }
+    public Ndarray[] getNdarrays() { return ndarrays; }
 }

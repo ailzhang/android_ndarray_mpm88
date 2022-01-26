@@ -1,7 +1,7 @@
 #version 310 es
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 precision highp float;
-layout(std430, binding = 0) buffer data_i32 { int _data_i32_[];}; 
+layout(std430, binding = 0) buffer data_f32 { float _data_f32_[];}; 
 
 const float inf = 1.0f / 0.0f;
 const float nan = 0.0f / 0.0f;
@@ -9,29 +9,30 @@ void substep_c44_00()
 { // range for
   // range known at compile time
   int _sid0 = int(gl_GlobalInvocationID.x);
-  for (int _sid = _sid0; _sid < (4096); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
+  for (int _sid = _sid0; _sid < (16384); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = 0 + _sid;
       int D = _itv;
-      int CRg = int(6);
-      int CRh = D >> CRg;
-      int O = int(0);
-      int CAg = 0;
-      int CAi = CAg + 262144 * O; // S0
-      int CAj = CAi + 98304; // S19
-      int Dcy = int(63);
-      int Dcn = CRh & Dcy;
-      int Dcp = D & Dcy;
-      int DcF = Dcn << CRg;
-      int D1P = Dcp + DcF;
-      int CAn = CAj + 8 * D1P; // S19
-      int CAo = CAn + 0; // S20
-      _data_i32_[CAo >> 2] = O;
-      int CAA = CAn + 4; // S21
-      _data_i32_[CAA >> 2] = O;
-      int CAH = CAi + 16384; // S22
-      int CAL = CAH + 4 * D1P; // S22
-      int CAM = CAL + 0; // S23
-      _data_i32_[CAM >> 2] = O;
+      int C9n = int(7);
+      int C9o = D >> C9n;
+      float O = float(0.0);
+      int BTj = 0;
+      int Cjv = int(0);
+      int BTl = BTj + 491520 * Cjv; // S0
+      int BTm = BTl + 360448; // S14
+      int Cu0 = int(127);
+      int CtJ = C9o & Cu0;
+      int CtL = D & Cu0;
+      int Cu7 = CtJ << C9n;
+      int CjC = CtL + Cu7;
+      int BTq = BTm + 8 * CjC; // S14
+      int BTr = BTq + 0; // S15
+      _data_f32_[BTr >> 2] = O;
+      int BTD = BTq + 4; // S16
+      _data_f32_[BTD >> 2] = O;
+      int BTK = BTl + 163840; // S17
+      int BTO = BTK + 4 * CjC; // S17
+      int BTP = BTO + 0; // S18
+      _data_f32_[BTP >> 2] = O;
   }
 }
 
