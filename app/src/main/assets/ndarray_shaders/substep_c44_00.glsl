@@ -31,8 +31,8 @@ void substep_c44_00()
       int J = int(0);
       int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
       //int _s1_arr4 = 128;
-      int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
-      //int _s2_arr4 = 2;
+      //int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
+      int _s2_arr4 = 2;
       int K = H;
       K *= _s1_arr4;
       K += F;
