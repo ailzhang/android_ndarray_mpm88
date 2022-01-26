@@ -26,11 +26,14 @@ void substep_c44_01()
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
+    int _s1_arr0 = 2;
+    int _s1_arr1 = 2;
+    int _s1_arr3 = 2;
+    int _s2_arr3 = 2;
+    int _s2_arr4 = 2;
     int V = _itv;
     int W = V - U * int(V / U);
     int Y = int(0);
-    int _s0_arr0 = _args_i32_[16 + 0 * 8 + 0];
-    int _s1_arr0 = _args_i32_[16 + 0 * 8 + 1];
     int Z = W;
     Z *= _s1_arr0;
     Z += Y;
@@ -95,9 +98,6 @@ void substep_c44_01()
     float Bk = Bj * As;
     float Bl = float(400.0);
     float Bm = Bk * Bl;
-    int _s0_arr3 = _args_i32_[16 + 3 * 8 + 0];
-    int _s1_arr3 = _args_i32_[16 + 3 * 8 + 1];
-    int _s2_arr3 = _args_i32_[16 + 3 * 8 + 2];
     int Bo = W;
     Bo *= _s1_arr3;
     Bo += Y;
@@ -134,8 +134,6 @@ void substep_c44_01()
     float BF = BD * B8;
     float BG = BE * B8;
     float BH = AM * AN;
-    int _s0_arr1 = _args_i32_[16 + 1 * 8 + 0];
-    int _s1_arr1 = _args_i32_[16 + 1 * 8 + 1];
     int BJ = W;
     BJ *= _s1_arr1;
     BJ += Y;
@@ -156,9 +154,7 @@ void substep_c44_01()
     float BW = BO + BU;
     float BX = BH * BV;
     float BY = BH * BW;
-    int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
     int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
-    int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
     int C0 = AB;
     C0 *= _s1_arr4;
     C0 += AC;

@@ -28,6 +28,11 @@ void substep_c44_02()
   int _sid0 = int(gl_GlobalInvocationID.x);
   for (int _sid = _sid0; _sid < (_end - _beg); _sid += int(gl_WorkGroupSize.x * gl_NumWorkGroups.x)) {
     int _itv = _beg + _sid;
+    int _s1_arr0 = 2;
+    int _s1_arr1 = 2;
+    int _s1_arr3 = 2;
+    int _s2_arr3 = 2;
+    int _s2_arr4 = 2;
       float Ej = float(0.0);
       int Ek = int(1);
       int El = int(3);
@@ -54,7 +59,6 @@ void substep_c44_02()
         float EF = Eq / EE;
         int _s0_arr4 = _args_i32_[16 + 4 * 8 + 0];
         int _s1_arr4 = _args_i32_[16 + 4 * 8 + 1];
-        int _s2_arr4 = _args_i32_[16 + 4 * 8 + 2];
         int EH = Ex;
         EH *= _s1_arr4;
         EH += Ev;
