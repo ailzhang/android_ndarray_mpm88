@@ -42,7 +42,7 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private long startTime;
 
     // Render or test max fps.
-    private final boolean SHOW_MAX_FPS = false;
+    private final boolean SHOW_MAX_FPS = true;
     // Args to set for runtime.
     private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
