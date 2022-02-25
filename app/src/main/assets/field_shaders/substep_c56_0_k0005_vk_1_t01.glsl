@@ -1,12 +1,12 @@
 #version 310 es
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 
-layout(binding = 2, std430) buffer root_buffer_0_u32_ptr
+layout(binding = 0, std430) buffer root_buffer_0_u32_ptr
 {
     uint _m0[];
 } root_buffer_0_u32;
 
-layout(binding = 3, std430) buffer root_buffer_0_i32_ptr
+layout(binding = 0, std430) buffer root_buffer_0_i32_ptr
 {
     int _m0[];
 } root_buffer_0_i32;

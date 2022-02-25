@@ -42,7 +42,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
     private long startTime;
 
     // Render or test max fps.
-    private final boolean SHOW_MAX_FPS = true;
+    // XXXX
+    private final boolean SHOW_MAX_FPS = false;
     // Args to set for runtime.
     private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).
@@ -79,7 +80,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
 
         if (!USE_NDARRAY) {
             // Field has fixed particle size, so we hack here for field version.
-            NDARRAY_NUM_PARTICLE = 8192;
+            // XXX
+            NDARRAY_NUM_PARTICLE = 4096;
         }
         // -----------------------------------------------------------------------------------------
         // Parse Json data.
@@ -234,7 +236,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer {
         if (USE_NDARRAY) {
             GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
         } else {
-            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32768);
+            // XXX : OFFSET
+            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
         }
 
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
