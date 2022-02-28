@@ -13,11 +13,15 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Mpm88Ndarray implements GLSurfaceView.Renderer{
     private Mpm88Runner mpm88_demo;
-    private final String demo_name = "mpm88";
+    private MpmObstacleRunner mpm_obstacle_demo;
+//    private final String demo_name = "mpm88";
+    private final String demo_name = "mpm_obstacle";
 
     public Mpm88Ndarray (Context context) {
         if (demo_name.equals("mpm88")) {
             mpm88_demo = new Mpm88Runner(context);
+        } else if (demo_name.equals("mpm_obstacle")) {
+           mpm_obstacle_demo = new MpmObstacleRunner(context);
         }
     }
 
@@ -26,6 +30,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer{
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         if (demo_name.equals("mpm88")) {
             mpm88_demo.onsurfacecreated(gl, config);
+        } else if (demo_name.equals("mpm_obstacle")) {
+            mpm_obstacle_demo.onsurfacecreated(gl, config);
         }
     }
 
@@ -38,6 +44,8 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer{
     public void onDrawFrame(GL10 gl) {
         if (demo_name.equals("mpm88")) {
             mpm88_demo.ondrawframe(gl);
+        } else if (demo_name.equals("mpm_obstacle")) {
+            mpm_obstacle_demo.ondrawframe(gl);
         }
     }
 
