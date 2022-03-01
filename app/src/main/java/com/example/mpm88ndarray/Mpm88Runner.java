@@ -42,7 +42,7 @@ public class Mpm88Runner {
 
     // Render or test max fps.
     // XXXX
-    private final boolean SHOW_MAX_FPS = false;
+    private final boolean SHOW_MAX_FPS = true;
     // Args to set for runtime.
     private final boolean USE_NDARRAY = false;
     // These three args only affects ndarray version (when USE_NDARRAY is set to true).

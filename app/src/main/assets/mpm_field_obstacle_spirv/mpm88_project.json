@@ -1,0 +1,32 @@
+{
+"project_data":
+{
+    "aot_json": "metadata.json",
+    "flow_init":
+    [
+        {
+            "identifier": "init_obstacle",
+            "iter_num": 1
+        },
+        {
+            "identifier": "init",
+            "iter_num": 1
+        }
+    ],
+    "flow_run":
+    [
+        {
+            "identifier": "emission",
+            "iter_num": 1
+        },
+        {
+            "identifier": "substep",
+            "iter_num": 50
+        }
+    ],
+    "flow_fini":
+    [
+
+    ]
+}
+}

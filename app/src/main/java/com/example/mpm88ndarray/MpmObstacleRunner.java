@@ -53,7 +53,7 @@ public class MpmObstacleRunner {
     private int NDARRAY_NUM_PARTICLE = 4096;
     private final int NDARRAY_NUM_GRID = 64;
 
-    private final int SUBSTEP = 50;
+    private final int SUBSTEP = 25;
     private final String[] kernel_names = {"init", "substep", "init_obstacle", "emission"};
 
     public MpmObstacleRunner(Context _context) {
@@ -64,7 +64,7 @@ public class MpmObstacleRunner {
 //        if (USE_NDARRAY) {
 //            folder_name = "mpm_ndarray_obstacle/";
 //        } else {
-            folder_name = "mpm_field_obstacle_opengl/";
+            folder_name = "mpm_field_obstacle_spirv/";
 //        }
         try {
             jsonfile = this.context.getAssets().open(folder_name + "metadata.json");
@@ -249,7 +249,7 @@ public class MpmObstacleRunner {
 //            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 0);
 //        } else {
             // XXX : OFFSET
-            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 65576);
+            GLES32.glVertexAttribPointer(0, 2, GLES32.GL_FLOAT, false, 2*4, 32772);
 //        }
 
         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, color_buf);
