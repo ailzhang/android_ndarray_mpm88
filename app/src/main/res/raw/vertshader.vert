@@ -1,16 +1,18 @@
 #version 320 es
 
-precision highp float;
-
-layout (location = 0) in vec2 a_v4Position;
-
-layout (location = 1) in vec4 a_v4FillColor;
-
-layout (location = 0) out vec4 v_v4FillColor;
+//precision highp float;
+//layout(location = 0) in vec2 viPos;
+//
+//out vec2 voTexCoord;
+//void main() {
+//    gl_Position = vec4(viPos.xy, 0, 1);
+//    voTexCoord = 0.5 * viPos.yx + vec2(0.5, 0.5);
+//}
+in vec4 a_position;
+in vec2 a_texcoords;
+out vec2 v_texcoords;
 
 void main() {
-    v_v4FillColor = a_v4FillColor;
-    gl_Position = vec4(a_v4Position.xy*2.0 - 1.0, 1, 1);
-    //gl_Position = a_v4Position;
-    gl_PointSize = 8.0f;
+    gl_Position = a_position;
+    v_texcoords = a_texcoords;
 }
