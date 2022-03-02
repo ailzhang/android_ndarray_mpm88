@@ -48,13 +48,12 @@ import javax.microedition.khronos.opengles.GL10;
 public class SmokeRunner {
     private Context context;
     private int root_buf_size;
-    private int render_program;
     private int global_tmp_buf;
     private int root_buf;
     private int arg_buf;
     private int color_buf;
-    private int texture_id;
-    private int[] buffers = new int[1];
+    private FieldRender field_render;
+    private int vertex_array_buffer;
 //    private Program[] programs;
     HashMap <String, Program> programs;
     private Bitmap bitmap;
@@ -269,81 +268,14 @@ public class SmokeRunner {
             GLES32.glDispatchCompute(render_dye[i].getNum_groups(), 1, 1);
         }
     }
-    private static FloatBuffer newFloatBuffer(float[] val) {
-        FloatBuffer buffer = ByteBuffer.allocateDirect(val.length * Float.SIZE / Byte.SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        buffer.put(val).position(0);
-        return buffer;
-    }
 
-    private static int byteSize(FloatBuffer buffer) {
-        return buffer.limit() * Float.SIZE / Byte.SIZE;
-    }
-
-    private static int floatBytes(int stride) {
-        return stride * Float.SIZE / Byte.SIZE;
-    }
 
     private void render() {
         GLES32.glMemoryBarrier(GLES32.GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
         GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT | GLES32.GL_DEPTH_BUFFER_BIT);
         GLES32.glClearColor(0f, 0f, 0f, 1f);
 
-        GLES32.glUseProgram(render_program);
-
-//        GLES32.glEnableVertexAttribArray(1);
-//        GLES32.glVertexAttribPointer(1, 2, GLES32.GL_FLOAT, false, 4*2, 0);
-        // Gen texture
-        int channel = 3;
-        int width = 462;
-        int height = 462;
-
-        // Load data to texture
-//        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, root_buf);
-//      Buffer buf = GLES32.glMapBufferRange(GLES32.GL_SHADER_STORAGE_BUFFER, /*offset=*/11099088, /*range=*/width * height * channel * 4, GLES32.GL_MAP_READ_BIT);
-
-//        GLES32.glTexImage2D(GLES32.GL_TEXTURE_2D,  0, GLES32.GL_RGBA16F, width, height, 0, GLES32.GL_FLOAT, GLES32.GL_RGBA, bitmap);
-//        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
-//        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR);
-//        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_WRAP_S, GLES32.GL_CLAMP_TO_EDGE);
-//        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_WRAP_T, GLES32.GL_CLAMP_TO_EDGE);
-//
-//        // Bind texture
-//        GLES32.glBindTexture(GLES32.GL_TEXTURE_2D, texture_id);
-//
-//        // Draw!
-//        GLES32.glActiveTexture(GLES32.GL_TEXTURE0);
-//        GLES32.glUniform1i(GLES32.glGetUniformLocation(render_program, "tex"), 0);
-//        GLES32.glDrawArrays(GLES32.GL_TRIANGLES, 0, 6);
-
-        int u_sampler = GLES32.glGetUniformLocation(render_program, "u_sampler");
-        int a_position = GLES32.glGetAttribLocation(render_program, "a_position");
-        int a_texcoords = GLES32.glGetAttribLocation(render_program, "a_texcoords");
-
-        GLES32.glBindTexture(GLES32.GL_TEXTURE_2D, texture_id);
-        GLES32.glTexParameterf(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
-        GLUtils.texImage2D(GLES32.GL_TEXTURE_2D, 0, bitmap, 0);
-        GLES32.glUniform1i(u_sampler, 0);
-
-        FloatBuffer positions = newFloatBuffer(new float[] {
-                // posX, posY, texS, texT
-                -0.5f, -0.5f, 0.0f, 1.0f,
-                0.5f, -0.5f, 1.0f, 1.0f,
-                -0.5f, 0.5f, 0.0f, 0.0f,
-                0.5f, 0.5f, 1.0f, 0.0f
-        });
-        GLES32.glGenBuffers(buffers.length, buffers, 0);
-        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, buffers[0]);
-        GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, byteSize(positions), positions, GLES32.GL_STATIC_DRAW);
-
-        GLES32.glVertexAttribPointer(a_position, 2, GLES32.GL_FLOAT, false, floatBytes(4), floatBytes(0));
-        GLES32.glEnableVertexAttribArray(a_position);
-
-        GLES32.glVertexAttribPointer(a_texcoords, 2, GLES32.GL_FLOAT, false, floatBytes(4), floatBytes(2));
-        GLES32.glEnableVertexAttribArray(a_texcoords);
-
-        // 画面クリアの色を指定
-        GLES32.glClearColor(0, 0, 0, 1);
-        GLES32.glDrawArrays(GLES32.GL_TRIANGLE_STRIP, 0, 4);
+        field_render.run(root_buf);
     }
 
     private void parseJsonData(JSONObject mpm88) {
@@ -457,6 +389,7 @@ public class SmokeRunner {
                 if (shader_program == 0) {
                     throw new RuntimeException("Error creating program: " + GLES32.glGetProgramInfoLog(shader_program));
                 }
+
                 cur_kernels[j].setShader_program(shader_program);
             }
         }
@@ -466,7 +399,6 @@ public class SmokeRunner {
     private void compileRenderShaders() {
         int mVertShader = GLES32.glCreateShader(GLES32.GL_VERTEX_SHADER);
         int mFragShader = GLES32.glCreateShader(GLES32.GL_FRAGMENT_SHADER);
-        bitmap = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.meme);
         InputStream rawVertShader = this.context.getResources().openRawResource(R.raw.vertshader);
         String stringVertShader = new BufferedReader(
                 new InputStreamReader(rawVertShader, StandardCharsets.UTF_8))
@@ -513,10 +445,31 @@ public class SmokeRunner {
         {
             throw new RuntimeException("Error creating fragment shader.");
         }
+
+        field_render = new FieldRender(mVertShader, mFragShader);
+    }
+}
+
+class FieldRender {
+    private Texture texture;
+    private int array_buffer;
+    private int vertex_array_buffer;
+    private int render_program;
+
+    private static FloatBuffer newFloatBuffer(float[] val) {
+        FloatBuffer buffer = ByteBuffer.allocateDirect(val.length * Float.SIZE / Byte.SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        buffer.put(val).position(0);
+        return buffer;
+    }
+
+    private static int byteSize(FloatBuffer buffer) {
+        return buffer.limit() * Float.SIZE / Byte.SIZE;
+    }
+
+    FieldRender(int mVertShader, int mFragShader) {
+
         render_program = GLES32.glCreateProgram();
-        int[] temp = new int[1];
-        GLES32.glGenTextures(1, temp, 0);
-        texture_id = temp[0];
+
         if (render_program != 0) {
             GLES32.glAttachShader(render_program, mVertShader);
             GLES32.glAttachShader(render_program, mFragShader);
@@ -535,5 +488,102 @@ public class SmokeRunner {
         {
             throw new RuntimeException("Error creating program.");
         }
-    }
+
+        // init_program
+        FloatBuffer quad = newFloatBuffer(new float[] {
+                -1f, -1f, 1.0f, -1.0f,
+                1f, 1f, -1.0f, -1.0f,
+                1f, 1f, -1f, 1f,
+        });
+        int[] temp = new int[1];
+        GLES32.glGenBuffers(1, temp, 0);
+        array_buffer = temp[0];
+        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, array_buffer);
+        GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, byteSize(quad), quad, GLES32.GL_STATIC_DRAW);
+
+        GLES32.glGenVertexArrays(1, temp, 0);
+        vertex_array_buffer = temp[0];
+        GLES32.glBindVertexArray(vertex_array_buffer);
+        GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, array_buffer);
+        int viPos = GLES32.glGetAttribLocation(render_program, "viPos");
+        GLES32.glEnableVertexAttribArray(viPos);
+        GLES32.glVertexAttribPointer(viPos, 2, GLES32.GL_FLOAT, false, 2 * 4, 0);
+        GLES32.glBindVertexArray(0);
+        texture = new Texture(462, 462);
+     }
+     private void loadDataToTexture(int root_buf) {
+         GLES32.glBindBuffer(GLES32.GL_SHADER_STORAGE_BUFFER, root_buf);
+         int size = texture.height * texture.width * 3;
+         int offset = 11099088;
+
+
+//         FloatBuffer fbuf = ByteBuffer.allocateDirect(size * Float.SIZE / Byte.SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
+//         GLES32.glgetbu(GLES32.GL_ARRAY_BUFFER, offset, 4 * size, fbuf);
+         Buffer fbuf = GLES32.glMapBufferRange(GLES32.GL_SHADER_STORAGE_BUFFER, offset, size * 4, GLES32.GL_MAP_READ_BIT);
+         ByteBuffer buf = null;
+         if (fbuf instanceof ByteBuffer) {
+             buf = (ByteBuffer) fbuf;
+         }
+         // HACK to see if rendering works
+         int count = 0;
+         FloatBuffer tmp = buf.order(ByteOrder.nativeOrder()).asFloatBuffer();
+         for (int i = 0; i < size; i++) {
+           if (tmp.get(i) != 0) count++;
+         }
+         Log.d("fbuf", "count " + count);
+
+         GLES32.glBindBuffer(GLES32.GL_SHADER_STORAGE_BUFFER, 0);
+
+         texture.loadData(buf);
+         GLES32.glUnmapBuffer(GLES32.GL_SHADER_STORAGE_BUFFER);
+     }
+     public void run(int root_buf) {
+
+         loadDataToTexture(root_buf);
+         texture.bind();
+         GLES32.glUseProgram(render_program);
+
+//         GLES32.glTexImage2D(GLES32.GL_TEXTURE_2D,  0, GLES32.GL_RGBA16F, width, height, 0, GLES32.GL_FLOAT, GLES32.GL_RGBA, fbuf);
+         GLES32.glActiveTexture(GLES32.GL_TEXTURE0);
+         GLES32.glTexParameterf(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
+         GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR);
+         int tex = GLES32.glGetUniformLocation(render_program, "tex");
+         GLES32.glUniform1i(tex, 0);
+
+         GLES32.glBindVertexArray(vertex_array_buffer);
+         GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, array_buffer);
+         GLES32.glDrawArrays(GLES32.GL_TRIANGLES, 0, 6);
+         GLES32.glBindVertexArray(0);
+         texture.unbind();
+     }
+}
+
+class Texture {
+     private int texture_id;
+     public int width;
+     public int height;
+     private final int channel = 3;
+     Texture(int _width, int _height) {
+         int[] temp = new int[1];
+         GLES32.glGenTextures(1, temp, 0);
+         texture_id = temp[0];
+         width = _width;
+         height = _height;
+     }
+     public void bind() {
+         GLES32.glBindTexture(GLES32.GL_TEXTURE_2D, texture_id);
+     }
+     public void unbind() {
+         GLES32.glBindTexture(GLES32.GL_TEXTURE_2D, 0);
+     }
+     public void loadData(Buffer data) {
+         bind();
+         GLES32.glTexImage2D(GLES32.GL_TEXTURE_2D,  0, GLES32.GL_RGB16F, width, height, 0, GLES32.GL_FLOAT, GLES32.GL_RGB16F, data);
+         GLES32.glTexParameterf(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
+         GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR);
+         GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_WRAP_S, GLES32.GL_CLAMP_TO_EDGE);
+         GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_WRAP_T, GLES32.GL_CLAMP_TO_EDGE);
+         unbind();
+     }
+
 }
