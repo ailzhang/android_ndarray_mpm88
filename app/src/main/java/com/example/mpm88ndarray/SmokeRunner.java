@@ -51,6 +51,7 @@ public class SmokeRunner {
     private int global_tmp_buf;
     private int root_buf;
     private int arg_buf;
+    private int frame = 0;
     private int color_buf;
     private FieldRender field_render;
     private int vertex_array_buffer;
@@ -166,7 +167,6 @@ public class SmokeRunner {
             }
         } else {
             substep(SUBSTEP);
-
             render();
 
             double substep_time = (System.nanoTime() - startTime) / SUBSTEP / 1e9;
@@ -174,6 +174,7 @@ public class SmokeRunner {
             Log.d("FPS", "" + 1.0 / (substep_time * SUBSTEP));
             startTime = System.nanoTime();
         }
+        frame++;
     }
 
     private void fillColorData() {
@@ -188,7 +189,7 @@ public class SmokeRunner {
 
     private void init() {
         // XXX: note the bind_id here
-        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, root_buf);
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, root_buf_size, null, GLES32.GL_DYNAMIC_COPY);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
         GLES32.glBufferData(GLES32.GL_SHADER_STORAGE_BUFFER, 16384, null, GLES32.GL_STATIC_COPY);
@@ -250,7 +251,7 @@ public class SmokeRunner {
         jacobi(p);
     }
     private void substep(int step) {
-        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 2, root_buf);
+        GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 0, root_buf);
         GLES32.glBindBufferBase(GLES32.GL_SHADER_STORAGE_BUFFER, 1, global_tmp_buf);
         advection(velocity.curr, velocity.curr, velocity.next);
         advection(velocity.curr, dye.curr, dye.next);
@@ -324,7 +325,6 @@ public class SmokeRunner {
                 k++;
             }
 
-//            programs[i] = new Program(kernels, ndarrays);
             programs.put(kernel_names[i], new Program(kernels, ndarrays) );
         }
     }
@@ -455,6 +455,7 @@ class FieldRender {
     private int array_buffer;
     private int vertex_array_buffer;
     private int render_program;
+    private ByteBuffer color_bytebuf = null;
 
     private static FloatBuffer newFloatBuffer(float[] val) {
         FloatBuffer buffer = ByteBuffer.allocateDirect(val.length * Float.SIZE / Byte.SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -517,24 +518,25 @@ class FieldRender {
          int offset = 11099088;
 
 
-//         FloatBuffer fbuf = ByteBuffer.allocateDirect(size * Float.SIZE / Byte.SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
-//         GLES32.glgetbu(GLES32.GL_ARRAY_BUFFER, offset, 4 * size, fbuf);
-         Buffer fbuf = GLES32.glMapBufferRange(GLES32.GL_SHADER_STORAGE_BUFFER, offset, size * 4, GLES32.GL_MAP_READ_BIT);
-         ByteBuffer buf = null;
-         if (fbuf instanceof ByteBuffer) {
-             buf = (ByteBuffer) fbuf;
-         }
-         // HACK to see if rendering works
-         int count = 0;
-         FloatBuffer tmp = buf.order(ByteOrder.nativeOrder()).asFloatBuffer();
-         for (int i = 0; i < size; i++) {
-           if (tmp.get(i) != 0) count++;
-         }
-         Log.d("fbuf", "count " + count);
 
+         Buffer fbuf = GLES32.glMapBufferRange(GLES32.GL_SHADER_STORAGE_BUFFER, offset, size * 4, GLES32.GL_MAP_READ_BIT | GLES32.GL_MAP_WRITE_BIT);
+         if (fbuf instanceof ByteBuffer) {
+             color_bytebuf = (ByteBuffer) fbuf;
+         }
+         // HACK to see if we get the numbers
+//         int count = 0;
+//         if (color_bytebuf != null) {
+//             FloatBuffer tmp = color_bytebuf.order(ByteOrder.nativeOrder()).asFloatBuffer();
+//             for (int i = 0; i < size; i++) {
+//                 if (tmp.get(i) != 0) {
+//                     count++;
+//                     Log.d("fbuf", i + ": " + tmp.get(i));
+//                 }
+//             }
+//         }
          GLES32.glBindBuffer(GLES32.GL_SHADER_STORAGE_BUFFER, 0);
 
-         texture.loadData(buf);
+         texture.loadData(color_bytebuf);
          GLES32.glUnmapBuffer(GLES32.GL_SHADER_STORAGE_BUFFER);
      }
      public void run(int root_buf) {
@@ -547,6 +549,7 @@ class FieldRender {
          GLES32.glActiveTexture(GLES32.GL_TEXTURE0);
          GLES32.glTexParameterf(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
          GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR);
+
          int tex = GLES32.glGetUniformLocation(render_program, "tex");
          GLES32.glUniform1i(tex, 0);
 
@@ -578,7 +581,11 @@ class Texture {
      }
      public void loadData(Buffer data) {
          bind();
-         GLES32.glTexImage2D(GLES32.GL_TEXTURE_2D,  0, GLES32.GL_RGB16F, width, height, 0, GLES32.GL_FLOAT, GLES32.GL_RGB16F, data);
+
+         GLES32.glTexImage2D(GLES32.GL_TEXTURE_2D,  0, GLES32.GL_RGB16F, width, height, 0, GLES32.GL_RGB,GLES32.GL_FLOAT, data);
+         int err_code = GLES32.glGetError();
+         Log.d("err code", "" + err_code);
+
          GLES32.glTexParameterf(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
          GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR);
          GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_WRAP_S, GLES32.GL_CLAMP_TO_EDGE);

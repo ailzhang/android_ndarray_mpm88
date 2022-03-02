@@ -7,7 +7,7 @@ in highp vec2 voTexCoord;
 void main()
 {
     vec4 color = vec4(1.0, 0.0, 0.0, 1.0);
-    color.xyz = texture(tex, voTexCoord).xyz * 10000.0;
+    color.xyz = texture(tex, voTexCoord).xyz * 1.0;
     fragColor = color;
 }
 
