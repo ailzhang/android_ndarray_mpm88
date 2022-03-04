@@ -204,6 +204,7 @@ public class SmokeRunner {
     }
     private void runKernel(String kernel_name) {
         Kernel [] kernel = programs.get(kernel_name).getKernels();
+        Log.d("kernels ", kernel_name);
         for (int i = 0; i < kernel.length; i++) {
             GLES32.glUseProgram(kernel[i].getShader_program());
             GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
@@ -399,12 +400,12 @@ public class SmokeRunner {
     private void compileRenderShaders() {
         int mVertShader = GLES32.glCreateShader(GLES32.GL_VERTEX_SHADER);
         int mFragShader = GLES32.glCreateShader(GLES32.GL_FRAGMENT_SHADER);
-        InputStream rawVertShader = this.context.getResources().openRawResource(R.raw.vertshader);
+        InputStream rawVertShader = this.context.getResources().openRawResource(R.raw.vertshader_smoke);
         String stringVertShader = new BufferedReader(
                 new InputStreamReader(rawVertShader, StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        InputStream rawFragShader = this.context.getResources().openRawResource(R.raw.fragshader);
+        InputStream rawFragShader = this.context.getResources().openRawResource(R.raw.fragshader_smoke);
         String stringFragShader = new BufferedReader(
                 new InputStreamReader(rawFragShader, StandardCharsets.UTF_8))
                 .lines()
