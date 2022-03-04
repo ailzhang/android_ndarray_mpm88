@@ -204,7 +204,7 @@ public class SmokeRunner {
     }
     private void runKernel(String kernel_name) {
         Kernel [] kernel = programs.get(kernel_name).getKernels();
-        Log.d("kernels ", kernel_name);
+//        Log.d("kernels ", kernel_name);
         for (int i = 0; i < kernel.length; i++) {
             GLES32.glUseProgram(kernel[i].getShader_program());
             GLES32.glMemoryBarrierByRegion(GLES32.GL_SHADER_STORAGE_BARRIER_BIT);
@@ -511,12 +511,12 @@ class FieldRender {
         GLES32.glEnableVertexAttribArray(viPos);
         GLES32.glVertexAttribPointer(viPos, 2, GLES32.GL_FLOAT, false, 2 * 4, 0);
         GLES32.glBindVertexArray(0);
-        texture = new Texture(462, 462);
+        texture = new Texture(231, 231);
      }
      private void loadDataToTexture(int root_buf) {
          GLES32.glBindBuffer(GLES32.GL_SHADER_STORAGE_BUFFER, root_buf);
          int size = texture.height * texture.width * 3;
-         int offset = 11099088;
+         int offset = 2774772;
 
 
 
@@ -585,7 +585,7 @@ class Texture {
 
          GLES32.glTexImage2D(GLES32.GL_TEXTURE_2D,  0, GLES32.GL_RGB16F, width, height, 0, GLES32.GL_RGB,GLES32.GL_FLOAT, data);
          int err_code = GLES32.glGetError();
-         Log.d("err code", "" + err_code);
+//         Log.d("err code", "" + err_code);
 
          GLES32.glTexParameterf(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_LINEAR);
          GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR);

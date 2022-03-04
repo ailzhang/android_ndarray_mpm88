@@ -3,9 +3,9 @@
   "kernels": {"update_dye|dyef=dye_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
-          "name": "update_dye_c66_1_k0021_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/update_dye_c66_1_k0021_vk_0_t00.glsl",
+          "range_hint": "53361",
+          "name": "update_dye_c66_1_k0022_vk_0_t00",
+          "source_path": "data/aot/smoke_stable_vulkan_231/update_dye_c66_1_k0022_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -15,9 +15,9 @@
       "arr_args": {}},"update_v|vf=velocity_next,pf=pressure_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
-          "name": "update_v_c64_3_k0019_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/update_v_c64_3_k0019_vk_0_t00.glsl",
+          "range_hint": "53361",
+          "name": "update_v_c64_3_k0020_vk_0_t00",
+          "source_path": "data/aot/smoke_stable_vulkan_231/update_v_c64_3_k0020_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -27,9 +27,9 @@
       "arr_args": {}},"update_v|vf=velocity_curr,pf=pressure_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
-          "name": "update_v_c64_2_k0018_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/update_v_c64_2_k0018_vk_0_t00.glsl",
+          "range_hint": "53361",
+          "name": "update_v_c64_2_k0019_vk_0_t00",
+          "source_path": "data/aot/smoke_stable_vulkan_231/update_v_c64_2_k0019_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -39,9 +39,9 @@
       "arr_args": {}},"update_v|vf=velocity_curr,pf=pressure_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
-          "name": "update_v_c64_0_k0016_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/update_v_c64_0_k0016_vk_0_t00.glsl",
+          "range_hint": "53361",
+          "name": "update_v_c64_0_k0017_vk_0_t00",
+          "source_path": "data/aot/smoke_stable_vulkan_231/update_v_c64_0_k0017_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -51,9 +51,9 @@
       "arr_args": {}},"update_v|vf=velocity_next,pf=pressure_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
-          "name": "update_v_c64_1_k0017_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/update_v_c64_1_k0017_vk_0_t00.glsl",
+          "range_hint": "53361",
+          "name": "update_v_c64_1_k0018_vk_0_t00",
+          "source_path": "data/aot/smoke_stable_vulkan_231/update_v_c64_1_k0018_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -63,9 +63,9 @@
       "arr_args": {}},"advection|vf=velocity_curr,field=velocity_curr,next_field=velocity_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "advection_c58_0_k0007_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/advection_c58_0_k0007_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/advection_c58_0_k0007_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -75,9 +75,9 @@
       "arr_args": {}},"jacobi_step|p_curr=pressure_curr,p_next=pressure_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "jacobi_step_c56_0_k0004_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/jacobi_step_c56_0_k0004_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/jacobi_step_c56_0_k0004_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -87,9 +87,9 @@
       "arr_args": {}},"external_force|vf=velocity_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "external_force_c60_0_k0012_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/external_force_c60_0_k0012_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/external_force_c60_0_k0012_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -99,9 +99,9 @@
       "arr_args": {}},"init": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "init_c70_0_k0000_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/init_c70_0_k0000_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/init_c70_0_k0000_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -111,9 +111,9 @@
       "arr_args": {}},"update_dye|dyef=dye_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
-          "name": "update_dye_c66_0_k0020_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/update_dye_c66_0_k0020_vk_0_t00.glsl",
+          "range_hint": "53361",
+          "name": "update_dye_c66_0_k0021_vk_0_t00",
+          "source_path": "data/aot/smoke_stable_vulkan_231/update_dye_c66_0_k0021_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -123,9 +123,9 @@
       "arr_args": {}},"divergence_vel|field=velocity_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "divergence_vel_c62_0_k0014_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/divergence_vel_c62_0_k0014_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/divergence_vel_c62_0_k0014_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -135,9 +135,9 @@
       "arr_args": {}},"advection|vf=velocity_curr,field=dye_curr,next_field=dye_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "advection_c58_2_k0009_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/advection_c58_2_k0009_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/advection_c58_2_k0009_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -147,9 +147,9 @@
       "arr_args": {}},"jacobi_step|p_curr=pressure_next,p_next=pressure_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "jacobi_step_c56_1_k0005_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/jacobi_step_c56_1_k0005_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/jacobi_step_c56_1_k0005_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -159,9 +159,9 @@
       "arr_args": {}},"advection|vf=velocity_next,field=velocity_next,next_field=velocity_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "advection_c58_1_k0008_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/advection_c58_1_k0008_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/advection_c58_1_k0008_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -171,9 +171,9 @@
       "arr_args": {}},"advection|vf=velocity_next,field=dye_next,next_field=dye_curr,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "advection_c58_3_k0010_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/advection_c58_3_k0010_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/advection_c58_3_k0010_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -183,9 +183,9 @@
       "arr_args": {}},"divergence_vel|field=velocity_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "divergence_vel_c62_1_k0015_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/divergence_vel_c62_1_k0015_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/divergence_vel_c62_1_k0015_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -195,9 +195,9 @@
       "arr_args": {}},"render_dye": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "render_dye_c68_0_k0001_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/render_dye_c68_0_k0001_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/render_dye_c68_0_k0001_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -207,9 +207,9 @@
       "arr_args": {}},"external_force|vf=velocity_next,": {
       "tasks": [{
           "type": "range_for",
-          "range_hint": "213444",
+          "range_hint": "53361",
           "name": "external_force_c60_1_k0013_vk_0_t00",
-          "source_path": "data/aot/smoke_stable_vulkan/external_force_c60_1_k0013_vk_0_t00.glsl",
+          "source_path": "data/aot/smoke_stable_vulkan_231/external_force_c60_1_k0013_vk_0_t00.glsl",
           "gpu_block_size": 128}],
       "args_count": 0,
       "rets_count": 0,
@@ -223,56 +223,56 @@
       "dtype": 9,
       "dtype_name": "f32",
       "mem_offset_in_parent": 0,
-      "shape": [462,462],
+      "shape": [231,231],
       "is_scalar": true,
       "element_shape": []},{
       "field_name": "pressure_next",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 853776,
-      "shape": [462,462],
+      "mem_offset_in_parent": 213444,
+      "shape": [231,231],
       "is_scalar": true,
       "element_shape": []},{
       "field_name": "velocity_curr",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 1707552,
-      "shape": [462,462],
+      "mem_offset_in_parent": 426888,
+      "shape": [231,231],
       "is_scalar": false,
       "element_shape": [1,2]},{
       "field_name": "velocity_next",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 3415104,
-      "shape": [462,462],
+      "mem_offset_in_parent": 853776,
+      "shape": [231,231],
       "is_scalar": false,
       "element_shape": [1,2]},{
       "field_name": "velocity_div",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 5122656,
-      "shape": [462,462],
+      "mem_offset_in_parent": 1280664,
+      "shape": [231,231],
       "is_scalar": true,
       "element_shape": []},{
       "field_name": "dye_curr",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 5976432,
-      "shape": [462,462],
+      "mem_offset_in_parent": 1494108,
+      "shape": [231,231],
       "is_scalar": false,
       "element_shape": [1,3]},{
       "field_name": "dye_next",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 8537760,
-      "shape": [462,462],
+      "mem_offset_in_parent": 2134440,
+      "shape": [231,231],
       "is_scalar": false,
       "element_shape": [1,3]},{
       "field_name": "color",
       "dtype": 9,
       "dtype_name": "f32",
-      "mem_offset_in_parent": 11099088,
-      "shape": [462,462],
+      "mem_offset_in_parent": 2774772,
+      "shape": [231,231],
       "is_scalar": false,
       "element_shape": [1,3]}],
-  "root_buffer_size": 13660416}}
+  "root_buffer_size": 3415104}}

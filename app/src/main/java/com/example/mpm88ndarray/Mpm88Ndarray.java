@@ -15,9 +15,9 @@ public class Mpm88Ndarray implements GLSurfaceView.Renderer{
     private Mpm88Runner mpm88_demo;
     private MpmObstacleRunner mpm_obstacle_demo;
     private SmokeRunner smoke_demo;
-    private final String demo_name = "mpm88";
+//    private final String demo_name = "mpm88";
 //    private final String demo_name = "mpm_obstacle";
-//    private final String demo_name = "smoke";
+    private final String demo_name = "smoke";
 
     public Mpm88Ndarray (Context context) {
         if (demo_name.equals("mpm88")) {
