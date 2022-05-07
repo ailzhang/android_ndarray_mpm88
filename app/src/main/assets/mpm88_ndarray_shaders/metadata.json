@@ -1,0 +1,90 @@
+{
+"aot_data": {
+  "kernels": {"init": {
+      "tasks": [{
+          "type": "range_for",
+          "range_hint": "arg 0",
+          "name": "init_c46_00",
+          "source_path": "aot/mpm88_ndarray_no_nv_extension/init_c46_00.glsl",
+          "gpu_block_size": 128}],
+      "args_count": 3,
+      "rets_count": 0,
+      "args_buffer_size": 160,
+      "rets_buffer_size": 0,
+      "scalar_args": {},
+      "arr_args": {"0": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [2],
+          "shape_offset_in_args_buf": 64,
+          "bind_index": 4},"1": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [2],
+          "shape_offset_in_args_buf": 96,
+          "bind_index": 5},"2": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [],
+          "shape_offset_in_args_buf": 128,
+          "bind_index": 6}}},"substep": {
+      "tasks": [{
+          "type": "range_for",
+          "range_hint": "arg 5",
+          "name": "substep_c44_00",
+          "source_path": "aot/mpm88_ndarray_no_nv_extension/substep_c44_00.glsl",
+          "gpu_block_size": 128},{
+          "type": "range_for",
+          "range_hint": "arg 0",
+          "name": "substep_c44_01",
+          "source_path": "aot/mpm88_ndarray_no_nv_extension/substep_c44_01.glsl",
+          "gpu_block_size": 128},{
+          "type": "range_for",
+          "range_hint": "arg 5",
+          "name": "substep_c44_02",
+          "source_path": "aot/mpm88_ndarray_no_nv_extension/substep_c44_02.glsl",
+          "gpu_block_size": 128},{
+          "type": "range_for",
+          "range_hint": "arg 0",
+          "name": "substep_c44_03",
+          "source_path": "aot/mpm88_ndarray_no_nv_extension/substep_c44_03.glsl",
+          "gpu_block_size": 128}],
+      "args_count": 6,
+      "rets_count": 0,
+      "args_buffer_size": 256,
+      "rets_buffer_size": 0,
+      "scalar_args": {},
+      "arr_args": {"0": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [2],
+          "shape_offset_in_args_buf": 64,
+          "bind_index": 4},"1": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [2],
+          "shape_offset_in_args_buf": 96,
+          "bind_index": 5},"2": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [],
+          "shape_offset_in_args_buf": 128,
+          "bind_index": 6},"3": {
+          "dtype_name": "f32",
+          "field_dim": 1,
+          "element_shape": [2,2],
+          "shape_offset_in_args_buf": 160,
+          "bind_index": 7},"4": {
+          "dtype_name": "f32",
+          "field_dim": 2,
+          "element_shape": [2],
+          "shape_offset_in_args_buf": 192,
+          "bind_index": 8},"5": {
+          "dtype_name": "f32",
+          "field_dim": 2,
+          "element_shape": [],
+          "shape_offset_in_args_buf": 224,
+          "bind_index": 9}}}},
+  "kernel_tmpls": {},
+  "fields": [],
+  "root_buffer_size": 0}}

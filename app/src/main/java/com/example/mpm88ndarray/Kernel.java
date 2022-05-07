@@ -2,13 +2,13 @@ package com.example.mpm88ndarray;
 
 public class Kernel {
     private String name;
-    private int workgroup_size;
+    private int gpu_block_size;
     private int num_groups;
     private int shader_program;
 
     public Kernel(String name, int workgroup_size, int num_groups) {
         this.name = name;
-        this.workgroup_size = workgroup_size;
+        this.gpu_block_size = workgroup_size;
         this.num_groups = num_groups;
     }
 
@@ -16,8 +16,8 @@ public class Kernel {
         return name;
     }
 
-    public int getWorkgroup_size() {
-        return workgroup_size;
+    public int getGpu_block_size() {
+        return gpu_block_size;
     }
 
     public int getNum_groups() {

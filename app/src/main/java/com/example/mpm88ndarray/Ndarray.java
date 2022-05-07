@@ -5,17 +5,17 @@ public class Ndarray {
     private int ssbo;
     private int total_size;
     private int shape_offset;
+    private int bind_idx;
     private int[] shape;
     private int[] element_shape;
-    public boolean init;
 
-    public Ndarray(int dim, int shape_offset, int total_size, int[] shape, int[] element_shape) {
+    public Ndarray(int dim, int shape_offset, int total_size, int bind_idx, int[] shape, int[] element_shape) {
         this.dim = dim;
         this.shape_offset = shape_offset;
         this.total_size = total_size;
         this.shape = shape;
+        this.bind_idx = bind_idx;
         this.element_shape = element_shape;
-        this.init = false;
     }
 
     public int getDim() {
@@ -48,5 +48,9 @@ public class Ndarray {
 
     public int getShape_offset() {
         return shape_offset;
+    }
+
+    public int getBind_idx() {
+        return bind_idx;
     }
 }
